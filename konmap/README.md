@@ -19,9 +19,11 @@ konmap/
   cities/index.json          which cities exist and which engine each uses
   cities/<id>/city.json      everything about one city (see "City file")
   cities/<id>/base.json      the city's base map
-  cities/<id>/reports.json   research reports for the Study tab
+  cities/<id>/reports.json   research reports for the Study tab (optional)
+  cities/<id>/curation.json  hand-written input for tools/build_city.py (new cities; Turin has none)
   engines/<name>/<ver>/      one engine version (the map program)
   shared/glyphs.json         map label fonts, shared by all engines
+  tools/                     build a city file from research, base maps, migrate old pages (see tools/README.md)
   REGISTRY.md                live artifacts, rules, change log
 ```
 
@@ -37,6 +39,8 @@ konmap/
    *KonMap Lab* artifact, logged, then kept or removed.
 5. **Only the artifacts in `REGISTRY.md` are edited.** Everything else is legacy and read-only.
 6. Every change: edit here → commit → republish the artifact from this folder → add a line to the change log.
+7. **The map is for using.** No development notes, version strings or build remarks in the page; those go in the
+   change log and the project docs.
 
 ## City file (`city.json`)
 

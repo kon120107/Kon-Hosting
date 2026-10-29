@@ -25,3 +25,9 @@ Plovdiv 1.0 · Apps (HTML holder prototype). Old GitHub Pages folders `turin-con
 
 - 2026-10-29 — Restructure: engine `concrete/0.3` (from Turin 2.2's engine 0.2, now loads cities from data,
   adds the tours module from Turin 2.0A). Turin moved to `cities/turin/`. KonMap artifact created.
+- 2026-10-29 — concrete/0.3 fixed in place: development notes removed from the panel (version line, engine note,
+  technical notes under the Show slider, metro and walk maker); tours are no longer a Routes switch (By area / era /
+  theme) but a collapsed "Tours by topic" box at the bottom of Routes, era tours grouped as "Periods of history";
+  tour sort/filter box dropped; missing tours CSS (chips, notes, story box, day-trip box) restored; deck title for
+  tours fixed. tools/: build_city, parse_report, build_base, clip_land, add_streets, migrate_page moved in from the
+  old template kit, writing the new city file directly.

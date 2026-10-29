@@ -1155,11 +1155,7 @@ button.primary.sm{font-size:12px;padding:5px 11px}
 .metlegs{margin:0 0 8px;padding-left:16px;font-size:12px;color:var(--muted)}
 .metlegs b{color:var(--fg);font-weight:600}
 
-/* module tours: curated themed tours */
-.tview{display:flex;flex-direction:column;gap:6px}
-#tvSeg{display:grid;grid-template-columns:repeat(3,1fr)}
-#tvSeg button{padding:7px 4px;font-weight:600}
-#tvNote{margin:0}
+/* module tours: hand-made tours, listed by topic at the bottom of Routes */
 .tgh{font-family:var(--font-mono);font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin:8px 0 -2px}
 .tera{display:block;font-family:var(--font-mono);font-size:10.5px;letter-spacing:.05em;color:var(--muted);margin-bottom:2px}
 .tour .rnum{border-radius:4px}
@@ -1167,16 +1163,31 @@ button.primary.sm{font-size:12px;padding:5px 11px}
 .tour .stop .t small{margin-top:1px}
 .tag.fact{color:var(--ok);border-color:var(--ok)}
 .tag.plausible{color:var(--warn);border-color:var(--warn)}
+.tag.legend{color:var(--save);border-color:var(--save)}
+.toff{display:flex;flex-direction:column;gap:4px;align-items:flex-start;font-size:12.5px;border:1px dashed var(--line);border-radius:4px;padding:7px 9px;margin:0 0 8px}
+.toff small{color:var(--muted);font-size:11.5px;line-height:1.35}
+.tnote{font-size:12px;line-height:1.4;color:var(--fg);margin:2px 0 8px;border-left:3px solid var(--line);padding-left:8px}
+.tnote .tag{margin-right:2px}
+.tchips{display:flex;flex-wrap:wrap;gap:5px;align-items:center;margin:8px 0 0;font-family:var(--font-mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
+.tchips button{font:600 11.5px var(--font-body);text-transform:none;letter-spacing:0;color:var(--fg);border:1px solid var(--line);border-radius:12px;padding:3px 9px;background:var(--bg);cursor:pointer;display:inline-flex;gap:6px;align-items:center;text-align:left}
+.tchips button:hover{background:var(--chip)}
+.tchips i{width:8px;height:8px;border-radius:50%;flex:none}
+details.tstory{margin:0 0 10px;border-left:3px solid var(--line);padding-left:9px}
+details.tstory>summary{cursor:pointer;font-size:12.5px;font-weight:600;color:var(--fg);list-style:none}
+details.tstory>summary::-webkit-details-marker{display:none}
+details.tstory>summary::before{content:"\25B8  ";font-size:10px;color:var(--muted)}
+details.tstory[open]>summary::before{content:"\25BE  "}
+.rbody details.tstory p{color:var(--fg);font-size:13px;line-height:1.55;margin:8px 0 0;max-width:62ch}
+#tourCards .tgh:first-child{margin-top:0}
 </style>
 <div id="app">
   <aside id="side" aria-label="Routes, places and events">
     <div class="top">
       <div class="tline">
-        <h1><span id="cityName">KonMap</span> <small>engine 0.3</small></h1>
+        <h1><span id="cityName">KonMap</span></h1>
         <span class="tbtns"><button type="button" class="ghost sm" id="closePanel">Close panel</button><button type="button" class="helpbtn" id="helpbtn" aria-label="How this map works" title="How this map works">?</button></span>
       </div>
       <div class="counts" id="counts"></div>
-      <p class="vnote"><b>Engine concrete 0.3</b> (29 Oct 2026): one engine for every city, loading the city from its data file; adds the curated tours (by era, by theme) first tried in Turin 2.0A. Built from Turin 2.2.</p>
     </div>
     <div class="tabs">
       <div class="seg" role="tablist" aria-label="Map mode">
@@ -1233,7 +1244,7 @@ button.primary.sm{font-size:12px;padding:5px 11px}
         <label class="tgl"><input type="checkbox" id="wNoV" checked> Leave out places I have visited</label>
         <label class="f">Time at each stop<select id="wStay"><option value="quick">Quick (main 20, minor 5 min)</option><option value="normal" selected>Normal (main 40, minor 10 min)</option><option value="slow">Slow (main 60, minor 20 min)</option></select></label>
         <div class="btnrow"><button type="button" class="primary" id="mkWalks">Make walks</button><button type="button" class="ghost" id="clrWalks" hidden>Clear</button></div>
-        <p class="note" id="walkNote">Skipped places, and places closed on the chosen day, are left out. Distance is straight line × 1.3 at 4.5 km/h.</p>
+        <p class="note" id="walkNote">Faded places and places closed that day are left out.</p>
       </div>
       <div class="cards" id="walkCards"></div>
     </div>
@@ -2393,7 +2404,7 @@ function renderDeck(){
   if(!list.length){ if(!d.hidden){ d.hidden=true; } DK.list=[]; return; }
   var same=DK.list.length===list.length && DK.list.every(function(x,i){return x===list[i];}) && DK.key===(focus.type+':'+focus.id);
   DK.list=list; DK.key=focus.type+':'+focus.id;
-  $('dkTitle').textContent=focus.type==='route'?('Route '+focus.id+' · '+R[focus.id].name):focus.type==='kept'?focusName():('Walk '+(focus.id+1));
+  $('dkTitle').textContent=focus.type==='route'?('Route '+focus.id+' · '+R[focus.id].name):focus.type==='walk'?('Walk '+(focus.id+1)):focusName();
   var row=$('dkRow'), keep=row.scrollLeft;
   row.innerHTML=list.map(function(s,i){ return deckCard(s,i,list.length); }).join('')+'<div class="dk-pad"></div>';
   d.hidden=false;
@@ -2485,7 +2496,7 @@ function rkSync(){
   $('rkOut').textContent=rkLabel(RK.min);
   each(document.querySelectorAll('#rkLens button'),function(b){ b.setAttribute('aria-pressed',b.getAttribute('data-l')===RK.lens); });
   var n=sights.filter(function(s){ return rkPass(s); }).length;
-  $('rkNote').textContent=n+' of '+sights.length+' places pass. '+LENS[RK.lens].d+' Starred places always show. New places use the research ratings; older ones a first guess from the kind of place.';
+  $('rkNote').textContent=n+' of '+sights.length+' places shown. '+LENS[RK.lens].d+' Starred places always show.';
   $('rank').hidden=mode==='events';
   var sn=$('showN'); if(sn) sn.textContent = mode==='events' ? '' : (RK.min<=1 ? 'all '+sights.length+' places' : n+' of '+sights.length+' places');
 }
@@ -2922,8 +2933,8 @@ function metNote(){
   var n=$('metNote'); if(!n) return;
   if(!MET.lines.length){ n.textContent='No metro data for this city.'; return; }
   var rides=routes.filter(function(r){return r.met&&r.met.rides;}).length;
-  n.textContent=MET.on ? ('On: '+MET.lines.map(function(l){return l.n;}).join(', ')+' drawn on the map. '+rides+' of '+routes.length+' routes save time with it; their times and km on foot now include the rides. Make walks in Explore can also hop by metro. Times are estimates (wait '+MET.wait+' min, '+MET.perStop+' min per station).')
-    : 'Off. When on, long hops use the metro where it saves at least '+MET.gain+' min. Buses and trams are not included.';
+  n.textContent=MET.on ? (rides+' of '+routes.length+' routes ride the '+MET.lines.map(function(l){return l.n;}).join(', ')+'; their times include it.')
+    : 'Long hops ride the metro where it saves '+MET.gain+'+ min.';
 }
 (function(){
   try{
@@ -2971,57 +2982,37 @@ makeWalks=function(){
 };
 
 // ---- module tours ----
-// ===== module tours (28 Oct 2026, first tried on Turin 1.0A) =====
-// Curated themed tours, written by hand (by Claude) in city.json "tours", next to the area routes.
-// A tour is a story, not a sweep: it need not cover every stop, and one stop can be on many tours.
-// kind "era" tours list chronologically ("By era"); kind "theme" tours group under their "theme" ("By theme").
-// Each stop carries a tour-specific note (why it is on THIS tour) and an optional tag: fact | plausible | legend.
-var TOURS=(CC.tours||[]), TOUR={}, TOURS_OF={}, TV={view:sget(SK+'rview','area')};
-if(['area','era','theme'].indexOf(TV.view)<0) TV.view='area';
+// Hand-made tours from city.json "tours", shown as a secondary list: a collapsed "Tours by topic" box at
+// the bottom of Routes (area walks stay the main view). Theme tours group under their "theme"; era tours
+// form one topic, "Periods of history", oldest first. Each stop carries a tour note and an optional tag.
+var TOURS=(CC.tours||[]), TOUR={}, TOURS_OF={};
 TOURS.forEach(function(t){
   t.list=[]; t.note={}; t.tg={};
   t.stops.forEach(function(x){ var s=S[x.id]; if(!s) return; t.list.push(s); t.note[x.id]=x.note||''; t.tg[x.id]=x.tag||''; (TOURS_OF[x.id]=TOURS_OF[x.id]||[]).push(t); });
   t.km=pathKm(t.list); t.min=walkMin(t.list); TOUR[t.id]=t;
-  var ip=t.list.filter(function(s){ return s.ip; }); t.score=ip.length?ip.reduce(function(a,s){ return a+s.ip[0]; },0)/ip.length:0;
-  t.len=(t.off||[]).length||t.km>8?'long':t.km>3?'medium':'short';
+  t.topic=t.kind==='era'?'Periods of history':(t.theme||'Other');
 });
 var TAGN={fact:'documented',plausible:'plausible',legend:'legend'};
-// sort and filter (collapsed box under the switch; tour views only)
-var LENN={short:'Short (up to 3 km)',medium:'Medium (3–8 km)',long:'Long or a day trip'};
-var TF=sget(SK+'tf',null)||{}; TF.sort=TF.sort||'def'; TF.len=TF.len||[]; TF.tags=TF.tags||[];
-var TTAGS=[]; TOURS.forEach(function(t){ (t.tags||[]).forEach(function(g){ if(TTAGS.indexOf(g)<0) TTAGS.push(g); }); });
-function tfOn(){ return TF.sort!=='def'||TF.len.length||TF.tags.length; }
 (function(){
-  var p=$('pRoutes'), box=document.createElement('div'); box.className='tview';
-  box.innerHTML='<span class="segs" id="tvSeg" role="group" aria-label="Organise routes"><button type="button" data-tv="area">By area</button><button type="button" data-tv="era">By era</button><button type="button" data-tv="theme">By theme</button></span><p class="note" id="tvNote"></p>';
-  p.insertBefore(box,p.querySelector('.ctrls'));
-  var fb=document.createElement('details'); fb.className='box'; fb.id='tfBox';
-  fb.innerHTML='<summary>Sort and filter tours <span class="sm" id="tfN"></span></summary><div class="inner">'+
-    '<div class="tfrow"><span class="mfl">Sort</span><span class="segs" id="tfSort" role="group" aria-label="Sort tours"><button type="button" data-v="def">Default</button><button type="button" data-v="len">Shortest</button><button type="button" data-v="int">Most interesting</button></span></div>'+
-    '<div class="tfrow"><span class="mfl">Length</span><span class="tfchips" id="tfLen">'+Object.keys(LENN).map(function(k){ return '<button type="button" data-v="'+k+'">'+LENN[k]+'</button>'; }).join('')+'</span></div>'+
-    '<div class="tfrow"><span class="mfl">Interests</span><span class="tfchips" id="tfTags">'+TTAGS.map(function(g){ return '<button type="button" data-v="'+esc(g)+'">'+esc(g)+'</button>'; }).join('')+'</span></div>'+
-    '<div class="btnrow"><button type="button" class="ghost sm" id="tfClear">Clear</button></div>'+
-    '<p class="note">Interest is the average of the research ratings of a tour\'s stops. No chip picked means all.</p></div>';
-  p.insertBefore(fb,box.nextSibling);
+  if(!TOURS.length) return;
+  var p=$('pRoutes'), box=document.createElement('details'); box.className='box'; box.id='tourBox';
+  box.innerHTML='<summary>Tours by topic <span class="sm" id="tourN"></span></summary><div class="inner"><div class="cards" id="tourCards"></div></div>';
+  p.appendChild(box);
   var dl=document.querySelector('#help dl'), dt=dl&&dl.querySelectorAll('dt')[1];
-  if(dt){ var a=document.createElement('dt'); a.textContent='Tours'; var b=document.createElement('dd'); b.textContent='In Routes, “By era” and “By theme” switch from the area walks to hand-made tours: a period of the city’s history, a person, or a kind of place. A tour picks only the stops that tell its story, and a place can be on several tours; each stop says why it is on this one, and whether the story is documented or legend.'; dt.parentNode.insertBefore(b,dt.nextSibling.nextSibling); dt.parentNode.insertBefore(a,b); }
+  if(dt){ var a=document.createElement('dt'); a.textContent='Tours'; var b=document.createElement('dd'); b.textContent='At the bottom of Routes, “Tours by topic” lists hand-made tours around a subject, a person or a period. Each stop says why it is on the tour, and whether the story is documented or legend.'; dt.parentNode.insertBefore(b,dt.nextSibling.nextSibling); dt.parentNode.insertBefore(a,b); }
 })();
-var TVNOTE={area:'Walks that group nearby places, in walking order.',era:'Tours through one period of the city, oldest first.',theme:'Tours built around a subject or a person.'};
 function tourVisible(t){
-  if(TV.view!==t.kind) return false;
-  if(TF.len.length && TF.len.indexOf(t.len)<0) return false;
-  if(TF.tags.length && !(t.tags||[]).some(function(g){ return TF.tags.indexOf(g)>=0; })) return false;
   if(!RD.q) return true;
-  return (t.name+' '+(t.intro||'')+' '+(t.theme||'')+' '+(t.era||'')).toLowerCase().indexOf(RD.q)>=0 || t.list.some(function(s){ return qOk(s,RD.q); });
+  return (t.name+' '+(t.intro||'')+' '+t.topic+' '+(t.era||'')).toLowerCase().indexOf(RD.q)>=0 || t.list.some(function(s){ return qOk(s,RD.q); });
 }
 function offOf(id){ var i=OFFIDS.indexOf(id); return i<0?null:{i:i,o:DATA.offmap[i]}; }
 function tourCard(t,n){
   var f=focus&&focus.type==='tour'&&focus.id===t.id, vc=visitedCount(t.list);
   var closed=RD.day==='any'?0:t.list.filter(function(s){return closedOn(s,RD.day);}).length;
-  var meta='<span>'+t.list.length+' stops'+((t.off||[]).length?' + '+t.off.length+' day trip'+(t.off.length>1?'s':''):'')+'</span><span>'+t.km.toFixed(1)+' km</span><span>≈ '+fmtT(t.min)+'</span>'+(t.score?'<span>interest '+t.score.toFixed(1)+'</span>':'')+(closed?'<span class="bad">'+closed+' closed '+DAYN[+RD.day]+'</span>':'')+(vc?'<span class="good">'+vc+'/'+t.list.length+' visited</span>':'');
+  var meta='<span>'+t.list.length+' stops'+((t.off||[]).length?' + '+t.off.length+' day trip'+(t.off.length>1?'s':''):'')+'</span><span>'+t.km.toFixed(1)+' km</span><span>≈ '+fmtT(t.min)+'</span>'+(closed?'<span class="bad">'+closed+' closed '+DAYN[+RD.day]+'</span>':'')+(vc?'<span class="good">'+vc+'/'+t.list.length+' visited</span>':'');
   var h='<div class="route tour'+(f?' focus':'')+'" data-card="tour:'+esc(t.id)+'"><button type="button" class="rh" data-focus="tour:'+esc(t.id)+'" aria-expanded="'+f+'"><span class="rnum" style="background:'+t.color+'">'+n+'</span><span>'+(t.era?'<span class="tera">'+esc(t.era)+'</span>':'')+'<span class="rtitle">'+esc(t.name)+'</span><span class="rmeta">'+meta+'</span></span></button>';
   if(f){
-    h+='<div class="rbody"><p class="tintro">'+esc(t.intro||'')+'</p>'+((t.story||[]).length?'<details class="tstory"><summary>About this tour</summary>'+t.story.map(function(p){ return '<p>'+esc(p)+'</p>'; }).join('')+'</details>':'')+((t.tags||[]).length?'<p class="ttags">'+t.tags.map(esc).join(' · ')+'</p>':'')+(t.how?'<p><b>Getting around:</b> '+esc(t.how)+'</p>':'')+'<ol>';
+    h+='<div class="rbody"><p class="tintro">'+esc(t.intro||'')+'</p>'+((t.story||[]).length?'<details class="tstory"><summary>About this tour</summary>'+t.story.map(function(p){ return '<p>'+esc(p)+'</p>'; }).join('')+'</details>':'')+(t.how?'<p><b>Getting around:</b> '+esc(t.how)+'</p>':'')+'<ol>';
     t.list.forEach(function(s,i){
       var r=stopRow(s,String(i+1),{day:RD.day,q:RD.q}), note=t.note[s.id], tg=t.tg[s.id];
       if(note) r=r.replace('</span><span class="tags">','<small>'+esc(note)+'</small></span><span class="tags">');
@@ -3035,42 +3026,25 @@ function tourCard(t,n){
   return h+'</div>';
 }
 function toursHtml(){
-  var vis=TOURS.filter(tourVisible), h='', n=0;
-  if(!vis.length) return '<p class="note">'+(RD.q?'No tour has a place matching “'+esc(RD.q)+'”.':tfOn()?'No tour fits these filters. Loosen them under Sort and filter.':'No tours of this kind yet.')+'</p>';
-  if(TF.sort!=='def'){ vis.sort(TF.sort==='len'?function(a,b){ return a.km+((a.off||[]).length?50:0)-(b.km+((b.off||[]).length?50:0)); }:function(a,b){ return b.score-a.score; }); return vis.map(function(t){ return tourCard(t,++n); }).join(''); }
-  if(TV.view==='era'){ vis.sort(function(a,b){ return (a.y||0)-(b.y||0); }); return vis.map(function(t){ return tourCard(t,++n); }).join(''); }
-  var groups=[]; vis.forEach(function(t){ if(groups.indexOf(t.theme)<0) groups.push(t.theme); });
-  groups.forEach(function(g){ h+='<div class="tgh">'+esc(g)+'</div>'; vis.filter(function(t){ return t.theme===g; }).forEach(function(t){ h+=tourCard(t,++n); }); });
+  var vis=TOURS.filter(tourVisible), h='', n=0, topics=[];
+  if(!vis.length) return '<p class="note">No tour has a place matching “'+esc(RD.q)+'”.</p>';
+  vis.forEach(function(t){ if(t.kind!=='era' && topics.indexOf(t.topic)<0) topics.push(t.topic); });
+  if(vis.some(function(t){ return t.kind==='era'; })) topics.push('Periods of history');
+  topics.forEach(function(g){
+    var ts=vis.filter(function(t){ return t.topic===g; });
+    if(g==='Periods of history') ts.sort(function(a,b){ return (a.y||0)-(b.y||0); });
+    h+='<div class="tgh">'+esc(g)+'</div>'; ts.forEach(function(t){ h+=tourCard(t,++n); });
+  });
   return h;
 }
 var _renderRoutesT=renderRoutes; renderRoutes=function(){
   _renderRoutesT();
-  each(document.querySelectorAll('#tvSeg button'),function(b){ b.setAttribute('aria-pressed',b.getAttribute('data-tv')===TV.view); });
-  $('tvNote').textContent=TVNOTE[TV.view];
-  var area=TV.view==='area', sec=document.querySelector('#pRoutes > .sec');
-  $('extrasBox').hidden=!area; $('offBox').hidden=!area||!DATA.offmap.length; $('tfBox').hidden=area;
-  each(document.querySelectorAll('#tfSort button'),function(b){ b.setAttribute('aria-pressed',b.getAttribute('data-v')===TF.sort); });
-  each(document.querySelectorAll('#tfLen button'),function(b){ b.setAttribute('aria-pressed',TF.len.indexOf(b.getAttribute('data-v'))>=0); });
-  each(document.querySelectorAll('#tfTags button'),function(b){ b.setAttribute('aria-pressed',TF.tags.indexOf(b.getAttribute('data-v'))>=0); });
-  if(!area){ var all=TOURS.filter(function(t){ return t.kind===TV.view; }).length, shown=TOURS.filter(tourVisible).length; $('tfN').textContent=(shown<all?shown+' of '+all:all+' tours')+(TF.sort==='len'?' · shortest first':TF.sort==='int'?' · most interesting first':''); }
-  if(sec) sec.textContent=area?'Planned walks':(TV.view==='era'?'Tours by era':'Tours by theme');
-  if(!area) $('routeCards').innerHTML=toursHtml();
+  if(!TOURS.length) return;
+  var vis=TOURS.filter(tourVisible).length;
+  $('tourN').textContent=vis<TOURS.length?vis+' of '+TOURS.length:TOURS.length;
+  $('tourCards').innerHTML=toursHtml();
+  if(focus&&focus.type==='tour') $('tourBox').open=true;
 };
-$('tvSeg').addEventListener('click',function(e){
-  var b=e.target.closest('[data-tv]'); if(!b) return; var v=b.getAttribute('data-tv'); if(v===TV.view) return;
-  TV.view=v; sset(SK+'rview',v);
-  if(focus && (focus.type==='tour'||focus.type==='route')) focus=null;
-  map.closePopup(); refresh(); fitMode();
-});
-function tfSave(){ sset(SK+'tf',TF); if(focus&&focus.type==='tour'&&!tourVisible(TOUR[focus.id])) focus=null; refresh(); }
-$('tfBox').addEventListener('click',function(e){
-  var b=e.target.closest('button'); if(!b) return; var v=b.getAttribute('data-v'), g=b.parentNode.id;
-  if(b.id==='tfClear'){ TF={sort:'def',len:[],tags:[]}; tfSave(); return; }
-  if(g==='tfSort') TF.sort=v;
-  else if(g==='tfLen'||g==='tfTags'){ var a=g==='tfLen'?TF.len:TF.tags, i=a.indexOf(v); if(i<0) a.push(v); else a.splice(i,1); }
-  else return;
-  tfSave();
-});
 // focus plumbing: a tour is a focus like a route
 var _focusListT=focusList; focusList=function(){ if(focus&&focus.type==='tour'){ var t=TOUR[focus.id]; return t?t.list:[]; } return _focusListT(); };
 var _focusNameT=focusName; focusName=function(){ if(focus&&focus.type==='tour') return TOUR[focus.id].name; return _focusNameT(); };
@@ -3088,8 +3062,8 @@ var _popupT=popupHtml; popupHtml=function(s){
 function openTour(id){
   var t=TOUR[id]; if(!t) return;
   map.closePopup(); closeGuide();
-  if(TV.view!==t.kind){ TV.view=t.kind; sset(SK+'rview',t.kind); }
   if(mode!=='routes') setMode('routes');
+  $('tourBox').open=true;
   if(!(focus&&focus.type==='tour'&&focus.id===id)) setFocus({type:'tour',id:id}); else refresh();
   autoClose();
 }
@@ -3098,20 +3072,14 @@ document.addEventListener('click',function(e){
   var g=e.target.closest&&e.target.closest('[data-tog]'); if(g){ e.stopPropagation(); var i=+g.getAttribute('data-tog'), o=DATA.offmap[i];
     openGuide({id:OFFIDS[i],name:o.name,blurb:o.blurb,when:o.when,q:o.q,route:null},{}); $('gchip').innerHTML='<i style="background:#8a8f98"></i><span>Day trip</span>'; }
 },true);
-// map: in the tour views the area routes go away; an open tour draws its own line and numbers
+// map: an open tour replaces the area routes with its own line and numbered stops
 var _drawRoutesT=drawRoutes; drawRoutes=function(){
   _drawRoutesT();
-  if(TV.view==='area') return;
+  var t=focus&&focus.type==='tour'?TOUR[focus.id]:null; if(!t) return;
   lineLG.clearLayers();
-  var t=focus&&focus.type==='tour'?TOUR[focus.id]:null;
-  if(t){
-    var ll=t.list.map(function(s){ return [s.lat,s.lon]; });
-    if(ll.length>1){ lineLG.addLayer(L.polyline(ll,{pane:'lines',color:tok('--panel'),weight:8,opacity:.85,interactive:false,lineCap:'round',lineJoin:'round'})); lineLG.addLayer(L.polyline(ll,{pane:'lines',color:t.color,weight:4.5,opacity:.95,interactive:false,lineCap:'round',lineJoin:'round'})); }
-    t.list.forEach(function(s,i){ if(!pinLG.hasLayer(s._m)) return; setPin(s._m,{id:s.id,color:t.color,size:s.main?28:24,glyph:s.k,cls:closedOn(s,RD.day)?' dim':'',num:i+1,top:true}); });
-  } else {
-    sights.forEach(function(s){ if(!pinLG.hasLayer(s._m)) return; var on=TOURS_OF[s.id]&&TOURS_OF[s.id].some(function(x){ return x.kind===TV.view; });
-      setPin(s._m,{id:s.id,color:KCOL[s.k],size:on?(s.main?24:19):13,glyph:s.k,cls:on&&!(RD.q&&!qOk(s,RD.q))?'':' dim',top:on&&s.main}); });
-  }
+  var ll=t.list.map(function(s){ return [s.lat,s.lon]; });
+  if(ll.length>1){ lineLG.addLayer(L.polyline(ll,{pane:'lines',color:tok('--panel'),weight:8,opacity:.85,interactive:false,lineCap:'round',lineJoin:'round'})); lineLG.addLayer(L.polyline(ll,{pane:'lines',color:t.color,weight:4.5,opacity:.95,interactive:false,lineCap:'round',lineJoin:'round'})); }
+  t.list.forEach(function(s,i){ if(!pinLG.hasLayer(s._m)) return; setPin(s._m,{id:s.id,color:t.color,size:s.main?28:24,glyph:s.k,cls:closedOn(s,RD.day)?' dim':'',num:i+1,top:true}); });
 };
 
 // ---------- boot ----------
