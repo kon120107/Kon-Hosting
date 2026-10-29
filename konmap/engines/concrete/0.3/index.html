@@ -10,6 +10,7 @@ body.rs-cur #routeCards,body.rs-cur #pRoutes>.sec,body.rs-cur #extrasBox,body.rs
 @media (max-width:820px){
   body #app.sheet.sh-mini #side{height:40px;overflow:hidden}
   body #app.sheet:not(.full) #deck{bottom:40px}
+  body #app.sheet .tabs{position:static}
 }
 </style></head><body>
 <title>KonMap</title>
@@ -3326,6 +3327,12 @@ setMode=function(m){
     cuEstimate(); cuButtons();
   }
 };
+// "What to show" also selects which places Custom builds walks from: in Custom it sits at the top
+// of the settings as "Places to include".
+(function(){ var sl=$('pExplore').querySelector('.mslot'), inn=$('cuSet').querySelector('.inner'); if(sl&&inn) inn.insertBefore(sl,inn.firstChild); })();
+function cuShowLabel(){ var b=$('showBox'); if(!b) return; var t=b.querySelector('summary').firstChild; if(t&&t.nodeType===3) t.nodeValue=mode==='explore'?'Places to include ':'What to show '; }
+var _setModeC2=setMode; setMode=function(m){ _setModeC2(m); cuShowLabel(); };
+cuShowLabel();
 if(CP.plan){ cuApply(CP.plan); CP.pending=true; }
 cuButtons();
 var startMode=sget(SK+'mode','routes');
