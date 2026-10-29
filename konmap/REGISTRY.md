@@ -35,3 +35,7 @@ Plovdiv 1.0 · Apps (HTML holder prototype). Old GitHub Pages folders `turin-con
   Casa Martini off-route) had been left behind — 2.1/2.2 were built on 2.0, and the migration copied only tours
   from 2.0A. city.json `routes` now = 2.0A's. Nothing else differed between 2.0A and Turin. Launcher opens the
   default city (`cities/index.json` "default": turin); "Cities" button in the panel goes to `#all`.
+- 2026-10-29 — Turin station guides rewritten (all 161): one strong opening paragraph, then up to 2–3 more only
+  where there is something to say; sources line now names real sources instead of report file names. Written
+  from the Turin reports only. tools/build_city.py now keeps written guide entries and marks generated ones
+  `draft` (Kon's guide-text rule is in its docstring).

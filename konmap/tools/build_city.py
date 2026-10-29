@@ -1,7 +1,10 @@
 """Build cities/<id>/city.json (engine concrete) from a hand-written curation file plus parsed report blocks.
 usage: build_city.py <id> <blocks.json> [<blocks2.json> ...]
 Input:  cities/<id>/curation.json  (written by hand, kept in Git; fields below)
-Output: cities/<id>/city.json      (overwritten; tours and evdata in an existing city.json are kept)
+Output: cities/<id>/city.json      (overwritten; tours, evdata and written guide entries in an existing city.json are kept)
+Guide text: each station gets one strong short paragraph to read first, then up to 2-3 more only if there is
+something to say (story, practical, comments), and a sources line naming real sources. The build only makes a
+raw draft (marked 'draft': true) for stations with no written entry; rewrite drafts by hand before shipping.
 
 curation.json: id, name, lat, bbox [w,s,e,n], core/center [[s,w],[n,e]], labels [[lat,lon,text,class]],
 majorRivers, attr, baseOn, helpNote, lists [[key,label]], extrasNote, engine (default concrete/0.3),
@@ -90,6 +93,12 @@ for r in C.get('routes', []):
 
 out_p = f'{B}/cities/{cid}/city.json'
 old = json.load(open(out_p)) if os.path.exists(out_p) else {}
+for k, v in (old.get('guide') or {}).items():
+    if k in guide and not v.get('draft'): guide[k] = v
+for k, v in guide.items():
+    if v['s'].startswith('Research ('): v['draft'] = True
+drafts = [k for k, v in guide.items() if v.get('draft')]
+if drafts: print('guide drafts to rewrite by hand:', drafts)
 cc = {k: C[k] for k in ['lat', 'core', 'center', 'labels', 'attr', 'baseOn', 'lists', 'extrasNote', 'helpNote'] if k in C}
 cc |= {'slug': cid, 'name': C['name']}
 city = {'meta': {'id': cid, 'name': C['name'], 'engine': C.get('engine', 'concrete/0.3'), 'source': 'kon', 'updated': datetime.date.today().isoformat()},
