@@ -11,7 +11,7 @@ a.city small{color:var(--muted);font-size:12px;font-family:ui-monospace,monospac
 </style></head><body><main>
 <h1>KonMap</h1><p>Pick a city.</p><div id="list"></div>
 </main><script>
-// Launcher. index.html lists cities; index.html#turin loads the engine that cities/index.json names for Turin
+// Launcher. index.html opens the default city (cities/index.json "default"); #all lists the cities; index.html#turin loads the engine that cities/index.json names for Turin
 // and writes it into this page (artifact viewers can't pass query strings or open sub-pages reliably).
 (function(){
   var list=document.getElementById('list');
@@ -31,15 +31,15 @@ a.city small{color:var(--muted);font-size:12px;font-family:ui-monospace,monospac
   }
   window.addEventListener('hashchange',function(){ location.reload(); });
   fetch('cities/index.json').then(function(r){ return r.json(); }).then(function(d){
-    var want=(location.hash||'').replace(/^#/,'');
+    var want=(location.hash||'').replace(/^#/,'')||d['default']||'';
     var hit=d.cities.filter(function(c){ return c.id===want; })[0];
     if(hit){
       return fetch('engines/'+hit.engine+'/index.html').then(function(r){ if(!r.ok) throw new Error('engine '+r.status); return r.text(); })
-        .then(mount);
+        .then(function(html){ window.KONMAP_CITY=hit.id; mount(html); });
     }
     d.cities.forEach(function(c){
       var a=document.createElement('a'); a.className='city'; a.href='#'+c.id;
-      a.textContent=c.name; var s=document.createElement('small'); s.textContent=c.engine; a.appendChild(s); list.appendChild(a);
+      a.textContent=c.name; list.appendChild(a);
     });
   }).catch(function(e){ list.textContent='Could not load: '+e.message; });
 })();

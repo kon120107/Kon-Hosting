@@ -4,10 +4,11 @@
 (function(){
   var ENGINE='concrete/0.3', ECFG=__ENGINE_CFG__;
   var ROOT=/\/engines\/[^\/]+\/[^\/]+\/[^\/]*$/.test(location.pathname)?'../../../':'';
-  var city=(location.hash||'').replace(/^#/,'')||new URLSearchParams(location.search).get('city');
+  var city=window.KONMAP_CITY||(location.hash||'').replace(/^#/,'')||new URLSearchParams(location.search).get('city');
   window.addEventListener('hashchange',function(){ location.reload(); });
   function fail(msg){ document.body.insertAdjacentHTML('afterbegin','<div style="padding:16px;font:14px system-ui">'+msg+' <a href="#" onclick="location.hash=\'\';location.reload();return false">All cities</a></div>'); }
-  if(!city){ fail('No city chosen.'); return; }
+  var cb=document.getElementById('citiesBtn'); if(cb) cb.addEventListener('click',function(){ if(ROOT){ location.href=ROOT+'index.html#all'; } else { location.hash='all'; } });
+  if(!city || city==='all'){ if(ROOT){ location.href=ROOT+'index.html#all'; return; } fail('No city chosen.'); return; }
   var dir=ROOT+'cities/'+encodeURIComponent(city)+'/';
   fetch(dir+'city.json').then(function(r){ if(!r.ok) throw new Error('city '+r.status); return r.json(); }).then(function(d){
     if(d.meta.engine!==ENGINE) console.warn('city asks for engine '+d.meta.engine+', running '+ENGINE);

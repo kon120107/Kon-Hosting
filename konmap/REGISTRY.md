@@ -31,3 +31,7 @@ Plovdiv 1.0 · Apps (HTML holder prototype). Old GitHub Pages folders `turin-con
   tour sort/filter box dropped; missing tours CSS (chips, notes, story box, day-trip box) restored; deck title for
   tours fixed. tools/: build_city, parse_report, build_base, clip_land, add_streets, migrate_page moved in from the
   old template kit, writing the new city file directly.
+- 2026-10-29 — Turin routes restored: the 13 district walks from Turin 2.0A (every city stop on one walk, only
+  Casa Martini off-route) had been left behind — 2.1/2.2 were built on 2.0, and the migration copied only tours
+  from 2.0A. city.json `routes` now = 2.0A's. Nothing else differed between 2.0A and Turin. Launcher opens the
+  default city (`cities/index.json` "default": turin); "Cities" button in the panel goes to `#all`.
