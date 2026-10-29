@@ -3298,7 +3298,7 @@ function cuEstimate(){
   var e=cuCompute(), el=$('cuEst'); if(!el) return;
   if(!e){ el.innerHTML='<span class="cue-d">'+($('wsPt').checked?'Pick a start point to see an estimate.':'No estimate.')+'</span>'; return; }
   var day=+wval('wH')*60, days=e.walks?Math.max(1,Math.ceil(e.min/day)):0, h=e.min/60;
-  el.innerHTML=e.walks?('<b>≈ '+e.walks+' walk'+(e.walks>1?'s':'')+' · '+e.places+' places</b><br>'+(h<10?h.toFixed(1):Math.round(h))+' h in total ('+e.km.toFixed(1)+' km on foot, plus time at stops)<br><span class="cue-d">≈ '+days+' day'+(days>1?'s':'')+' at up to '+wval('wH')+' h a day · '+(e.cands-e.places)+' of '+e.cands+' filtered places don't fit any walk</span>'):'<span class="cue-d">No walks with these settings ('+e.cands+' places pass the filters).</span>';
+  el.innerHTML=e.walks?('<b>≈ '+e.walks+' walk'+(e.walks>1?'s':'')+' · '+e.places+' places</b><br>'+(h<10?h.toFixed(1):Math.round(h))+' h in total ('+e.km.toFixed(1)+' km on foot, plus time at stops)<br><span class="cue-d">≈ '+days+' day'+(days>1?'s':'')+' at up to '+wval('wH')+' h a day · '+(e.cands-e.places)+' of '+e.cands+' filtered places fit no walk</span>'):'<span class="cue-d">No walks with these settings ('+e.cands+' places pass the filters).</span>';
   var s=$('cuSum'); if(s) s.textContent=e.walks?e.walks+' walks · ≈ '+days+' d':'';
 }
 var cuT=null; function cuSoon(){ clearTimeout(cuT); cuT=setTimeout(function(){ if(mode==='explore') cuEstimate(); },120); if(CP.plan){ CP.dirty=true; cuButtons(); } }
