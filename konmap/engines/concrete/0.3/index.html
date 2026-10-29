@@ -722,7 +722,7 @@ button{font:inherit;color:inherit}
 /* panel header: title, counters, help; then sticky mode tabs */
 .top{padding:14px 16px 10px;display:flex;flex-direction:column;gap:8px}
 .tline{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
-h1{font-family:var(--font-display);font-weight:700;font-size:28px;line-height:1;letter-spacing:.01em;text-transform:uppercase;margin:0;text-wrap:balance}
+h1{font-family:var(--font-display);font-weight:700;font-size:28px;line-height:1;letter-spacing:.01em;text-transform:none;margin:0;text-wrap:balance}
 h1 small{font-size:15px;color:var(--muted);letter-spacing:.06em;margin-left:4px}
 .counts{font-family:var(--font-mono);font-size:11px;color:var(--muted);display:flex;gap:12px;flex-wrap:wrap}
 .counts b{color:var(--fg);font-weight:500}
@@ -3239,8 +3239,7 @@ refresh=function(){
 };
 function spApply(){
   var inS=mode==='sites'||mode==='study';
-  $('sSub').hidden=!inS;
-  each($('sSub').querySelectorAll('button'),function(b){ b.setAttribute('aria-pressed',b.getAttribute('data-v')===(mode==='study'?'study':'all')); });
+  if($('sSub')){ $('sSub').hidden=!inS; } if($('sSub')) each($('sSub').querySelectorAll('button'),function(b){ b.setAttribute('aria-pressed',b.getAttribute('data-v')===(mode==='study'?'study':'all')); });
   $('tSites').setAttribute('aria-selected',inS);
   if(inS) $('tRoutes').setAttribute('aria-selected','false');
 }
@@ -3335,6 +3334,69 @@ var _setModeC2=setMode; setMode=function(m){ _setModeC2(m); cuShowLabel(); };
 cuShowLabel();
 if(CP.plan){ cuApply(CP.plan); CP.pending=true; }
 cuButtons();
+// ---- module study 2 (29 Oct 2026): Study is a quiet switch at the end of Sites (off by default);
+// "Read first" (easy reading from reports.json entries with g:'read') above the research reports;
+// "Tours" (the curated themed and era tours) as readable chapters: topic, story, and why each stop.
+SP.sub='all';
+(function(){
+  var w=$('sSub'); if(w) w.parentNode.removeChild(w);
+  $('pSites').insertAdjacentHTML('beforeend','<label class="tgl stsw"><input type="checkbox" id="stOn"> Study mode <span class="note">read before you go</span></label>');
+  $('pStudy').insertAdjacentHTML('beforeend','<label class="tgl stsw"><input type="checkbox" id="stOff" checked> Study mode <span class="note">turn off to go back to Sites</span></label>');
+  var sec=$('stReps').previousElementSibling; if(sec) sec.textContent='Research reports';
+  $('stReps').insertAdjacentHTML('beforebegin','');
+  sec.insertAdjacentHTML('beforebegin','<div class="sec">Read first</div><div class="cards" id="stRead"></div><div class="sec">Tours: a topic, and why each stop</div><div class="cards" id="stTours"></div>');
+  var st=document.createElement('style'); st.textContent='.stsw{display:flex;gap:8px;align-items:center;margin:28px 0 8px;padding-top:10px;border-top:1px solid var(--line);font-size:13px;color:var(--muted)}.stsw .note{margin:0;font-size:11px}#stTours .rmeta span:first-child{text-transform:none}';
+  document.head.appendChild(st);
+})();
+$('stOn').addEventListener('change',function(e){ if(e.target.checked){ e.target.checked=false; SP.sub='study'; setMode('study'); } });
+$('stOff').addEventListener('change',function(e){ if(!e.target.checked){ e.target.checked=true; SP.sub='all'; setMode('sites'); } });
+function tourChap(id){ var t=TOURS.filter(function(x){return x.id===id;})[0]; if(!t) return null;
+  return {id:'t:'+id,title:t.name,color:t.color||'#8a8f98',list:(t.stops||[]).map(function(x){return S[x.id];}).filter(Boolean),r:null,tour:t}; }
+var _chapByIdT=chapById; chapById=function(id){ if(String(id).indexOf('t:')===0) return tourChap(id.slice(2)); return _chapByIdT(id); };
+var _stNameT=stName; stName=function(id){ if(id.indexOf('tour:')===0){ var c=tourChap(id.slice(5)); return c?c.title:id; } return _stNameT(id); };
+var _stOpenT=stOpen; stOpen=function(id){ if(id.indexOf('tour:')===0) return stOpenTour(id.slice(5)); return _stOpenT(id); };
+function stOpenTour(id){
+  var c=tourChap(id); if(!c) return; var t=c.tour;
+  stFocus='t:'+id; refresh(); if(c.list.length) fitList(c.list);
+  gCur=null; gList=[];
+  $('gchip').innerHTML='<i style="background:'+c.color+'"></i><span>'+(t.kind==='era'?'Period of history':'Themed tour'+(t.theme?' · '+esc(t.theme):''))+'</span>';
+  var notes={}; (t.stops||[]).forEach(function(x){ notes[x.id]=x.note||''; });
+  var h='<h2>'+esc(t.name)+'</h2>'+stBox('tour:'+id,false)+(t.intro?'<p class="gintro">'+mdi(t.intro)+'</p>':'')+
+    (t.story||[]).map(function(p){ return '<p>'+mdi(p)+'</p>'; }).join('')+(t.how?'<p class="note"><b>How:</b> '+esc(t.how)+'</p>':'')+
+    '<div class="sec">The stops, and why they are on this tour</div><ol class="stlist">'+c.list.map(function(s,i){ var rd=stRead(s.id);
+      return '<li><button type="button" data-stgo="'+esc(s.id)+'" class="'+(rd?'rd':'')+'"><span class="n">'+(rd?'✓':i+1)+'</span><span class="kg" style="background:'+KCOL[s.k]+'">'+glyph(s.k)+'</span><span class="t">'+esc(s.name)+(notes[s.id]?'<small>'+esc(notes[s.id])+'</small>':'')+'</span></button></li>'; }).join('')+'</ol>';
+  gBody.innerHTML=h; gBody.scrollTop=0; $('gnav').hidden=true; gEl.hidden=false;
+}
+var _openReportT=openReport; openReport=function(rid){ _openReportT(rid); var m=STUDY_REPS.filter(function(x){return x.id===rid;})[0]; if(m&&m.g==='read') $('gchip').innerHTML='<i style="background:var(--fg)"></i><span>Reading</span>'; };
+var _renderStudyT=renderStudy;
+renderStudy=function(){
+  _renderStudyT();
+  var rd=$('stRead'); rd.innerHTML='';
+  STUDY_REPS.forEach(function(r){ if(r.g!=='read') return; var b=$('stReps').querySelector('[data-rep="'+r.id+'"]'); if(b) rd.appendChild(b); });
+  rd.previousElementSibling.hidden=!rd.children.length; rd.hidden=!rd.children.length;
+  var vis=TOURS.slice().sort(function(a,b){ return (a.kind==='era')-(b.kind==='era'); });
+  $('stTours').innerHTML=vis.map(function(t){ var c=tourChap(t.id), id='tour:'+t.id, r=stRead(id), f=stFocus==='t:'+t.id;
+    return '<button type="button" class="stcard'+(r?' rd':'')+(f?' on':'')+'" data-open="'+esc(id)+'"><span class="rnum" style="background:'+(t.color||'#8a8f98')+'">'+(r?'✓':'·')+'</span><span><span class="rtitle">'+esc(t.name)+'</span><span class="rmeta"><span>'+(t.kind==='era'?'Period of history':esc(t.theme||'Theme'))+'</span><span>'+(c?c.list.length:0)+' stops</span></span></span></button>'; }).join('');
+  $('stTours').previousElementSibling.hidden=!TOURS.length;
+};
+// ---- module curated view (29 Oct 2026): in Routes › Curated the map shows the curated tours, faded,
+// instead of the area walks; tapping one (card or line) shows only that tour. "What to show" belongs
+// to Sites and Custom only, so it is hidden in By area and Curated.
+var _drawRoutesK=drawRoutes; drawRoutes=function(){
+  if(!(mode==='routes'&&RS.sub==='curated')) return _drawRoutesK();
+  pinLG.clearLayers(); lineLG.clearLayers();
+  var ft=focus&&focus.type==='tour'?TOUR[focus.id]:null, done={};
+  TOURS.forEach(function(t){
+    if(ft&&t!==ft) return;
+    var on=!!ft, ll=t.list.map(function(s){ return [s.lat,s.lon]; });
+    if(ll.length>1){ var pl=L.polyline(ll,{pane:'lines',color:t.color,weight:on?4:3,opacity:on?.9:.28,dashArray:on?'7 7':null,interactive:!on});
+      if(!on){ pl.on('click',function(){ setFocus({type:'tour',id:t.id}); }); pl.bindTooltip(t.name,{sticky:true}); }
+      lineLG.addLayer(pl); }
+    t.list.forEach(function(s,i){ if(done[s.id]) return; done[s.id]=1;
+      setPin(s._m,{id:s.id,color:t.color,size:on?(s.main?28:24):(s.main?20:16),glyph:s.k,cls:on?(closedOn(s,RD.day)?' dim':''):' dim',num:on?i+1:null,top:on}); pinLG.addLayer(s._m); });
+  });
+};
+(function(){ var st=document.createElement('style'); st.textContent='body.rs-area #showBox,body.rs-cur #showBox{display:none}'; document.head.appendChild(st); })();
 var startMode=sget(SK+'mode','routes');
 refresh();
 if(startMode==='explore'||startMode==='events') setMode(startMode);
@@ -3366,7 +3428,7 @@ try{ var mq=window.matchMedia('(prefers-color-scheme: dark)'); var th=function()
     cfg.glyphFile=ROOT+'shared/glyphs.json';
     var cc=d.cc; cc.tours=d.tours||[];
     document.title=d.meta.name+' · KonMap';
-    var n=document.getElementById('cityName'); if(n) n.textContent=d.meta.name+' Concrete Map';
+    var n=document.getElementById('cityName'); if(n) n.textContent='KonMap';
     var h=document.getElementById('cityNote'); if(h) h.textContent=cc.helpNote||'';
     KONMAP_ENGINE(cfg,cc,d.data,d.guide,d.offids,d.evdata,d.routes,d.paths);
   }).catch(function(e){ console.error(e); fail('Could not load city “'+city+'”: '+e.message+'.'); });
