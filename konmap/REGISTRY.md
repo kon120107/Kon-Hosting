@@ -39,3 +39,6 @@ Plovdiv 1.0 · Apps (HTML holder prototype). Old GitHub Pages folders `turin-con
   where there is something to say; sources line now names real sources instead of report file names. Written
   from the Turin reports only. tools/build_city.py now keeps written guide entries and marks generated ones
   `draft` (Kon's guide-text rule is in its docstring).
+- 2026-10-29 — Turin guides rewritten again to Paris depth: main stops 3–4 paragraphs (what you see, story,
+  context, practical), minor stops 1–3. Adds historical context beyond the reports (general history, flagged
+  where uncertain); fixes Teatro Regio façade (Benedetto Alfieri, not Juvarra).
