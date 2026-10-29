@@ -1,4 +1,17 @@
-<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}
+/* ---- layout 29 Oct 2026: Routes = By area / Curated / Custom; Study + Cities in the top bar; lower closed-ish panel ---- */
+.seg.sub{margin-top:8px;grid-template-columns:repeat(3,1fr)}
+.seg.sub button{font-size:12px;padding:7px 4px}
+.seg.sub button[aria-pressed="true"]{background:var(--fg);color:var(--bg)}
+.mapbtns button[aria-pressed="true"],.mapbtns button[aria-pressed="true"]:hover{background:var(--fg);color:var(--bg)}
+body.rs-area #rank{display:none}
+body.rs-area #tourBox{display:none}
+body.rs-cur #routeCards,body.rs-cur #pRoutes>.sec,body.rs-cur #extrasBox,body.rs-cur #offBox,body.rs-cur #mywalks{display:none}
+@media (max-width:820px){
+  body #app.sheet.sh-mini #side{height:40px;overflow:hidden}
+  body #app.sheet:not(.full) #deck{bottom:40px}
+}
+</style></head><body>
 <title>KonMap</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1294,8 +1307,8 @@ details.tstory[open]>summary::before{content:"\25BE  "}
     <dl>
       <dt>Panel</dt><dd>“Close panel” gives the whole screen to the map; “Show panel” (or “Show stops”) on the map brings it back.</dd>
       <dt>Routes</dt><dd>Planned walks in visit order. Tap a route to see its stops, then tap a stop for details. Lines are straight, not the street path; “Walk it in Google Maps” gives directions.</dd>
-      <dt>Explore</dt><dd>Every place, coloured by kind, with no routes. Narrow them with the filters, then “Make walks” chains what is left into walks within your limits. “From a point I pick” builds one walk around where you tap.</dd>
-      <dt>Events</dt><dd>Temporary happenings appear here once a trip has dates (research prompt 2).</dd>
+      <dt>Routes › Custom</dt><dd>Every place, coloured by kind, with no routes. Narrow them with the filters, then “Make walks” chains what is left into walks within your limits. “From a point I pick” builds one walk around where you tap.</dd>
+      <dt>Sites</dt><dd>Every place on its own. Search by name, or set a point (your location, or tap the map) and a radius to light up what is near it, nearest first. “Study” here is for reading up before you go.</dd><dt>Events</dt><dd>Temporary happenings appear here once a trip has dates (research prompt 2).</dd>
       <dt>Your marks</dt><dd>Star a must-see; Fade a place you don’t want (faded places are left out of new walks). At the bottom of each card, pick a rating and press Visited to keep it. The Visited and faded settings in each tab show, fade or hide those places. Marks stay in this browser only.</dd>
     </dl>
     <details class="box"><summary>Move your marks to another device</summary><div class="inner">
@@ -2490,6 +2503,7 @@ function dots(v){ var h='<span class="dots" aria-label="'+v+' of 5">'; for(var i
   try{ d.open=!!sget(SK+'showopen',false); }catch(e){}
   d.addEventListener('toggle',function(){ sset(SK+'showopen',d.open); });
   var p=document.querySelector('#pRoutes .mslot'); if(p) p.appendChild(d);
+  window._showBox=d;
 })();
 function rkLabel(v){ return v<=1?'Everything':v>=5?'Only the best':'Score '+v+'+'; }
 function rkSync(){
@@ -3093,9 +3107,231 @@ map.fitBounds(window.innerWidth<820?CITY:CORE,{padding:[6,6]});
 setBase();
 initGL();
 if($('meBtn')) $('meBtn').addEventListener('click',meOn);
+// ---- module layout (29 Oct 2026) ----
+// Routes has three kinds: By area (planned walks, no Show slider), Curated (hand-made tours) and Custom
+// (the old Explore: filters + make walks on the spot). Explore and Study leave the tab bar; Study and
+// Cities sit in the top bar. The phone sheet goes down to a 40 px strip (mini) instead of 148 px (peek).
+var RS={sub:sget(SK+'rsub','area')||'area', back:'routes'};
+if(['area','curated','custom'].indexOf(RS.sub)<0) RS.sub='area';
+(function(){
+  var w=document.createElement('div'); w.className='seg sub'; w.id='rSub'; w.setAttribute('role','group'); w.setAttribute('aria-label','Kind of route');
+  w.innerHTML='<button type="button" data-s="area">By area</button><button type="button" data-s="curated">Curated</button><button type="button" data-s="custom">Custom</button>';
+  $('hint').parentNode.insertBefore(w,$('hint'));
+  $('tExplore').hidden=true; if($('tStudy')) $('tStudy').hidden=true;
+  var seg=document.querySelector('.tabs .seg[role=tablist]'); if(seg){ var n=0; each(seg.querySelectorAll('button'),function(x){ if(!x.hidden) n++; }); seg.style.gridTemplateColumns='repeat('+n+',1fr)'; if(n<2) seg.style.display='none'; }
+  var mb=document.querySelector('.mapbtns');
+  if($('tStudy')){ var sb=document.createElement('button'); sb.type='button'; sb.id='studyBtn'; sb.textContent='Study'; sb.setAttribute('aria-pressed','false'); mb.appendChild(sb);
+    sb.addEventListener('click',function(){ if(mode==='study') setMode(RS.back||'routes'); else { RS.back=mode; setMode('study'); } }); }
+  var cb=$('citiesBtn'); if(cb){ cb.className=''; mb.appendChild(cb); }
+  w.addEventListener('click',function(e){
+    var b=e.target.closest('[data-s]'); if(!b) return; var s=b.getAttribute('data-s');
+    RS.sub=s; sset(SK+'rsub',s);
+    if(s==='custom') setMode('explore');
+    else if(mode!=='routes') setMode('routes');
+    else { focus=null; refresh(); fitMode(); }
+    if(s==='curated' && $('tourBox')) $('tourBox').open=true;
+    rsApply();
+  });
+  $('tRoutes').addEventListener('click',function(e){ e.stopImmediatePropagation(); setMode(RS.sub==='custom'?'explore':'routes'); },true);
+})();
+function rsApply(){
+  var inR=mode==='routes'||mode==='explore';
+  $('rSub').hidden=!inR;
+  each($('rSub').querySelectorAll('button'),function(b){ b.setAttribute('aria-pressed',b.getAttribute('data-s')===(mode==='explore'?'custom':RS.sub)); });
+  document.body.classList.toggle('rs-area',mode==='routes'&&RS.sub!=='curated');
+  document.body.classList.toggle('rs-cur',mode==='routes'&&RS.sub==='curated');
+  $('tRoutes').setAttribute('aria-selected',inR);
+  if($('studyBtn')) $('studyBtn').setAttribute('aria-pressed',mode==='study');
+}
+var _rkPassL=rkPass; rkPass=function(s){ if(mode==='routes'&&RS.sub!=='curated') return true; return _rkPassL(s); };
+var _setModeL=setMode; setMode=function(m){ if(m==='routes'&&RS.sub==='custom'){ RS.sub='area'; } if(m==='explore') RS.sub='custom'; _setModeL(m); rsApply(); };
+var _setSheetL=setSheet; setSheet=function(st){ if(st==='peek') st='mini'; _setSheetL(st); };
+if(RS.sub==='custom' && sget(SK+'mode','routes')==='routes') RS.sub='area';
+rsApply();
+
+// ---- module sites (29 Oct 2026): top tabs Routes / Sites / Events ----
+// Sites = every place on its own, no routes: search, and "near a point" (my location or a tapped
+// point, with a radius): nearby pins lit, the list sorted by distance. Study is the second view here.
+// Events keeps its own rule: the tab shows only when the city has event data.
+var SP={sub:sget(SK+'ssub','all')==='study'?'study':'all', pt:null, ptName:'', r:+(sget(SK+'srad',1))||1, q:'', pick:false};
+var spLG=L.layerGroup().addTo(map);
+HINT.sites='Every place on its own. Search, or set a point to see what is near it.';
+(function(){
+  var seg=document.querySelector('.tabs .seg[role=tablist]');
+  var b=document.createElement('button'); b.id='tSites'; b.type='button'; b.setAttribute('role','tab'); b.setAttribute('aria-selected','false'); b.textContent='Sites';
+  seg.insertBefore(b,$('tEvents'));
+  var n=0; each(seg.querySelectorAll('button'),function(x){ if(!x.hidden) n++; }); seg.style.gridTemplateColumns='repeat('+n+',1fr)'; seg.style.display=n<2?'none':'';
+  var w=document.createElement('div'); w.className='seg sub'; w.id='sSub'; w.setAttribute('role','group'); w.setAttribute('aria-label','Sites view'); w.style.gridTemplateColumns='repeat(2,1fr)'; w.hidden=true;
+  w.innerHTML='<button type="button" data-v="all">All sites</button><button type="button" data-v="study">Study</button>';
+  $('hint').parentNode.insertBefore(w,$('hint'));
+  var p=document.createElement('div'); p.className='pane'; p.id='pSites'; p.hidden=true;
+  p.innerHTML='<div class="ctrls"><label class="f wide">Find a place<input id="sQ" type="search" placeholder="e.g. Mollino, shelter" autocomplete="off"></label></div>'+
+    '<div class="mslot"></div>'+
+    '<div class="sec">Near a point</div>'+
+    '<div class="btnrow"><button type="button" class="ghost sm" id="sMe">Use my location</button><button type="button" class="ghost sm" id="sPick">Pick on map</button><button type="button" class="ghost sm" id="sClr" hidden>Clear</button></div>'+
+    '<label class="f" id="sRadL" hidden>Within <span><output id="oR"></output> km</span><input type="range" id="sR" min="0.2" max="5" step="0.1"></label>'+
+    '<p class="note" id="sCount"></p><ul class="splist" id="sList"></ul>';
+  $('pEvents').parentNode.insertBefore(p,$('pEvents'));
+  b.addEventListener('click',function(){ setMode(SP.sub==='study'?'study':'sites'); });
+  w.addEventListener('click',function(e){ var x=e.target.closest('[data-v]'); if(!x) return; SP.sub=x.getAttribute('data-v'); sset(SK+'ssub',SP.sub); setMode(SP.sub==='study'?'study':'sites'); });
+  var sb=$('studyBtn'); if(sb) sb.parentNode.removeChild(sb);
+  var st=document.createElement('style'); st.textContent='.splist{list-style:none;margin:0;padding:0}.splist .tags{font-family:var(--font-mono);font-size:11px;color:var(--muted)}#mapwrap.sppick{cursor:crosshair}';
+  document.head.appendChild(st);
+  $('sR').value=SP.r; $('oR').textContent=SP.r;
+})();
+function spDist(s){ return SP.pt?km(SP.pt,s):0; }
+function spIn(s){ return !SP.pt || spDist(s)<=SP.r; }
+function spDraw(){
+  pinLG.clearLayers(); lineLG.clearLayers(); walkLG.clearLayers(); spLG.clearLayers();
+  if(map.hasLayer(evLG)) map.removeLayer(evLG);
+  sights.forEach(function(s){
+    if(!markVis(s.id)||!rkPass(s)) return;
+    var lit=spIn(s)&&qOk(s,SP.q), big=lit&&!!SP.pt;
+    setPin(s._m,{id:s.id,color:KCOL[s.k],size:big?(s.main?28:22):(s.main?24:18),glyph:s.k,cls:lit?'':' dim',top:s.main});
+    pinLG.addLayer(s._m);
+  });
+  if(SP.pt){
+    spLG.addLayer(L.circle([SP.pt.lat,SP.pt.lon],{pane:'lines',radius:SP.r*1000,color:tok('--fg'),weight:1.5,dashArray:'5 6',fillOpacity:.05,interactive:false}));
+    spLG.addLayer(L.marker([SP.pt.lat,SP.pt.lon],{pane:'dots',keyboard:false,interactive:false,zIndexOffset:2000,icon:L.divIcon({className:'pinwrap',iconSize:[22,22],iconAnchor:[11,11],html:'<div class="startpin"></div>'})}));
+  }
+}
+function spList(){
+  var l=sights.filter(function(s){ return markVis(s.id)&&rkPass(s)&&spIn(s)&&qOk(s,SP.q); });
+  if(SP.pt) l.sort(function(a,b){ return spDist(a)-spDist(b); });
+  else l.sort(function(a,b){ return (b.main-a.main)||a.name.localeCompare(b.name); });
+  $('sCount').textContent=SP.pt?(l.length+' place'+(l.length===1?'':'s')+' within '+SP.r+' km of '+(SP.ptName||'your point')+', nearest first.'):(l.length+' place'+(l.length===1?'':'s')+(SP.q?' match.':'. Main stops first.'));
+  $('sList').innerHTML=l.map(function(s){ var d=SP.pt?spDist(s):null;
+    return '<li><button class="stop'+(s.main?' main':'')+(markFaded(s.id)?' dim':'')+'" type="button" data-sp="'+esc(s.id)+'"><span class="n">'+(mk(s.id).v?'✓':'·')+'</span><span class="kg" style="background:'+KCOL[s.k]+'">'+glyph(s.k)+'</span><span class="t">'+esc(s.name)+'<small>'+esc(KNAME[s.k]||'')+'</small></span><span class="tags">'+(d!=null?(d<1?Math.round(d*1000/10)*10+' m':d.toFixed(1)+' km'):(mk(s.id).s?'★':''))+'</span></button></li>'; }).join('');
+  $('sClr').hidden=!SP.pt; $('sRadL').hidden=!SP.pt;
+}
+function spSet(ll,name){
+  SP.pt={lat:ll[0],lon:ll[1]}; SP.ptName=name||'';
+  refresh();
+  flyBounds(L.latLng(ll[0],ll[1]).toBounds(SP.r*2200),{padding:[20,20],duration:.5});
+  if(typeof setSheet==='function' && window.innerWidth<820) setSheet('half');
+}
+function spPick(on){
+  SP.pick=on; $('mapwrap').classList.toggle('sppick',on);
+  if(on){ toast('Tap the map at the point you want.',8000); if(typeof setSheet==='function' && window.innerWidth<820) setSheet('mini'); }
+}
+map.on('click',function(e){ if(!SP.pick||mode!=='sites') return; spPick(false); spSet([e.latlng.lat,e.latlng.lng],'your point'); });
+$('sQ').addEventListener('input',function(e){ SP.q=e.target.value.trim().toLowerCase(); refresh(); });
+$('sR').addEventListener('input',function(e){ SP.r=+e.target.value; $('oR').textContent=SP.r; sset(SK+'srad',SP.r); refresh(); });
+$('sClr').addEventListener('click',function(){ SP.pt=null; refresh(); fitMode(); });
+$('sPick').addEventListener('click',function(){ spPick(!SP.pick); });
+$('sMe').addEventListener('click',function(){
+  if(ME.last){ spSet(ME.last,'you'); return; }
+  if(!navigator.geolocation){ toast('This browser cannot share your location. Use “Pick on map”.'); return; }
+  var b=$('sMe'); b.disabled=true; b.textContent='Locating…';
+  navigator.geolocation.getCurrentPosition(function(p){ b.disabled=false; b.textContent='Use my location'; spSet([p.coords.latitude,p.coords.longitude],'you'); },
+    function(err){ b.disabled=false; b.textContent='Use my location'; toast(err&&err.code===1?'Location is blocked here (inside Claude a page cannot ask for it). Use “Pick on map” instead.':'Could not get your location. Use “Pick on map” instead.'); },
+    {enableHighAccuracy:true,timeout:15000,maximumAge:30000});
+});
+$('sList').addEventListener('click',function(e){ var x=e.target.closest('[data-sp]'); if(!x) return; var s=S[x.getAttribute('data-sp')]; if(!s) return; autoClose(); flyToSight(s); setTimeout(function(){ openPopup(s); },550); });
+var _refreshP=refresh;
+refresh=function(){
+  if(mode!=='sites'){ spLG.clearLayers(); return _refreshP(); }
+  if(typeof rkSync==='function') rkSync();
+  if($('deck')) $('deck').hidden=true;
+  spDraw(); spList(); counts(); panelLabel();
+  if(typeof stopLabels==='function') stopLabels();
+};
+function spApply(){
+  var inS=mode==='sites'||mode==='study';
+  $('sSub').hidden=!inS;
+  each($('sSub').querySelectorAll('button'),function(b){ b.setAttribute('aria-pressed',b.getAttribute('data-v')===(mode==='study'?'study':'all')); });
+  $('tSites').setAttribute('aria-selected',inS);
+  if(inS) $('tRoutes').setAttribute('aria-selected','false');
+}
+var _setModeP=setMode;
+setMode=function(m){
+  if(mode==='sites' && m!=='sites'){ $('pSites').hidden=true; spLG.clearLayers(); if(SP.pick) spPick(false); }
+  _setModeP(m);
+  $('pSites').hidden=mode!=='sites';
+  spApply();
+};
+spApply();
+// ---- module custom plan (29 Oct 2026): live estimate + save the Custom setup ----
+// Custom (the old Explore) gets: a live estimate while you adjust (walks, places, hours, days) and
+// "Save plan": filters + walk settings (+ start point) are stored; on the next visit Custom rebuilds
+// the walks with the settings folded away. One saved plan per city, in this browser.
+var CP={key:SK+'cplan', plan:sget(SK+'cplan',null), pending:false, dirty:false};
+(function(){
+  var pane=$('pExplore'), calc=pane.querySelector('.calc'), ctrls=pane.querySelector('.ctrls'), kinds=pane.querySelector('details.box'), sec=pane.querySelector('.sec');
+  var d=document.createElement('details'); d.className='box'; d.id='cuSet'; d.open=true;
+  d.innerHTML='<summary>Filters and walk settings <span class="sm" id="cuSum"></span></summary><div class="inner"></div>';
+  var inn=d.querySelector('.inner');
+  pane.insertBefore(d,ctrls);
+  var btns=calc.querySelector('.btnrow'), note=$('walkNote');
+  [ctrls,kinds,sec,calc].forEach(function(x){ if(x) inn.appendChild(x); });
+  var est=document.createElement('div'); est.id='cuEst'; est.className='cuest';
+  d.parentNode.insertBefore(est,d.nextSibling);
+  est.parentNode.insertBefore(btns,est.nextSibling); btns.parentNode.insertBefore(note,btns.nextSibling);
+  btns.insertAdjacentHTML('beforeend','<button type="button" class="ghost" id="cuSave" hidden>Save plan</button><button type="button" class="ghost sm" id="cuForget" hidden>Forget saved plan</button>');
+  var st=document.createElement('style'); st.textContent='.cuest{margin:8px 0;padding:8px 10px;border:1px solid var(--line);border-radius:8px;font-family:var(--font-mono);font-size:12px;line-height:1.5}.cuest b{font-size:13px}.cuest .cue-d{color:var(--muted)}';
+  document.head.appendChild(st);
+})();
+function cuState(){ return {X:{day:X.day,q:X.q,minor:X.minor,opt:X.opt,ver:X.ver,kinds:JSON.parse(JSON.stringify(X.kinds))},
+  w:{wLeg:wval('wLeg'),wKm:wval('wKm'),wH:wval('wH'),wStay:wval('wStay'),wNoV:$('wNoV').checked,start:$('wsPt').checked?'pt':'any'},
+  pt:startPt?{lat:startPt.lat,lon:startPt.lon}:null}; }
+function cuApply(p){
+  if(!p) return;
+  var x=p.X||{}; ['day','q','minor','opt','ver'].forEach(function(k){ if(x[k]!=null) X[k]=x[k]; }); if(x.kinds) KORD.forEach(function(k){ if(x.kinds[k]!=null) X.kinds[k]=x.kinds[k]; });
+  $('xDay').value=X.day; $('xQ').value=X.q; $('xMinor').checked=X.minor; $('xOpt').checked=X.opt; $('xVer').value=X.ver;
+  var w=p.w||{}; [['wLeg','oLeg'],['wKm','oKm'],['wH','oH']].forEach(function(a){ if(w[a[0]]!=null){ $(a[0]).value=w[a[0]]; $(a[1]).textContent=w[a[0]]; } });
+  if(w.wStay) $('wStay').value=w.wStay; if(w.wNoV!=null) $('wNoV').checked=w.wNoV;
+  $(w.start==='pt'?'wsPt':'wsAny').checked=true;
+  if(p.pt) setStart(L.latLng(p.pt.lat,p.pt.lon));
+  syncStartUi(); try{ syncKinds(); }catch(e){}
+}
+function cuCompute(){
+  var g0=gen, f0=genFocus, n0=$('walkNote').textContent, out=null;
+  try{
+    if($('wsPt').checked){ if(!startPt) return null; makeWalkFromPoint(); } else makeWalksAnywhere();
+    var min=0, kmT=0, n=0; gen.forEach(function(w){ min+=w.min; kmT+=w.km; n+=w.stops.length; });
+    out={walks:gen.length,places:n,min:min,km:kmT,cands:candidates().length};
+  } catch(e){ out=null; }
+  finally{ gen=g0; genFocus=f0; $('walkNote').textContent=n0; }
+  return out;
+}
+function cuEstimate(){
+  var e=cuCompute(), el=$('cuEst'); if(!el) return;
+  if(!e){ el.innerHTML='<span class="cue-d">'+($('wsPt').checked?'Pick a start point to see an estimate.':'No estimate.')+'</span>'; return; }
+  var day=+wval('wH')*60, days=e.walks?Math.max(1,Math.ceil(e.min/day)):0, h=e.min/60;
+  el.innerHTML=e.walks?('<b>≈ '+e.walks+' walk'+(e.walks>1?'s':'')+' · '+e.places+' places</b><br>'+(h<10?h.toFixed(1):Math.round(h))+' h in total ('+e.km.toFixed(1)+' km on foot, plus time at stops)<br><span class="cue-d">≈ '+days+' day'+(days>1?'s':'')+' at up to '+wval('wH')+' h a day · '+(e.cands-e.places)+' of '+e.cands+' filtered places don't fit any walk</span>'):'<span class="cue-d">No walks with these settings ('+e.cands+' places pass the filters).</span>';
+  var s=$('cuSum'); if(s) s.textContent=e.walks?e.walks+' walks · ≈ '+days+' d':'';
+}
+var cuT=null; function cuSoon(){ clearTimeout(cuT); cuT=setTimeout(function(){ if(mode==='explore') cuEstimate(); },120); if(CP.plan){ CP.dirty=true; cuButtons(); } }
+$('pExplore').addEventListener('input',function(e){ if(e.target.closest('#cuSet')) cuSoon(); });
+$('pExplore').addEventListener('change',function(e){ if(e.target.closest('#cuSet')) cuSoon(); });
+function cuButtons(){
+  var s=$('cuSave'), f=$('cuForget');
+  s.hidden=!gen.length && !CP.plan;
+  s.textContent=CP.plan?(CP.dirty?'Save changes':'Saved ✓'):'Save plan';
+  s.className=CP.plan&&!CP.dirty?'ghost':'primary';
+  f.hidden=!CP.plan;
+}
+$('cuSave').addEventListener('click',function(){
+  if(!gen.length) makeWalks();
+  CP.plan=cuState(); CP.dirty=false; sset(CP.key,CP.plan);
+  $('cuSet').open=false; cuButtons(); toast('Plan saved. Custom will open on these walks next time.');
+});
+$('cuForget').addEventListener('click',function(){ armClear($('cuForget'),'',function(){ CP.plan=null; CP.dirty=false; try{ localStorage.removeItem(CP.key); }catch(e){} sset(CP.key,null); $('cuSet').open=true; cuButtons(); $('cuForget').textContent='Forget saved plan'; }); });
+var _makeWalksC=makeWalks; makeWalks=function(){ _makeWalksC(); cuButtons(); cuEstimate(); };
+var _setModeC=setMode;
+setMode=function(m){
+  _setModeC(m);
+  if(mode==='explore'){
+    if(CP.pending && !gen.length){ CP.pending=false; makeWalks(); $('cuSet').open=false; }
+    cuEstimate(); cuButtons();
+  }
+};
+if(CP.plan){ cuApply(CP.plan); CP.pending=true; }
+cuButtons();
 var startMode=sget(SK+'mode','routes');
 refresh();
 if(startMode==='explore'||startMode==='events') setMode(startMode);
+if(startMode==='sites') setMode('sites');
 if(window.ResizeObserver) new ResizeObserver(function(){ map.invalidateSize(); }).observe($('mapwrap'));
 window.addEventListener('resize',function(){ map.invalidateSize(); });
 try{ var mq=window.matchMedia('(prefers-color-scheme: dark)'); var th=function(){ refresh(); glRecolor(); }; if(mq.addEventListener) mq.addEventListener('change',th); else if(mq.addListener) mq.addListener(th); }catch(e){}
