@@ -3397,6 +3397,39 @@ var _drawRoutesK=drawRoutes; drawRoutes=function(){
   });
 };
 (function(){ var st=document.createElement('style'); st.textContent='body.rs-area #showBox,body.rs-cur #showBox{display:none}'; document.head.appendChild(st); })();
+// ---- module per-kind amounts (29 Oct 2026): Custom › Kinds of place › "Set how many of each kind".
+// Off by default. When on, each kind gets a slider 0..all; the top N of that kind by the existing
+// score (the same ranking as the Show slider) are kept. Saved with the Custom plan.
+var PK={on:false,n:{}}, PKTOP={};
+function pkTotal(k){ return sights.filter(function(s){return s.k===k;}).length; }
+function pkRank(){ PKTOP={}; KORD.forEach(function(k){ var l=sights.filter(function(s){return s.k===k;}).sort(function(a,b){ return (score(b)-score(a))||(b.main-a.main); }); var n=PK.n[k]==null?l.length:PK.n[k]; l.slice(0,n).forEach(function(s){ PKTOP[s.id]=1; }); }); }
+(function(){
+  var box=$('kinds').parentNode;
+  box.insertAdjacentHTML('beforeend','<label class="tgl pktg"><input type="checkbox" id="pkOn"> Set how many of each kind <span class="note">best-ranked first</span></label><div id="pkRows" hidden></div>');
+  var st=document.createElement('style'); st.textContent='.pktg{margin-top:10px;font-size:13px}.pktg .note{margin:0;font-size:11px}#pkRows{display:grid;gap:6px;margin-top:6px}.pkr{display:grid;grid-template-columns:18px 1fr 70px;gap:4px 8px;align-items:center;font-size:13px}.pkr input{grid-column:1/-1;width:100%}.pkr output{font-family:var(--font-mono);font-size:11px;color:var(--muted);text-align:right}';
+  document.head.appendChild(st);
+})();
+function pkRender(){
+  $('pkRows').innerHTML=KORD.filter(function(k){ return pkTotal(k)>0; }).map(function(k){ var t=pkTotal(k), n=PK.n[k]==null?t:PK.n[k];
+    return '<div class="pkr"><span class="kg" style="background:'+KCOL[k]+'">'+glyph(k)+'</span><span>'+esc(KNAME[k])+'</span><output id="pko-'+k+'">'+n+' of '+t+'</output><input type="range" min="0" max="'+t+'" step="1" value="'+n+'" data-pk="'+k+'" aria-label="'+esc(KNAME[k])+'"></div>'; }).join('');
+}
+function pkSync(){
+  $('pkOn').checked=PK.on; $('pkRows').hidden=!PK.on; $('kinds').hidden=PK.on;
+  var b=$('kinds').parentNode.querySelector('.btnrow'); if(b) b.hidden=PK.on;
+  if(PK.on){ pkRender(); pkRank(); }
+}
+$('pkOn').addEventListener('change',function(e){
+  PK.on=e.target.checked;
+  if(PK.on){ KORD.forEach(function(k){ if(PK.n[k]==null) PK.n[k]=X.kinds[k]?pkTotal(k):0; X.kinds[k]=true; }); }
+  else { KORD.forEach(function(k){ X.kinds[k]=(PK.n[k]==null?true:PK.n[k]>0); }); try{ syncKinds(); }catch(err){} }
+  pkSync(); refresh();
+});
+$('pkRows').addEventListener('input',function(e){ var k=e.target.getAttribute('data-pk'); if(!k) return; PK.n[k]=+e.target.value; $('pko-'+k).textContent=PK.n[k]+' of '+pkTotal(k); pkRank(); refresh(); });
+var _exploreVisP=exploreVis; exploreVis=function(s){ if(!_exploreVisP(s)) return false; if(PK.on && !PKTOP[s.id]) return false; return true; };
+var _cuStateP=cuState; cuState=function(){ var o=_cuStateP(); o.pk={on:PK.on,n:PK.n}; return o; };
+var _cuApplyP=cuApply; cuApply=function(p){ _cuApplyP(p); if(p&&p.pk){ PK.on=!!p.pk.on; PK.n=p.pk.n||{}; } pkSync(); };
+if(CP.plan&&CP.plan.pk){ PK.on=!!CP.plan.pk.on; PK.n=CP.plan.pk.n||{}; }
+pkSync();
 var startMode=sget(SK+'mode','routes');
 refresh();
 if(startMode==='explore'||startMode==='events') setMode(startMode);
