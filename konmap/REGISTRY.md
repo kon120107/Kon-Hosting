@@ -1,0 +1,27 @@
+# Registry
+
+## Live artifacts — the ONLY ones Claude edits
+
+| Artifact | Slug | Holds |
+|---|---|---|
+| KonMap | `4a7c9607-30c8-4227-9c02-8a2602db3250` | launcher, all engines, all migrated cities |
+| KonMap Lab | not created yet | experiments; created on the first one |
+
+Republish from this folder with `publish_files` (patch mode: send only the files that changed).
+
+## Cities
+
+| City | Engine | Status |
+|---|---|---|
+| Turin | concrete/0.3 | migrated 29 Oct 2026 (from Turin 2.2 + tours from 2.0A) |
+| Copenhagen, Paris, Rome, Athens, Plovdiv | — | legacy single-page artifacts; migrate one by one |
+
+## Legacy artifacts (read-only, to be deleted when Kon says)
+
+Turin Concrete Map 1.0, 1.0A, 2.0, 2.0A, 2.1, 2.2 · Copenhagen 1.1, 1.2 · Paris 4.1 · Rome 1.0 · Athens 1.0 ·
+Plovdiv 1.0 · Apps (HTML holder prototype). Old GitHub Pages folders `turin-concrete-map/`, `paris-concrete-map/`.
+
+## Change log
+
+- 2026-10-29 — Restructure: engine `concrete/0.3` (from Turin 2.2's engine 0.2, now loads cities from data,
+  adds the tours module from Turin 2.0A). Turin moved to `cities/turin/`. KonMap artifact created.
