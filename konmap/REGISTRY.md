@@ -14,12 +14,13 @@ Republish from this folder with `publish_files` (patch mode: send only the files
 | City | Engine | Status |
 |---|---|---|
 | Turin | concrete/0.3 | migrated 29 Oct 2026 (from Turin 2.2 + tours from 2.0A) |
-| Copenhagen, Paris, Rome, Athens, Plovdiv | — | legacy single-page artifacts; migrate one by one |
+| Plovdiv | concrete/0.3 | built from the research register 29 Oct 2026 (72 stops, 10 walks, 7 tours, 5 Study readings; drawn base, no streets) |
+| Copenhagen, Paris, Rome, Athens | — | legacy single-page artifacts; migrate one by one |
 
 ## Legacy artifacts (read-only, to be deleted when Kon says)
 
 Turin Concrete Map 1.0, 1.0A, 2.0, 2.0A, 2.1, 2.2 · Copenhagen 1.1, 1.2 · Paris 4.1 · Rome 1.0 · Athens 1.0 ·
-Plovdiv 1.0 · Apps (HTML holder prototype). Old GitHub Pages folders `turin-concrete-map/`, `paris-concrete-map/`.
+Plovdiv 1.0 (replaced by cities/plovdiv) · Apps (HTML holder prototype). Old GitHub Pages folders `turin-concrete-map/`, `paris-concrete-map/`.
 
 ## Change log
 
@@ -42,3 +43,4 @@ Plovdiv 1.0 · Apps (HTML holder prototype). Old GitHub Pages folders `turin-con
 - 2026-10-29 — Turin guides rewritten again to Paris depth: main stops 3–4 paragraphs (what you see, story,
   context, practical), minor stops 1–3. Adds historical context beyond the reports (general history, flagged
   where uncertain); fixes Teatro Regio façade (Benedetto Alfieri, not Juvarra).
+- 2026-10-29 — Plovdiv added (concrete/0.3), built from claude/plovdiv-sites.md rather than migrating legacy 1.0: 72 stops (A concrete/socialist, B pass-by, C thinkers), 7 day trips, 10 area walks, 7 tours, Study (intro, socialist Plovdiv, violence and memory, thinkers, passes), station guides written by hand from the reports. Base drawn from Natural Earth (the old 1.0 base lacked the Maritsa). Register rows with no coordinates are not mapped yet (see project 00-status).

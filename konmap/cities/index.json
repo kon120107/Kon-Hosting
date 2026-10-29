@@ -5,6 +5,11 @@
    "id": "turin",
    "name": "Turin",
    "engine": "concrete/0.3"
+  },
+  {
+   "id": "plovdiv",
+   "name": "Plovdiv",
+   "engine": "concrete/0.3"
   }
  ]
 }
