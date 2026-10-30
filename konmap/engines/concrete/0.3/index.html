@@ -1875,8 +1875,8 @@ function drawExplore(){
   $('xCount').textContent='Showing '+shown+' of '+sights.length+' places'+(lit<shown?', '+lit+' lit':'')+'.';
   drawWalks();
 }
-var WCOL=['#16191d','#1f4e79','#7a1f3d','#3d5a1f','#5b2c83','#7a4a00','#0b5d5d','#6b2020'];
-function wcol(i){ return i===0 ? tok('--fg') : WCOL[i%WCOL.length]; }
+var WCOL=(function(){ var c=[]; (NR||[]).forEach(function(r){ if(r.color && c.indexOf(r.color)<0) c.push(r.color); }); return c.length>=4?c:['#e6194b','#3cb44b','#4363d8','#f58231','#911eb4','#469990','#9A6324','#800000']; })();
+function wcol(i){ return WCOL[i%WCOL.length]; }
 function tok(n){ try{ return getComputedStyle(document.documentElement).getPropertyValue(n).trim()||'#16191d'; }catch(e){ return '#16191d'; } }
 function drawWalks(){
   walkLG.clearLayers();
@@ -1885,8 +1885,10 @@ function drawWalks(){
     if(w.solo) return;
     var dim=genFocus!==null&&genFocus!==i, c=wcol(i);
     var pts=(w.start?[w.start]:[]).concat(w.stops).map(function(s){return [s.lat,s.lon];});
-    walkLG.addLayer(L.polyline(pts,{pane:'lines',color:c,weight:genFocus===i?5:3.5,opacity:dim?.12:.85,dashArray:'7 6',interactive:false}));
-    if(!dim && !w.start) walkLG.addLayer(L.marker([w.stops[0].lat,w.stops[0].lon],{pane:'lines',interactive:false,icon:L.divIcon({className:'',html:'<span class="wlabel" style="background:'+c+';color:'+(i===0?'var(--bg)':'#fff')+'">Walk '+(i+1)+'</span>',iconSize:[52,16],iconAnchor:[-10,24]})}));
+    var on=genFocus===i;
+    if(on) walkLG.addLayer(L.polyline(pts,{pane:'lines',color:tok('--panel'),weight:9,opacity:.9,interactive:false,lineCap:'round',lineJoin:'round'}));
+    walkLG.addLayer(L.polyline(pts,{pane:'lines',color:c,weight:on?5:3.2,opacity:dim?.14:.9,interactive:false,lineCap:'round',lineJoin:'round'}));
+    if(!dim && !w.start) walkLG.addLayer(L.marker([w.stops[0].lat,w.stops[0].lon],{pane:'lines',interactive:false,icon:L.divIcon({className:'',html:'<span class="wlabel" style="background:'+c+';color:#fff">Walk '+(i+1)+'</span>',iconSize:[52,16],iconAnchor:[-10,24]})}));
   });
 }
 function wval(id){ return $(id).value; }
@@ -1970,7 +1972,7 @@ function walkName(w){ return (w.start?'From your start':esc(w.stops[0].name))+' 
 function renderWalkCards(){
   $('walkCards').innerHTML=gen.map(function(w,i){
     var f=genFocus===i, vc=visitedCount(w.stops);
-    var h='<div class="route'+(f?' focus':'')+'" data-card="walk:'+i+'"><button type="button" class="rh" data-gw="'+i+'" aria-expanded="'+f+'"><span class="rnum" style="background:'+wcol(i)+';color:'+(i===0?'var(--bg)':'#fff')+'">'+(i+1)+'</span><span><span class="rtitle">'+walkName(w)+'</span><span class="rmeta"><span>'+w.stops.length+' stops</span><span>'+w.km.toFixed(1)+' km</span><span>≈ '+fmtT(w.min)+'</span>'+(vc?'<span class="good">'+vc+' visited</span>':'')+'</span></span></button>';
+    var h='<div class="route'+(f?' focus':'')+'" data-card="walk:'+i+'"><button type="button" class="rh" data-gw="'+i+'" aria-expanded="'+f+'"><span class="rnum" style="background:'+wcol(i)+';color:#fff">'+(i+1)+'</span><span><span class="rtitle">'+walkName(w)+'</span><span class="rmeta"><span>'+w.stops.length+' stops</span><span>'+w.km.toFixed(1)+' km</span><span>≈ '+fmtT(w.min)+'</span>'+(vc?'<span class="good">'+vc+' visited</span>':'')+'</span></span></button>';
     if(f){
       h+='<div class="rbody"><ol>'+w.stops.map(function(s,k){ return stopRow(s,String(k+1),{day:X.day,q:''}); }).join('')+'</ol>';
       h+='<div class="btnrow"><button type="button" class="ghost sm" data-keep="'+i+'"'+(w.keptId?' disabled':'')+'>'+(w.keptId?'Kept in Routes':'Keep this walk')+'</button></div>';
@@ -2490,33 +2492,61 @@ function score(s,lens){
   var v = lens==='see' ? (c.i+2*c.p)/3 : lens==='story' ? (c.i+2*c.t)/3 : (2*c.i+c.p+c.t)/4;
   return Math.max(1,Math.min(5,Math.round(v*2)/2));
 }
-function rkPass(s){ var m=mk(s.id); if(m.s) return true; return score(s)>=RK.min; }
+// Amounts (30 Oct 2026): one cutoff. Each kind keeps its top N places by score; the Show slider
+// sets every kind's N to "those scoring at least X", the kind sliders then fine-tune ("Custom mix").
+// The total shown is always the sum of the kind sliders (plus starred places).
+var AM={n:sget(SK+'amn',null)||{}, mix:!!sget(SK+'ammix',false)}, AMTOP={};
+function amKinds(){ return KORD.filter(function(k){ return sights.some(function(s){ return s.k===k; }); }); }
+function amAll(k){ return sights.filter(function(s){ return s.k===k; }).length; }
+function amList(k){ return sights.filter(function(s){ return s.k===k; }).sort(function(a,b){ return (score(b)-score(a))||(b.main-a.main)||a.name.localeCompare(b.name); }); }
+function amFromMin(){ AM.n={}; amKinds().forEach(function(k){ AM.n[k]=sights.filter(function(s){ return s.k===k && score(s)>=RK.min; }).length; }); }
+function amRank(){
+  if(!AM.mix) amFromMin();
+  AMTOP={}; amKinds().forEach(function(k){ var n=AM.n[k]==null?amAll(k):Math.min(AM.n[k],amAll(k)); amList(k).slice(0,n).forEach(function(s){ AMTOP[s.id]=1; }); });
+}
+function amTotal(){ var t=0; amKinds().forEach(function(k){ t+=AM.n[k]==null?amAll(k):Math.min(AM.n[k],amAll(k)); }); return t; }
+function amSave(){ sset(SK+'amn',AM.mix?AM.n:null); sset(SK+'ammix',AM.mix); }
+function rkPass(s){ var m=mk(s.id); if(m.s) return true; return !!AMTOP[s.id]; }
+amRank();
 function dots(v){ var h='<span class="dots" aria-label="'+v+' of 5">'; for(var i=1;i<=5;i++) h+='<i class="'+(v>=i?'on':v>=i-.5?'half':'')+'"></i>'; return h+'</span>'; }
 // control
 (function(){
   var box=document.createElement('div'); box.id='rank'; box.className='rank';
   box.innerHTML='<div class="rk-row"><label class="rk-l" for="rkMin">Show</label><input type="range" id="rkMin" min="1" max="5" step="0.5" value="'+RK.min+'"><output id="rkOut"></output></div>'+
     '<div class="rk-row"><span class="rk-l">Lens</span><span class="segs" id="rkLens" role="group" aria-label="Ranking lens">'+Object.keys(LENS).map(function(k){ return '<button type="button" data-l="'+k+'">'+LENS[k].n+'</button>'; }).join('')+'</span></div>'+
+    '<details class="amk" id="amBox"><summary>By kind <span class="sm" id="amSum"></span></summary>'+
+      '<div class="btnrow"><button type="button" class="ghost sm" id="amAllB">All</button><button type="button" class="ghost sm" id="amNoneB">None</button></div>'+
+      '<div id="amRows">'+amKinds().map(function(k){ var t=amAll(k);
+        return '<div class="pkr"><span class="kg" style="background:'+KCOL[k]+'">'+glyph(k)+'</span><span>'+esc(KNAME[k])+'</span><output id="amo-'+k+'"></output><input type="range" min="0" max="'+t+'" step="1" data-am="'+k+'" aria-label="'+esc(KNAME[k])+'"></div>'; }).join('')+'</div></details>'+
     '<p class="rk-n" id="rkNote"></p>';
+  var st=document.createElement('style'); st.textContent='.amk{margin:8px 0 2px}.amk>summary{cursor:pointer;font-size:13px;font-weight:600}.amk .btnrow{margin:6px 0}#amRows{display:grid;gap:6px}.pkr{display:grid;grid-template-columns:18px 1fr 70px;gap:4px 8px;align-items:center;font-size:13px}.pkr input{grid-column:1/-1;width:100%}.pkr output{font-family:var(--font-mono);font-size:11px;color:var(--muted);text-align:right}';
+  document.head.appendChild(st);
   var d=document.createElement('details'); d.className='box'; d.id='showBox';
   d.innerHTML='<summary>What to show <span class="sm" id="showN"></span></summary><div class="inner"></div>';
   var inn=d.querySelector('.inner'); inn.appendChild(box); inn.appendChild($('mfilt'));
-  try{ d.open=!!sget(SK+'showopen',false); }catch(e){}
+  try{ d.open=!!sget(SK+'showopen',false); box.querySelector('#amBox').open=!!sget(SK+'amopen',false); }catch(e){}
+  box.querySelector('#amBox').addEventListener('toggle',function(e){ sset(SK+'amopen',e.target.open); });
   d.addEventListener('toggle',function(){ sset(SK+'showopen',d.open); });
   var p=document.querySelector('#pRoutes .mslot'); if(p) p.appendChild(d);
   window._showBox=d;
 })();
-function rkLabel(v){ return v<=1?'Everything':v>=5?'Only the best':'Score '+v+'+'; }
+function rkLabel(v){ if(AM.mix) return 'Custom mix'; return v<=1?'Everything':v>=5?'Only the best':'Score '+v+'+'; }
 function rkSync(){
+  amRank();
   $('rkOut').textContent=rkLabel(RK.min);
+  amKinds().forEach(function(k){ var t=amAll(k), n=AM.n[k]==null?t:Math.min(AM.n[k],t), i=document.querySelector('[data-am="'+k+'"]'); if(i && +i.value!==n) i.value=n; var o=$('amo-'+k); if(o) o.textContent=n+' of '+t; });
+  var as=$('amSum'); if(as) as.textContent=amTotal()+' of '+sights.length+(AM.mix?' · custom':'');
   each(document.querySelectorAll('#rkLens button'),function(b){ b.setAttribute('aria-pressed',b.getAttribute('data-l')===RK.lens); });
   var n=sights.filter(function(s){ return rkPass(s); }).length;
-  $('rkNote').textContent=n+' of '+sights.length+' places shown. '+LENS[RK.lens].d+' Starred places always show.';
+  $('rkNote').textContent=n+' of '+sights.length+' places shown, the best-scoring of each kind first. '+LENS[RK.lens].d+' Starred places always show.';
   $('rank').hidden=mode==='events';
   var sn=$('showN'); if(sn) sn.textContent = mode==='events' ? '' : (RK.min<=1 ? 'all '+sights.length+' places' : n+' of '+sights.length+' places');
 }
 moveMarkFilter=function(){ var slot=document.querySelector('#p'+mode.charAt(0).toUpperCase()+mode.slice(1)+' .mslot'); if(slot && $('showBox')) slot.appendChild($('showBox')); };
-$('rkMin').addEventListener('input',function(e){ RK.min=+e.target.value; sset(SK+'rkmin',RK.min); refresh(); });
+$('rkMin').addEventListener('input',function(e){ RK.min=+e.target.value; sset(SK+'rkmin',RK.min); AM.mix=false; amSave(); refresh(); });
+$('amRows').addEventListener('input',function(e){ var k=e.target.getAttribute('data-am'); if(!k) return; if(!AM.mix){ amFromMin(); AM.mix=true; } AM.n[k]=+e.target.value; amSave(); refresh(); });
+$('amAllB').addEventListener('click',function(){ RK.min=1; $('rkMin').value=1; sset(SK+'rkmin',1); AM.mix=false; amSave(); refresh(); });
+$('amNoneB').addEventListener('click',function(){ amKinds().forEach(function(k){ AM.n[k]=0; }); AM.mix=true; amSave(); refresh(); });
 $('rkLens').addEventListener('click',function(e){ var b=e.target.closest('[data-l]'); if(!b) return; RK.lens=b.getAttribute('data-l'); sset(SK+'rklens',RK.lens); refresh(); });
 // hide failing places everywhere places are shown
 var _markVisD=markVis; markVis=function(id){ if(!_markVisD(id)) return false; var s=S[id]; if(s && !rkPass(s)) return false; return true; };
@@ -3144,7 +3174,7 @@ function rsApply(){
   $('tRoutes').setAttribute('aria-selected',inR);
   if($('studyBtn')) $('studyBtn').setAttribute('aria-pressed',mode==='study');
 }
-var _rkPassL=rkPass; rkPass=function(s){ if(mode==='routes'&&RS.sub!=='curated') return true; return _rkPassL(s); };
+var _rkPassL=rkPass; rkPass=function(s){ if(mode==='routes') return true; return _rkPassL(s); };
 var _setModeL=setMode; setMode=function(m){ if(m==='routes'&&RS.sub==='custom'){ RS.sub='area'; } if(m==='explore') RS.sub='custom'; _setModeL(m); rsApply(); };
 var _setSheetL=setSheet; setSheet=function(st){ if(st==='peek') st='mini'; _setSheetL(st); };
 if(RS.sub==='custom' && sget(SK+'mode','routes')==='routes') RS.sub='area';
@@ -3397,39 +3427,27 @@ var _drawRoutesK=drawRoutes; drawRoutes=function(){
   });
 };
 (function(){ var st=document.createElement('style'); st.textContent='body.rs-area #showBox,body.rs-cur #showBox{display:none}'; document.head.appendChild(st); })();
-// ---- module per-kind amounts (29 Oct 2026): Custom › Kinds of place › "Set how many of each kind".
-// Off by default. When on, each kind gets a slider 0..all; the top N of that kind by the existing
-// score (the same ranking as the Show slider) are kept. Saved with the Custom plan.
-var PK={on:false,n:{}}, PKTOP={};
-function pkTotal(k){ return sights.filter(function(s){return s.k===k;}).length; }
-function pkRank(){ PKTOP={}; KORD.forEach(function(k){ var l=sights.filter(function(s){return s.k===k;}).sort(function(a,b){ return (score(b)-score(a))||(b.main-a.main); }); var n=PK.n[k]==null?l.length:PK.n[k]; l.slice(0,n).forEach(function(s){ PKTOP[s.id]=1; }); }); }
+// ---- kinds (30 Oct 2026): the per-kind sliders in "What to show" replace Custom's kind checkboxes and
+// the old Custom-only "Set how many of each kind". Old saved plans are read into the sliders.
 (function(){
-  var box=$('kinds').parentNode;
-  box.insertAdjacentHTML('beforeend','<label class="tgl pktg"><input type="checkbox" id="pkOn"> Set how many of each kind <span class="note">best-ranked first</span></label><div id="pkRows" hidden></div>');
-  var st=document.createElement('style'); st.textContent='.pktg{margin-top:10px;font-size:13px}.pktg .note{margin:0;font-size:11px}#pkRows{display:grid;gap:6px;margin-top:6px}.pkr{display:grid;grid-template-columns:18px 1fr 70px;gap:4px 8px;align-items:center;font-size:13px}.pkr input{grid-column:1/-1;width:100%}.pkr output{font-family:var(--font-mono);font-size:11px;color:var(--muted);text-align:right}';
-  document.head.appendChild(st);
+  var det=$('kinds').closest('details'), ver=$('xVer').closest('label'), ctr=$('xQ').closest('.ctrls');
+  if(ver&&ctr) ctr.appendChild(ver);
+  if(det) det.parentNode.removeChild(det);
 })();
-function pkRender(){
-  $('pkRows').innerHTML=KORD.filter(function(k){ return pkTotal(k)>0; }).map(function(k){ var t=pkTotal(k), n=PK.n[k]==null?t:PK.n[k];
-    return '<div class="pkr"><span class="kg" style="background:'+KCOL[k]+'">'+glyph(k)+'</span><span>'+esc(KNAME[k])+'</span><output id="pko-'+k+'">'+n+' of '+t+'</output><input type="range" min="0" max="'+t+'" step="1" value="'+n+'" data-pk="'+k+'" aria-label="'+esc(KNAME[k])+'"></div>'; }).join('');
+syncKinds=function(){};
+function amFromPlan(p){
+  if(!p) return;
+  if(p.am){ if(p.am.min!=null){ RK.min=+p.am.min; $('rkMin').value=RK.min; } AM.mix=!!p.am.mix; AM.n=p.am.n||{}; }
+  else {
+    var x=(p.X&&p.X.kinds)||{}, off=KORD.some(function(k){ return x[k]===false; }), pk=p.pk&&p.pk.on;
+    if(off||pk){ amFromMin(); if(pk) KORD.forEach(function(k){ if(p.pk.n&&p.pk.n[k]!=null) AM.n[k]=p.pk.n[k]; }); KORD.forEach(function(k){ if(x[k]===false) AM.n[k]=0; }); AM.mix=true; }
+  }
+  KORD.forEach(function(k){ X.kinds[k]=true; });
+  amSave();
 }
-function pkSync(){
-  $('pkOn').checked=PK.on; $('pkRows').hidden=!PK.on; $('kinds').hidden=PK.on;
-  var b=$('kinds').parentNode.querySelector('.btnrow'); if(b) b.hidden=PK.on;
-  if(PK.on){ pkRender(); pkRank(); }
-}
-$('pkOn').addEventListener('change',function(e){
-  PK.on=e.target.checked;
-  if(PK.on){ KORD.forEach(function(k){ if(PK.n[k]==null) PK.n[k]=X.kinds[k]?pkTotal(k):0; X.kinds[k]=true; }); }
-  else { KORD.forEach(function(k){ X.kinds[k]=(PK.n[k]==null?true:PK.n[k]>0); }); try{ syncKinds(); }catch(err){} }
-  pkSync(); refresh();
-});
-$('pkRows').addEventListener('input',function(e){ var k=e.target.getAttribute('data-pk'); if(!k) return; PK.n[k]=+e.target.value; $('pko-'+k).textContent=PK.n[k]+' of '+pkTotal(k); pkRank(); refresh(); });
-var _exploreVisP=exploreVis; exploreVis=function(s){ if(!_exploreVisP(s)) return false; if(PK.on && !PKTOP[s.id]) return false; return true; };
-var _cuStateP=cuState; cuState=function(){ var o=_cuStateP(); o.pk={on:PK.on,n:PK.n}; return o; };
-var _cuApplyP=cuApply; cuApply=function(p){ _cuApplyP(p); if(p&&p.pk){ PK.on=!!p.pk.on; PK.n=p.pk.n||{}; } pkSync(); };
-if(CP.plan&&CP.plan.pk){ PK.on=!!CP.plan.pk.on; PK.n=CP.plan.pk.n||{}; }
-pkSync();
+var _cuStateP=cuState; cuState=function(){ var o=_cuStateP(); o.am={min:RK.min,mix:AM.mix,n:AM.mix?AM.n:null}; return o; };
+var _cuApplyP=cuApply; cuApply=function(p){ _cuApplyP(p); amFromPlan(p); };
+if(CP.plan) amFromPlan(CP.plan);
 var startMode=sget(SK+'mode','routes');
 refresh();
 if(startMode==='explore'||startMode==='events') setMode(startMode);
