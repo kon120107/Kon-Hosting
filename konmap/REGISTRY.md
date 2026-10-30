@@ -44,3 +44,8 @@ Plovdiv 1.0 (replaced by cities/plovdiv) · Apps (HTML holder prototype). Old Gi
   context, practical), minor stops 1–3. Adds historical context beyond the reports (general history, flagged
   where uncertain); fixes Teatro Regio façade (Benedetto Alfieri, not Juvarra).
 - 2026-10-29 — Plovdiv added (concrete/0.3), built from claude/plovdiv-sites.md rather than migrating legacy 1.0: 72 stops (A concrete/socialist, B pass-by, C thinkers), 7 day trips, 10 area walks, 7 tours, Study (intro, socialist Plovdiv, violence and memory, thinkers, passes), station guides written by hand from the reports. Base drawn from Natural Earth (the old 1.0 base lacked the Maritsa). Register rows with no coordinates are not mapped yet (see project 00-status).
+- 2026-10-30 — concrete/0.3 fixed in place: "What to show" has one cutoff. Each kind keeps its top N by score; the Show
+  slider sets every kind's N ("score X+"), the per-kind sliders under it ("By kind", with All/None) fine-tune it
+  ("Custom mix"); total shown = sum of the kind sliders + starred. Available in Sites and Custom. Replaces Custom's
+  kind checkboxes and the Custom-only per-kind toggle (old saved plans are read in). The hidden filter no longer
+  applies in Curated. Custom walks drawn like planned routes: the city's route colours, solid, haloed when picked.
