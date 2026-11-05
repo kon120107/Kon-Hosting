@@ -1706,9 +1706,9 @@ function popupHtml(s){
     '<div class="rc"><i style="background:'+col+'"></i><span>'+esc(stepTxt(s))+'</span></div>'+
     '<div class="rc"><span class="kg" style="background:'+KCOL[s.k]+'">'+glyph(s.k)+'</span><span>'+esc(KNAME[s.k])+'</span></div>'+
     '<p>'+esc(s.blurb)+'</p>'+(s.when?'<p class="when">'+esc(s.when)+'</p>':'')+(daysTxt(s)?'<p class="when">'+esc(daysTxt(s))+'</p>':'')+flag+
-    (GUIDE[s.id]?'<button type="button" class="gbtn" data-guide="'+esc(s.id)+'">Read the guide</button>':'')+
+    '<div class="links"><a href="'+gmSearch(s.q)+'" target="_blank" rel="noopener">Google Maps</a><a href="'+gmTransit(s)+'" target="_blank" rel="noopener">Transit</a><a href="'+cmap(s)+'" target="_blank" rel="noopener">Citymapper</a><a href="'+gimg(s.name,s.q)+'" target="_blank" rel="noopener">Photos</a></div>'+
     toolsRow(s.id)+
-    '<div class="links"><a href="'+gmSearch(s.q)+'" target="_blank" rel="noopener">Google Maps</a><a href="'+gmTransit(s)+'" target="_blank" rel="noopener">Transit</a><a href="'+cmap(s)+'" target="_blank" rel="noopener">Citymapper</a><a href="'+gimg(s.name,s.q)+'" target="_blank" rel="noopener">Photos</a></div>'+marksRow(s.id)+'</div>';
+    (GUIDE[s.id]?'<button type="button" class="gbtn" data-guide="'+esc(s.id)+'">Read the guide</button>':'')+marksRow(s.id)+'</div>';
 }
 function viewPad(){ return {tl:[40,40],br:[40,40]}; }
 function flyCenter(ll,z,opt){ var vp=viewPad(), dx=(vp.br[0]-vp.tl[0])/2, dy=(vp.br[1]-vp.tl[1])/2; var p=map.project(L.latLng(ll),z).add([dx,dy]); map.flyTo(map.unproject(p,z),z,opt||{duration:.5}); }
@@ -2082,7 +2082,7 @@ function evLinks(e){
 function evCopy(e){ return '<div class="btnrow" style="margin-top:6px"><button type="button" class="ghost sm" data-copy="'+attr(e.o?e.o+', '+e.v:e.v)+'">Copy name</button><button type="button" class="ghost sm" data-copy="'+attr(e.ad||e.v)+'">Copy address</button></div>'; }
 function evPopupHtml(e){
   return '<div class="pop"><h2>'+esc(e.n)+'</h2><div class="rc"><span class="kg" style="background:'+EVT[e.t].c+'">'+glyph(e.t)+'</span><span>'+esc(EVT[e.t].n)+' · '+esc(e.v)+'</span></div><p>'+esc(e.x)+'</p>'+evTable(e,false)+evWarn(e)+
-    '<button type="button" class="gbtn" data-evg="'+esc(e.id)+'">Full details</button>'+toolsRow(e.id)+'<div class="links">'+evLinks(e)+'</div>'+marksRow(e.id)+'</div>';
+    '<button type="button" class="gbtn" data-evg="'+esc(e.id)+'">Full details</button>'+'<div class="links">'+evLinks(e)+'</div>'+toolsRow(e.id)+marksRow(e.id)+'</div>';
 }
 function openEvPopup(e){ if(e.la==null){ openEvGuide(e,{}); return; } L.popup({offset:[0,-8],maxWidth:320,autoPanPadding:[20,20]}).setLatLng([e.la,e.lo]).setContent(evPopupHtml(e)).openOn(map); }
 document.addEventListener('click',function(ev){ var b=ev.target.closest&&ev.target.closest('[data-evg]'); if(!b) return; var e=EVID[b.getAttribute('data-evg')]; if(e) openEvGuide(e,{}); },true);
@@ -2166,7 +2166,7 @@ function openGuide(s,opts){
   var h='<h2>'+esc(G.t)+'</h2>';
   G.p.forEach(function(p,i){ h+='<p'+(i===0?' class="gintro"':'')+'>'+mdi(p)+'</p>'; });
   var prac=(s.when?'<p>'+esc(s.when)+'</p>':'')+(daysTxt(s)?'<p>'+esc(daysTxt(s))+'</p>':'')+(s.nv?'<p>Not re-verified in 2026. Check before a special trip.</p>':'');
-  h+='<div class="gprac">'+prac+'<div class="btnrow" style="margin-top:8px"><button type="button" class="ghost sm" data-copy="'+attr(s.name)+'">Copy name</button>'+(s.q?'<button type="button" class="ghost sm" data-copy="'+attr(s.q)+'">Copy address</button>':'')+'</div>'+toolsRow(s.id)+'<div class="links"><a href="'+gmSearch(s.q)+'" target="_blank" rel="noopener">Google Maps</a>'+(s.lat!=null?'<a href="'+gmTransit(s)+'" target="_blank" rel="noopener">Transit</a><a href="'+cmap(s)+'" target="_blank" rel="noopener">Citymapper</a>':'')+'<a href="'+gimg(s.name,s.q)+'" target="_blank" rel="noopener">Photos</a></div>'+marksRow(s.id)+'</div>';
+  h+='<div class="gprac">'+prac+'<div class="btnrow" style="margin-top:8px"><button type="button" class="ghost sm" data-copy="'+attr(s.name)+'">Copy name</button>'+(s.q?'<button type="button" class="ghost sm" data-copy="'+attr(s.q)+'">Copy address</button>':'')+'</div>'+'<div class="links"><a href="'+gmSearch(s.q)+'" target="_blank" rel="noopener">Google Maps</a>'+(s.lat!=null?'<a href="'+gmTransit(s)+'" target="_blank" rel="noopener">Transit</a><a href="'+cmap(s)+'" target="_blank" rel="noopener">Citymapper</a>':'')+'<a href="'+gimg(s.name,s.q)+'" target="_blank" rel="noopener">Photos</a></div>'+toolsRow(s.id)+marksRow(s.id)+'</div>';
   if(G.s) h+='<p class="gsrc">Sources: '+esc(G.s)+'</p>';
   if(G.u&&G.u.length) h+='<p class="gsrc">'+G.u.map(function(x){ return '<a href="'+esc(x[1])+'" target="_blank" rel="noopener">'+esc(x[0])+'</a>'; }).join(' · ')+'</p>';
   gBody.innerHTML=h; gBody.scrollTop=0;
@@ -2178,7 +2178,7 @@ function openGuide(s,opts){
 function openEvGuide(e,opts){
   opts=opts||{}; gCur=e; gList=evOrder; gLabel='Event';
   $('gchip').innerHTML='<i style="background:'+EVT[e.t].c+'"></i><span>'+esc(EVT[e.t].n)+'</span>';
-  gBody.innerHTML='<h2>'+esc(e.n)+'</h2><p class="gintro">'+esc(e.x)+'</p><div class="gprac">'+evTable(e,true)+evWarn(e)+evCopy(e)+toolsRow(e.id)+'<div class="links">'+evLinks(e)+'</div>'+marksRow(e.id)+'</div>';
+  gBody.innerHTML='<h2>'+esc(e.n)+'</h2><p class="gintro">'+esc(e.x)+'</p><div class="gprac">'+evTable(e,true)+evWarn(e)+evCopy(e)+'<div class="links">'+evLinks(e)+'</div>'+toolsRow(e.id)+marksRow(e.id)+'</div>';
   gBody.scrollTop=0;
   syncNav(evOrder.indexOf(e),evOrder.length,'Event');
   gEl.hidden=false;
@@ -2658,7 +2658,7 @@ var _routeCardE=routeCard; routeCard=function(r){
 };
 $('pRoutes').addEventListener('click',function(e){ var b=e.target.closest('[data-tour]'); if(!b) return; e.stopPropagation(); trStart(b.getAttribute('data-tour'),0); },true);
 // a route chip in the popup also offers the walk
-var _popupE=popupHtml; popupHtml=function(s){ var h=_popupE(s); if(s.route&&!s.ropt&&s.route.core.length>1) h=h.replace('<div class="links">','<button type="button" class="startwalk sm" data-tourp="'+s.route.id+'" data-ti="'+s.route.core.indexOf(s)+'">Walk route '+s.route.id+' from here</button><div class="links">'); return h; };
+// popup 'Walk route X from here' button removed 5 Nov 2026 (Kon): walks start from the route card
 document.addEventListener('click',function(e){ var b=e.target.closest&&e.target.closest('[data-tourp]'); if(!b) return; e.stopPropagation(); trStart(b.getAttribute('data-tourp'),+b.getAttribute('data-ti')); },true);
 // resume
 (function(){ var t=sget(SK+'tour',null); if(t&&R[t.r]){ var el=$('resume'); el.innerHTML='<span>Walk in progress: route '+esc(t.r)+', stop '+(t.i+1)+' of '+R[t.r].core.length+'</span><button type="button" class="tb go" id="rsGo">Resume</button><button type="button" class="tb" id="rsNo">Dismiss</button>'; el.hidden=false;

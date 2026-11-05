@@ -57,3 +57,7 @@ Plovdiv 1.0 (replaced by cities/plovdiv) · Apps (HTML holder prototype). Old Gi
 - 2026-11-05 — Cluj street map: OSM named streets from GitHub `madeincluj/street-names` (2013, ODbL; 830 streets).
   shared/glyphs.json gains a trimmed 256-511 range (ă ș ț ş ţ ő ű ł) for all three fonts, so Romanian and Hungarian
   street names render; Turin checked unchanged.
+- 2026-11-05 — Launcher opens the last city opened on this device (localStorage `konmap.last`), else the city list;
+  cities/index.json "default" no longer used. concrete/0.3 popup: links (Maps, Transit, Citymapper, Photos) first, then
+  Star/Fade, then Read the guide; the 'Walk route X from here' button is gone (walks start from the route card). Guide
+  and event panels: links before Star/Fade too.
