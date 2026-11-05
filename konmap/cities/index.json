@@ -10,6 +10,16 @@
    "id": "plovdiv",
    "name": "Plovdiv",
    "engine": "concrete/0.3"
+  },
+  {
+   "id": "vatra-dornei",
+   "name": "Vatra Dornei",
+   "engine": "concrete/0.3"
+  },
+  {
+   "id": "cluj",
+   "name": "Cluj-Napoca",
+   "engine": "concrete/0.3"
   }
  ]
 }

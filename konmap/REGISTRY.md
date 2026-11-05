@@ -15,6 +15,8 @@ Republish from this folder with `publish_files` (patch mode: send only the files
 |---|---|---|
 | Turin | concrete/0.3 | migrated 29 Oct 2026 (from Turin 2.2 + tours from 2.0A) |
 | Plovdiv | concrete/0.3 | built from the research register 29 Oct 2026 (72 stops, 10 walks, 7 tours, 5 Study readings; drawn base, no streets) |
+| Vatra Dornei | concrete/0.3 | built 30 Oct 2026 (34 stops); synced to Git from the live artifact 5 Nov 2026 |
+| Cluj-Napoca | concrete/0.3 | short-stay map 5 Nov 2026: 24 stops, 1 half-afternoon walk, Study with 2 readings; drawn base, no river, no streets |
 | Copenhagen, Paris, Rome, Athens | — | legacy single-page artifacts; migrate one by one |
 
 ## Legacy artifacts (read-only, to be deleted when Kon says)
@@ -49,3 +51,6 @@ Plovdiv 1.0 (replaced by cities/plovdiv) · Apps (HTML holder prototype). Old Gi
   ("Custom mix"); total shown = sum of the kind sliders + starred. Available in Sites and Custom. Replaces Custom's
   kind checkboxes and the Custom-only per-kind toggle (old saved plans are read in). The hidden filter no longer
   applies in Curated. Custom walks drawn like planned routes: the city's route colours, solid, haloed when picked.
+- 2026-11-05 — Vatra Dornei files copied into Git from the live artifact (they were only published). Cluj-Napoca added
+  (cities/cluj): 15-stop half-afternoon loop + 9 stops off it (Mănăștur, Makovecz church, Gheorgheni, two markets,
+  the €50k automatic toilet); guides hand-written from the Oct 2026 research report; base without the river.
