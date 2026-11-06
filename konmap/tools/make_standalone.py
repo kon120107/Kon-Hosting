@@ -1,11 +1,13 @@
 """One city as a single self-contained page (engine + city data + base map + reports + glyphs + Leaflet inlined), for sharing.
-usage: make_standalone.py <id> <out.html> [lang]
+usage: make_standalone.py <id> <out.html> [lang] [--sites-first]
+--sites-first: Sites tab put first (left) and opened on load (Vatra Dornei pages, 6 Nov 2026).
 lang (e.g. es): city text from cities/<id>/<lang>/city.json and reports.json (base map shared), engine interface text
 translated with tools/i18n/<lang>.py. A fetch shim serves the inlined data; the Cities button is hidden.
 Still online: fonts and the MapLibre street-map libraries (jsdelivr), as in KonMap."""
 import json, sys, os, re, importlib.util
 B = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-cid, out = sys.argv[1], sys.argv[2]; lang = sys.argv[3] if len(sys.argv) > 3 else ''
+SF = '--sites-first' in sys.argv; args = [a for a in sys.argv[1:] if a != '--sites-first']
+cid, out = args[0], args[1]; lang = args[2] if len(args) > 2 else ''
 cdir = f'{B}/cities/{cid}'; tdir = f'{cdir}/{lang}' if lang else cdir
 city = json.load(open(f'{tdir}/city.json'))
 eng = open(f'{B}/engines/{city["meta"]["engine"]}/index.html').read()
@@ -39,5 +41,8 @@ tag = '<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet
 lf = open(f'{B}/shared/vendor/leaflet-1.9.4.js').read().replace('</script', '<\\/script')
 assert tag in eng
 eng = eng.replace(tag, shim + '<script>' + lf + '</script>')
+if SF:
+    eng = eng.replace('</body>', '<script>(function(){var n=0,t=setInterval(function(){var s=document.getElementById("tSites"),r=document.getElementById("tRoutes");'
+      'if(s&&r){clearInterval(t);r.parentNode.insertBefore(s,r);s.click();}else if(++n>100)clearInterval(t);},100);})();</script></body>', 1)
 open(out, 'w').write(eng)
 print(out, os.path.getsize(out))
