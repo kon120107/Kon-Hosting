@@ -17,7 +17,8 @@ Republish from this folder with `publish_files` (patch mode: send only the files
 | Plovdiv | concrete/0.3 | built from the research register 29 Oct 2026 (72 stops, 10 walks, 7 tours, 5 Study readings; drawn base, no streets) |
 | Vatra Dornei | concrete/0.3 | built 30 Oct 2026 (34 stops); synced to Git from the live artifact 5 Nov 2026 |
 | Cluj-Napoca | concrete/0.3 | short-stay map 5 Nov 2026: 24 stops, 1 half-afternoon walk, Study with 2 readings; OSM street map (2013 named-street extract, madeincluj/street-names), no river |
-| Copenhagen, Paris, Rome, Athens | — | legacy single-page artifacts; migrate one by one |
+| Rome | concrete/0.3 | built from claude/rome/rome-sites.md 6 Nov 2026: 134 stops, 14 walks, 14 tours (church day as tours), 6 day trips, Study; drawn base with the Tevere, no streets |
+| Copenhagen, Paris, Athens | — | legacy single-page artifacts; migrate one by one |
 
 ## Legacy artifacts (read-only, to be deleted when Kon says)
 
@@ -61,3 +62,7 @@ Plovdiv 1.0 (replaced by cities/plovdiv) · Apps (HTML holder prototype). Old Gi
   cities/index.json "default" no longer used. concrete/0.3 popup: links (Maps, Transit, Citymapper, Photos) first, then
   Star/Fade, then Read the guide; the 'Walk route X from here' button is gone (walks start from the route card). Guide
   and event panels: links before Star/Fade too.
+- 2026-11-06 — concrete/0.3 gains a 'church' kind (cross glyph, indigo, filterable), fixed in place; Turin, Plovdiv
+  checked unchanged. Rome added (cities/rome), replacing the legacy single-page Rome: 134 stops (59 religious by era,
+  27 concrete, 26 pass-by, 16 lore, 6 thinkers), 14 area walks, 14 tours incl. the modern church day (main), a second
+  modern day and the all-eras day; Study with 6 readings + the research reports. Base from Natural Earth + OSM coast.

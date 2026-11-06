@@ -20,6 +20,11 @@
    "id": "cluj",
    "name": "Cluj-Napoca",
    "engine": "concrete/0.3"
+  },
+  {
+   "id": "rome",
+   "name": "Rome",
+   "engine": "concrete/0.3"
   }
  ]
 }
