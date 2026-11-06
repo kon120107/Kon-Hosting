@@ -1193,6 +1193,19 @@ details.tstory>summary::before{content:"\25B8  ";font-size:10px;color:var(--mute
 details.tstory[open]>summary::before{content:"\25BE  "}
 .rbody details.tstory p{color:var(--fg);font-size:13px;line-height:1.55;margin:8px 0 0;max-width:62ch}
 #tourCards .tgh:first-child{margin-top:0}
+.pop h2 .pk{display:inline-grid;place-items:center;width:18px;height:18px;border-radius:50%;vertical-align:3px;margin-right:6px}
+.pop h2 .pk svg{width:12px;height:12px}
+.pop .mtools{margin-top:6px}
+.pop .gbtn{padding:6px 10px;margin-top:6px;background:none;color:var(--muted);border:1px solid var(--line);font-weight:500}
+.mapbtns button.qbtn{width:30px;padding:0;border-radius:50%;font-weight:700}
+.lg{display:flex;flex-direction:column;gap:6px;border-bottom:1px solid var(--line);padding-bottom:10px}
+.lgh{font-weight:600;font-size:13px}
+.lgk{display:grid;grid-template-columns:1fr;gap:5px;font-size:12.5px;color:var(--muted)}
+.lgk>span{display:flex;align-items:center;gap:8px}
+.lgk .kg{flex:none}
+.lgp{flex:none;width:32px;display:grid;place-items:center}
+.lgp .pin svg{width:60%;height:60%}
+.lgt{margin:0;font-size:12.5px;color:var(--muted)}
 </style>
 <div id="app">
   <aside id="side" aria-label="Routes, places and events">
@@ -1702,13 +1715,11 @@ function stepTxt(s){
 function popupHtml(s){
   var r=s.route, col=mode==='explore'?KCOL[s.k]:(r?r.color:'#8a8f98');
   var flag=s.nv?'<p class="when">Not re-verified in 2026. Check before a special trip.</p>':'';
-  return '<div class="pop"><h2>'+esc(s.name)+'</h2>'+
-    '<div class="rc"><i style="background:'+col+'"></i><span>'+esc(stepTxt(s))+'</span></div>'+
-    '<div class="rc"><span class="kg" style="background:'+KCOL[s.k]+'">'+glyph(s.k)+'</span><span>'+esc(KNAME[s.k])+'</span></div>'+
+  return '<div class="pop"><h2><span class="kg pk" title="'+attr(KNAME[s.k]||'')+'" style="background:'+KCOL[s.k]+'">'+glyph(s.k)+'</span>'+esc(s.name)+'</h2>'+
     '<p>'+esc(s.blurb)+'</p>'+(s.when?'<p class="when">'+esc(s.when)+'</p>':'')+(daysTxt(s)?'<p class="when">'+esc(daysTxt(s))+'</p>':'')+flag+
     '<div class="links"><a href="'+gmSearch(s.q)+'" target="_blank" rel="noopener">Google Maps</a><a href="'+gmTransit(s)+'" target="_blank" rel="noopener">Transit</a><a href="'+cmap(s)+'" target="_blank" rel="noopener">Citymapper</a><a href="'+gimg(s.name,s.q)+'" target="_blank" rel="noopener">Photos</a></div>'+
     toolsRow(s.id)+
-    (GUIDE[s.id]?'<button type="button" class="gbtn" data-guide="'+esc(s.id)+'">Read the guide</button>':'')+marksRow(s.id)+'</div>';
+    '<button type="button" class="gbtn" data-guide="'+esc(s.id)+'">'+(GUIDE[s.id]?'Read the guide':'More: rating, visited, scores')+'</button></div>';
 }
 function viewPad(){ return {tl:[40,40],br:[40,40]}; }
 function flyCenter(ll,z,opt){ var vp=viewPad(), dx=(vp.br[0]-vp.tl[0])/2, dy=(vp.br[1]-vp.tl[1])/2; var p=map.project(L.latLng(ll),z).add([dx,dy]); map.flyTo(map.unproject(p,z),z,opt||{duration:.5}); }
@@ -2158,7 +2169,7 @@ function guideContext(s){
   return {list:[],label:''};
 }
 function openGuide(s,opts){
-  var G=GUIDE[s.id]; if(!G) return;
+  var G=GUIDE[s.id]||(s.blurb!=null?{t:s.name,p:[s.blurb]}:null); if(!G) return;
   opts=opts||{}; gCur=s;
   var ctx=guideContext(s); gList=ctx.list; gLabel=ctx.label;
   var r=s.route;
@@ -2167,6 +2178,7 @@ function openGuide(s,opts){
   G.p.forEach(function(p,i){ h+='<p'+(i===0?' class="gintro"':'')+'>'+mdi(p)+'</p>'; });
   var prac=(s.when?'<p>'+esc(s.when)+'</p>':'')+(daysTxt(s)?'<p>'+esc(daysTxt(s))+'</p>':'')+(s.nv?'<p>Not re-verified in 2026. Check before a special trip.</p>':'');
   h+='<div class="gprac">'+prac+'<div class="btnrow" style="margin-top:8px"><button type="button" class="ghost sm" data-copy="'+attr(s.name)+'">Copy name</button>'+(s.q?'<button type="button" class="ghost sm" data-copy="'+attr(s.q)+'">Copy address</button>':'')+'</div>'+'<div class="links"><a href="'+gmSearch(s.q)+'" target="_blank" rel="noopener">Google Maps</a>'+(s.lat!=null?'<a href="'+gmTransit(s)+'" target="_blank" rel="noopener">Transit</a><a href="'+cmap(s)+'" target="_blank" rel="noopener">Citymapper</a>':'')+'<a href="'+gimg(s.name,s.q)+'" target="_blank" rel="noopener">Photos</a></div>'+toolsRow(s.id)+marksRow(s.id)+'</div>';
+  if(typeof gExtra==='function') h=h.replace('<div class="gprac">',gExtra(s)+'<div class="gprac">');
   if(G.s) h+='<p class="gsrc">Sources: '+esc(G.s)+'</p>';
   if(G.u&&G.u.length) h+='<p class="gsrc">'+G.u.map(function(x){ return '<a href="'+esc(x[1])+'" target="_blank" rel="noopener">'+esc(x[0])+'</a>'; }).join(' · ')+'</p>';
   gBody.innerHTML=h; gBody.scrollTop=0;
@@ -2195,7 +2207,7 @@ function stepGuide(d){
   if(!gCur) return; var i=gList.indexOf(gCur)+d; if(i<0||i>=gList.length) return;
   var x=gList[i];
   if(x.id && x.id.indexOf('e-')===0) openEvGuide(x,{fly:true,quiet:true});
-  else if(GUIDE[x.id]) openGuide(x,{fly:true,quiet:true});
+  else if(GUIDE[x.id]||x.blurb!=null) openGuide(x,{fly:true,quiet:true});
   else { gCur=x; stepGuide(d); }
 }
 function closeGuide(){ gEl.hidden=true; gCur=null; }
@@ -2298,7 +2310,8 @@ $('panelBtn').addEventListener('click',function(){ setPanel($('app').classList.c
 $('fitBtn').addEventListener('click',fitMode);
 
 // help + marks transfer
-$('helpbtn').addEventListener('click',function(){ $('help').hidden=false; $('helpClose').focus(); });
+function openHelp(){ $('help').hidden=false; try{ $('helpClose').focus({preventScroll:true}); }catch(e){} var c=document.querySelector('#help .hcard'); if(c) c.scrollTop=0; }
+$('helpbtn').addEventListener('click',openHelp);
 $('helpClose').addEventListener('click',function(){ $('help').hidden=true; });
 $('help').addEventListener('click',function(e){ if(e.target===$('help')) $('help').hidden=true; });
 $('mExport').addEventListener('click',function(){ var t=JSON.stringify({marks:marks,walks:kept}); $('mText').value=t; copyText(t,$('mExport')); });
@@ -2560,7 +2573,7 @@ var _stopRowD=stopRow; stopRow=function(s,n,opts){
 };
 var _popupD=popupHtml; popupHtml=function(s){
   var c=s.sc, row=function(n,v){ return '<span class="sc"><b>'+n+'</b>'+dots(v)+'</span>'; };
-  return _popupD(s).replace('<p>','<div class="scs">'+row('Interest',c.i)+row('To see',c.p)+row('Story',c.t)+'</div><p>');
+  return _popupD(s);
 };
 var _refreshD=refresh; refresh=function(){ rkSync(); _refreshD(); };
 
@@ -3101,7 +3114,6 @@ function tourChips(s){
 var _popupT=popupHtml; popupHtml=function(s){
   var h=_popupT(s), add='';
   if(focus&&focus.type==='tour'){ var t=TOUR[focus.id], nt=t&&t.note[s.id]; if(nt) add+='<p class="tnote">'+(t.tg[s.id]?'<span class="tag '+t.tg[s.id]+'">'+TAGN[t.tg[s.id]]+'</span> ':'')+esc(nt)+'</p>'; }
-  add+=tourChips(s);
   return h.replace('<div class="links">',add+'<div class="links">');
 };
 function openTour(id){
@@ -3448,6 +3460,37 @@ function amFromPlan(p){
 var _cuStateP=cuState; cuState=function(){ var o=_cuStateP(); o.am={min:RK.min,mix:AM.mix,n:AM.mix?AM.n:null}; return o; };
 var _cuApplyP=cuApply; cuApply=function(p){ _cuApplyP(p); amFromPlan(p); };
 if(CP.plan) amFromPlan(CP.plan);
+
+// ---- module compact cards + help legend (6 Nov 2026, Kon) ----
+// Map popups keep only name, kind icon, text, links and Star/Fade. Route, scores, tours, rating and
+// Visited live in the full view (openGuide), which now opens for every place, guide or not.
+function gExtra(s){
+  var h='<div class="rc"><span class="kg" style="background:'+KCOL[s.k]+'">'+glyph(s.k)+'</span><span>'+esc(KNAME[s.k]||'')+'</span></div>';
+  if(s.route||s.ropt) h+='<div class="rc"><i style="background:'+(s.route?s.route.color:'#8a8f98')+'"></i><span>'+esc(stepTxt(s))+'</span></div>';
+  if(s.sc&&typeof dots==='function'){ var row=function(n,v){ return '<span class="sc"><b>'+n+'</b>'+dots(v)+'</span>'; }; h+='<div class="scs">'+row('Interest',s.sc.i)+row('To see',s.sc.p)+row('Story',s.sc.t)+'</div>'; }
+  if(typeof tourChips==='function') h+=tourChips(s);
+  return h;
+}
+(function(){
+  var mb=document.querySelector('.mapbtns');
+  if(mb){ var q=document.createElement('button'); q.type='button'; q.id='helpMap'; q.className='qbtn'; q.textContent='?'; q.title='How this map works'; q.setAttribute('aria-label','How this map works'); mb.appendChild(q);
+    q.addEventListener('click',openHelp); }
+  var dl=document.querySelector('#help dl'); if(!dl) return;
+  var pin=function(inner,cls,st,z){ z=z||22; return '<span class="lgp"><span class="pin'+(cls||'')+'" style="width:'+z+'px;height:'+z+'px;'+(st||'background:#5f6670')+'">'+(inner||'')+'</span></span>'; };
+  var ks=(typeof amKinds==='function'?amKinds():KORD);
+  var h='<div class="lg"><div class="lgh">Kinds of place</div><div class="lgk">'+ks.map(function(k){ return '<span><span class="kg" style="background:'+KCOL[k]+'">'+glyph(k)+'</span>'+esc(KNAME[k]||k)+'</span>'; }).join('')+'</div>'+
+    '<div class="lgh">Pins</div><div class="lgk">'+
+    '<span>'+pin(glyph(ks[0]||'arch'),'','background:#5f6670',28)+'Big pin: a major stop, or a high score</span>'+
+    '<span>'+pin(glyph(ks[0]||'arch'),'','background:#5f6670',16)+'Small pin: a minor stop</span>'+
+    '<span>'+pin(glyph(ks[0]||'arch'),' opt','color:#5f6670;border-color:#5f6670',20)+'Hollow pin: optional add-on to a route</span>'+
+    '<span>'+pin('<span class="num">3</span>','','background:#5f6670',22)+'Number: stop order on the open route or walk</span>'+
+    '<span>'+pin(glyph(ks[0]||'arch'),' sv','background:#5f6670',22).replace('</span></span>','<span class="hv">★</span></span></span>')+'Gold ring and ★: starred</span>'+
+    '<span>'+pin(glyph(ks[0]||'arch'),'','background:#5f6670',22).replace('</span></span>','<span class="ck">✓</span></span></span>')+'✓: visited</span>'+
+    '<span>'+pin(glyph(ks[0]||'arch'),' fd','background:#5f6670',18)+'Grey and small: faded by you (or visited, if set to fade)</span>'+
+    '<span>'+pin(glyph(ks[0]||'arch'),' dim','background:#5f6670',22)+'Very pale: closed that day, or outside your search</span>'+
+    '</div><div class="lgh">Tap a pin</div><p class="lgt">The card shows the essentials and Star / Fade. “More” (or “Read the guide”) opens the full view with route, scores, tours, your rating and Visited.</p></div>';
+  dl.insertAdjacentHTML('beforebegin',h);
+})();
 var startMode=sget(SK+'mode','routes');
 refresh();
 if(startMode==='explore'||startMode==='events') setMode(startMode);

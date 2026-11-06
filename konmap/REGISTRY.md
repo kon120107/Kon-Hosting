@@ -67,3 +67,4 @@ Plovdiv 1.0 (replaced by cities/plovdiv) · Apps (HTML holder prototype). Old Gi
   checked unchanged. Rome added (cities/rome), replacing the legacy single-page Rome: 134 stops (59 religious by era,
   27 concrete, 26 pass-by, 16 lore, 6 thinkers), 14 area walks, 14 tours incl. the modern church day (main), a second
   modern day and the all-eras day; Study with 6 readings + the research reports. Base from Natural Earth + OSM coast.
+- 2026-11-06 — Standalone shareable Vatra Dornei page: `/vatra-dornei/index.html` (repo root, built by tools/make_standalone.py from KonMap; artifact "Vatra Dornei · KonMap", slug 46c5987a-8fc2-43a4-b46f-5ce7e1623cdc). Rebuild it after Vatra Dornei changes. Engine concrete/0.3 synced from the live artifact (popup/legend changes were only published).
