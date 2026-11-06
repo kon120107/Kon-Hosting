@@ -3461,6 +3461,15 @@ var _cuStateP=cuState; cuState=function(){ var o=_cuStateP(); o.am={min:RK.min,m
 var _cuApplyP=cuApply; cuApply=function(p){ _cuApplyP(p); amFromPlan(p); };
 if(CP.plan) amFromPlan(CP.plan);
 
+// ---- module home pin (6 Nov 2026, Kon) ----
+// CC.home = [{lat,lon,name,note}]: where we stay. Not a site: own house icon, always on top, no routes or scores.
+(CC.home||[]).forEach(function(hm){
+  var ic='<div style="width:30px;height:30px;border-radius:8px;background:#111;display:grid;place-items:center;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.45)"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M3 11.5L12 4l9 7.5V20h-6v-5h-6v5H3z" fill="#fff"/></svg></div>';
+  var hmk=L.marker([hm.lat,hm.lon],{icon:L.divIcon({className:'homepin',iconSize:[30,30],iconAnchor:[15,15],html:ic}),zIndexOffset:3000,keyboard:false}).addTo(map);
+  hmk.bindTooltip(esc(hm.name),{permanent:true,direction:'right',offset:[14,0]});
+  hmk.bindPopup('<div class="pop"><h2>'+esc(hm.name)+'</h2>'+(hm.note?'<p>'+esc(hm.note)+'</p>':'')+'<div class="links"><a href="https://www.google.com/maps/dir/?api=1&destination='+hm.lat+','+hm.lon+'" target="_blank" rel="noopener">Google Maps</a></div></div>');
+});
+
 // ---- module compact cards + help legend (6 Nov 2026, Kon) ----
 // Map popups keep only name, kind icon, text, links and Star/Fade. Route, scores, tours, rating and
 // Visited live in the full view (openGuide), which now opens for every place, guide or not.
