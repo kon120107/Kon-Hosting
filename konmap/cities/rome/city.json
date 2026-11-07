@@ -188,8 +188,8 @@
     "minor"
    ]
   ],
-  "attr": "Coast: OSM via @geo-maps (ODbL). Rivers, roads, rail: Natural Earth (public domain). No street data yet.",
-  "baseOn": "Base map: drawn from OSM coastline and Natural Earth (main rivers, roads and rail, generalised; can sit up to about 1 km off). No street map yet.",
+  "attr": "Streets, rail, Tevere and Aniene: © OpenStreetMap contributors (ODbL). Coast: OSM via @geo-maps. Outer rivers and roads: Natural Earth.",
+  "baseOn": "Base map: OpenStreetMap — every street in the centre, main roads, rail and the rivers across the city; outside that, Natural Earth (generalised).",
   "lists": [
    [
     "R",

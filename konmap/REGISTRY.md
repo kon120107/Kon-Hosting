@@ -17,7 +17,7 @@ Republish from this folder with `publish_files` (patch mode: send only the files
 | Plovdiv | concrete/0.3 | built from the research register 29 Oct 2026 (72 stops, 10 walks, 7 tours, 5 Study readings; drawn base, no streets) |
 | Vatra Dornei | concrete/0.3 | built 30 Oct 2026 (34 stops); OSM street map 6 Nov 2026 |
 | Cluj-Napoca | concrete/0.3 | short-stay map 5 Nov 2026: 24 stops, 1 half-afternoon walk, Study with 2 readings; OSM street map (2013 named-street extract, madeincluj/street-names), no river |
-| Rome | concrete/0.3 | built from claude/rome/rome-sites.md 6 Nov 2026: 134 stops, 14 walks, 14 tours (church day as tours), 6 day trips, Study; drawn base with the Tevere, no streets |
+| Rome | concrete/0.3 | built from claude/rome/rome-sites.md 6 Nov 2026: 134 stops, 14 walks, 14 tours (church day as tours), 6 day trips, Study; OSM street map 7 Nov 2026 (all streets in the centre; main roads, rail, Tevere and Aniene citywide) |
 | Copenhagen, Paris, Athens | — | legacy single-page artifacts; migrate one by one |
 
 ## Legacy artifacts (read-only, to be deleted when Kon says)
@@ -55,6 +55,7 @@ Plovdiv 1.0 (replaced by cities/plovdiv) · Apps (HTML holder prototype). Old Gi
 - 2026-11-05 — Vatra Dornei files copied into Git from the live artifact (they were only published). Cluj-Napoca added
   (cities/cluj): 15-stop half-afternoon loop + 9 stops off it (Mănăștur, Makovecz church, Gheorgheni, two markets,
   the €50k automatic toilet); guides hand-written from the Oct 2026 research report; base without the river.
+- 2026-11-07 — Rome street map: OSM via Overpass (Kon downloaded on phone from overpass.private.coffee; overpass-api.de returns 406 to phone browsers; raw/rome-osm.json). Centre box 41.86–41.93 N, 12.44–12.53 E has every street; box 41.77–42.03 N, 12.38–12.65 E has tertiary and up, rail, rivers. OSM Tevere and Aniene replace Natural Earth inside that box.
 - 2026-11-06 — Vatra Dornei street map: OSM via Overpass (Kon downloaded on phone; raw/vatra-dornei-osm.json), add_streets.py + OSM town rivers (Bistrița, Dorna…) replacing Natural Earth inside the town box.
 - 2026-11-05 — Cluj street map: OSM named streets from GitHub `madeincluj/street-names` (2013, ODbL; 830 streets).
   shared/glyphs.json gains a trimmed 256-511 range (ă ș ț ş ţ ő ű ł) for all three fonts, so Romanian and Hungarian
