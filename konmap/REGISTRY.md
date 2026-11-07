@@ -55,6 +55,7 @@ Plovdiv 1.0 (replaced by cities/plovdiv) · Apps (HTML holder prototype). Old Gi
 - 2026-11-05 — Vatra Dornei files copied into Git from the live artifact (they were only published). Cluj-Napoca added
   (cities/cluj): 15-stop half-afternoon loop + 9 stops off it (Mănăștur, Makovecz church, Gheorgheni, two markets,
   the €50k automatic toilet); guides hand-written from the Oct 2026 research report; base without the river.
+- 2026-11-07 — Standalone shareable Rome page: `/rome/index.html` (repo root, `make_standalone.py rome rome/index.html`; Routes first, as KonMap). Rebuild it after Rome changes.
 - 2026-11-07 — Rome street map: OSM via Overpass (Kon downloaded on phone from overpass.private.coffee; overpass-api.de returns 406 to phone browsers; raw/rome-osm.json). Centre box 41.86–41.93 N, 12.44–12.53 E has every street; box 41.77–42.03 N, 12.38–12.65 E has tertiary and up, rail, rivers. OSM Tevere and Aniene replace Natural Earth inside that box.
 - 2026-11-06 — Vatra Dornei street map: OSM via Overpass (Kon downloaded on phone; raw/vatra-dornei-osm.json), add_streets.py + OSM town rivers (Bistrița, Dorna…) replacing Natural Earth inside the town box.
 - 2026-11-05 — Cluj street map: OSM named streets from GitHub `madeincluj/street-names` (2013, ODbL; 830 streets).
