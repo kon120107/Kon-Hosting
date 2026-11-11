@@ -18,11 +18,12 @@ Republish from this folder with `publish_files` (patch mode: send only the files
 | Vatra Dornei | concrete/0.3 | built 30 Oct 2026 (34 stops); OSM street map 6 Nov 2026 |
 | Cluj-Napoca | concrete/0.3 | short-stay map 5 Nov 2026: 24 stops, 1 half-afternoon walk, Study with 2 readings; OSM street map (2013 named-street extract, madeincluj/street-names), no river |
 | Rome | concrete/0.3 | built from claude/rome/rome-sites.md 6 Nov 2026: 134 stops, 14 walks, 14 tours (church day as tours), 6 day trips, Study; OSM street map 7 Nov 2026 (all streets in the centre; main roads, rail, Tevere and Aniene citywide) |
-| Copenhagen, Paris, Athens | — | legacy single-page artifacts; migrate one by one |
+| Athens | concrete/0.3 | built from claude/athens/athens-sites.md 11 Nov 2026: 176 stops, 14 walks, 8 tours, 4 day trips, Study (5 readings + manual pass); drawn base, no streets |
+| Copenhagen, Paris | — | legacy single-page artifacts; migrate one by one |
 
 ## Legacy artifacts (read-only, to be deleted when Kon says)
 
-Turin Concrete Map 1.0, 1.0A, 2.0, 2.0A, 2.1, 2.2 · Copenhagen 1.1, 1.2 · Paris 4.1 · Rome 1.0 · Athens 1.0 ·
+Turin Concrete Map 1.0, 1.0A, 2.0, 2.0A, 2.1, 2.2 · Copenhagen 1.1, 1.2 · Paris 4.1 · Rome 1.0 · Athens 1.0 (replaced by cities/athens) ·
 Plovdiv 1.0 (replaced by cities/plovdiv) · Apps (HTML holder prototype). Old GitHub Pages folders `turin-concrete-map/`, `paris-concrete-map/`.
 
 ## Change log
@@ -72,3 +73,4 @@ Plovdiv 1.0 (replaced by cities/plovdiv) · Apps (HTML holder prototype). Old Gi
 - 2026-11-06 — Standalone shareable Vatra Dornei page: `/vatra-dornei/index.html` (repo root, built by tools/make_standalone.py from KonMap; artifact "Vatra Dornei · KonMap", slug 46c5987a-8fc2-43a4-b46f-5ce7e1623cdc). Rebuild it after Vatra Dornei changes. Engine concrete/0.3 synced from the live artifact (popup/legend changes were only published).
 - 2026-11-06 — Spanish standalone Vatra Dornei: `/vatra-dornei-es/index.html` (artifact "Vatra Dornei · KonMap (español)", slug df995817-ce30-410c-9254-824d9ea28804). Text in cities/vatra-dornei/es/, interface strings in tools/i18n/es.py; `make_standalone.py vatra-dornei <out> es`. Standalone pages now inline Leaflet (shared/vendor). Both Vatra Dornei pages are built with --sites-first (Sites tab left and open on load; Vatra Dornei only, not KonMap).
 - 2026-11-06 — Vatra Dornei classics from the research "Basic and classic sights" (16 stops, list D, routes 9–12, 12 Apostoli optional on route 7) in English and Spanish; base map land extended to 25.95 E / 47.92 N for the monasteries and Rarău. Engine concrete/0.3: new home-pin module (`cc.home` = [{lat,lon,name,note}], house icon, not a site); Vatra Dornei uses it for the hostel. Standalone pages rebuilt.
+- 2026-11-11 — Athens added (cities/athens), replacing legacy Athens 1.0: built from the research register (master + D1, D2, D3, R1, K1 + manual pass): 176 stops (classics with find-it details, church hunt by era, concrete/Cold War, pass-by, thinkers and science), 14 area walks (2 by car), 8 tours (church hunt, Occupation, junta, water, science, mountains/Cold War, modernists, classics), 4 day trips; guides hand-written for every stop; Study: intro, concrete, marks, churches, tickets + manual pass. Base from Natural Earth + OSM coast (thin: no rivers inside the box). curation.json generated from claude-side scripts (sites carry name/blurb/when overrides, no report blocks).

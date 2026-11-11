@@ -1,0 +1,3287 @@
+{
+ "id": "athens",
+ "name": "Athens",
+ "lat": 37.98,
+ "bbox": [
+  23.38,
+  37.62,
+  24.16,
+  38.21
+ ],
+ "core": [
+  [
+   37.962,
+   23.712
+  ],
+  [
+   37.992,
+   23.752
+  ]
+ ],
+ "center": [
+  [
+   37.9,
+   23.62
+  ],
+  [
+   38.07,
+   23.88
+  ]
+ ],
+ "labels": [
+  [
+   37.9755,
+   23.7348,
+   "Athens",
+   "big city"
+  ],
+  [
+   37.942,
+   23.646,
+   "Piraeus",
+   "city"
+  ],
+  [
+   37.9715,
+   23.7257,
+   "Acropolis",
+   "minor"
+  ],
+  [
+   37.9875,
+   23.735,
+   "Exarchia",
+   "minor"
+  ],
+  [
+   37.9785,
+   23.743,
+   "Kolonaki",
+   "minor"
+  ],
+  [
+   37.9975,
+   23.737,
+   "Kypseli",
+   "minor"
+  ],
+  [
+   37.965,
+   23.645,
+   "Nikaia",
+   "minor"
+  ],
+  [
+   37.945,
+   23.713,
+   "Nea Smyrni",
+   "minor"
+  ],
+  [
+   37.889,
+   23.742,
+   "Hellinikon",
+   "minor"
+  ],
+  [
+   38.05,
+   23.88,
+   "Penteli",
+   "minor"
+  ],
+  [
+   38.17,
+   23.72,
+   "Parnitha",
+   "minor"
+  ],
+  [
+   37.93,
+   23.81,
+   "Hymettus",
+   "minor"
+  ],
+  [
+   37.714,
+   24.055,
+   "Lavrio",
+   "minor"
+  ],
+  [
+   37.652,
+   24.025,
+   "Sounion",
+   "minor"
+  ],
+  [
+   38.042,
+   23.54,
+   "Elefsina",
+   "minor"
+  ],
+  [
+   38.16,
+   23.8,
+   "Tatoi",
+   "minor"
+  ],
+  [
+   37.8,
+   23.98,
+   "Keratea",
+   "minor"
+  ],
+  [
+   38.12,
+   23.97,
+   "Marathon",
+   "minor"
+  ]
+ ],
+ "majorRivers": [
+  "Kifisos",
+  "Kifissos",
+  "Ilisos"
+ ],
+ "attr": "Coast: OSM via @geo-maps (ODbL). Rivers, roads, rail: Natural Earth (public domain). No street data yet.",
+ "baseOn": "Base map: drawn from OSM coastline and Natural Earth (main roads, rail and rivers, generalised; can sit up to about 1 km off). No street map yet.",
+ "lists": [
+  [
+   "K",
+   "The classics, with find-it details"
+  ],
+  [
+   "R",
+   "Churches, mosques and cemeteries"
+  ],
+  [
+   "A",
+   "Concrete, ruins and the Cold War"
+  ],
+  [
+   "B",
+   "Small marks with stories"
+  ],
+  [
+   "C",
+   "Where thinkers sat, and science"
+  ]
+ ],
+ "extrasNote": "Off the planned walks: add them with Custom, or go on their own.",
+ "helpNote": "Base map: drawn from OSM coastline and Natural Earth (main roads, rail and rivers, generalised; can sit up to about 1 km off). No street map yet. Walks 13 and 14 need a car. Since April 2024 there is no combined ticket: each ancient site is paid separately (Acropolis €30). Pins come from Google Places where checked; approximate ones say so in the guide. About 45 leads from the research have no location yet and are not on the map.",
+ "sites": [
+  {
+   "id": "zenetos-school",
+   "key": "A-zenetos-school",
+   "k": "arch",
+   "main": 1,
+   "ll": [
+    37.94171,
+    23.73788
+   ],
+   "q": "Strongylo Scholeio, Agios Dimitrios",
+   "name": "Zenetos's Circular School",
+   "blurb": "A disc-shaped school of the 1970s wrapped in sun-tuned louvres: the best-known built work of Greece's great utopian modernist.",
+   "when": "Working state school with about 1,500 pupils: view from outside, not at school-run times.",
+   "nv": false
+  },
+  {
+   "id": "ntua-residence",
+   "key": "A-ntua-residence",
+   "k": "arch",
+   "main": 1,
+   "ll": [
+    37.97389,
+    23.7816
+   ],
+   "q": "Foititiki Estia EMP, Zografou",
+   "name": "NTUA student residence, Zografou",
+   "blurb": "A ten-storey béton-brut slab on tall pilotis at the foot of Hymettus, called the building that carries Greek brutalism almost single-handed.",
+   "when": "In use by students, poor condition; exterior from the street.",
+   "nv": false
+  },
+  {
+   "id": "lycabettus-theatre",
+   "key": "A-lycabettus-theatre",
+   "k": "arch",
+   "main": 1,
+   "ll": [
+    37.98402,
+    23.74704
+   ],
+   "q": "Lycabettus Theatre",
+   "name": "Lycabettus Theatre",
+   "blurb": "Zenetos's open-air amphitheatre in an old quarry on the hill, ruined in 2008 and reopened in 2023 with his light roof restored.",
+   "when": "Events only, roughly mid-May to October; buy a concert ticket to see it.",
+   "nv": false
+  },
+  {
+   "id": "fix-emst",
+   "key": "A-fix-emst",
+   "k": "museum",
+   "main": 1,
+   "ll": [
+    37.963,
+    23.72534
+   ],
+   "q": "EMST, Syngrou 53",
+   "name": "FIX brewery / EMST",
+   "blurb": "Zenetos's 1957 glass-and-brick skin round an 1864 brewery, half cut away for the metro and now the National Museum of Contemporary Art.",
+   "when": "Tue–Sun 11:00–19:00 (Thu to 22:00); €10.",
+   "nv": false
+  },
+  {
+   "id": "amalias-34",
+   "key": "A-amalias-34",
+   "k": "arch",
+   "main": 1,
+   "ll": [
+    37.97177,
+    23.73323
+   ],
+   "q": "Leoforos Vasilissis Amalias 34",
+   "name": "Zenetos's block, Amalias 34",
+   "blurb": "A 1959–60 apartment block with sliding façade panels: the original of the cheap folding shutters later copied all over Athens.",
+   "when": "Street view; private flats.",
+   "nv": false
+  },
+  {
+   "id": "pikionis-school",
+   "key": "A-pikionis-school",
+   "k": "arch",
+   "main": 1,
+   "ll": [
+    37.98244,
+    23.7402
+   ],
+   "q": "Sina 70, Athens",
+   "name": "Pikionis's Pefkakia school",
+   "blurb": "Dimitris Pikionis's only fully modernist building, a 1931–32 school stepped down a steep slope; he disowned it almost at once.",
+   "when": "Working school; view from the street. The map pin is the 14th Primary School, Sina 70; check on site that it is the Pikionis building.",
+   "nv": true
+  },
+  {
+   "id": "benaki-118",
+   "key": "A-benaki-118",
+   "k": "arch",
+   "main": 1,
+   "ll": [
+    37.98704,
+    23.73824
+   ],
+   "q": "Emmanouil Benaki 118",
+   "name": "Antonakakis block, Em. Benaki 118",
+   "blurb": "A 1974–75 Exarchia block by Atelier 66 whose stair is an open 'street' climbing through the building.",
+   "when": "Street view; private flats.",
+   "nv": false
+  },
+  {
+   "id": "semitelou-5",
+   "key": "A-semitelou-5",
+   "k": "arch",
+   "main": 0,
+   "ll": [
+    37.99,
+    23.76
+   ],
+   "q": "Semitelou 5, Ambelokipi",
+   "name": "Valsamakis's first block, Semitelou 5",
+   "blurb": "Nikos Valsamakis's first building, a refined 1950s block near Plateia Mavili.",
+   "when": "Street view.",
+   "nv": false
+  },
+  {
+   "id": "valsamakis-irodotou",
+   "key": "A-valsamakis-irodotou",
+   "k": "arch",
+   "main": 0,
+   "ll": [
+    37.97692,
+    23.74231
+   ],
+   "q": "Irodotou 17, Kolonaki",
+   "name": "Valsamakis block, Irodotou 17",
+   "blurb": "A mid-1950s Kolonaki block by Nikos Valsamakis.",
+   "when": "Street view.",
+   "nv": false
+  },
+  {
+   "id": "valsamakis-proskopon",
+   "key": "A-valsamakis-proskopon",
+   "k": "arch",
+   "main": 0,
+   "ll": [
+    37.9724,
+    23.74408
+   ],
+   "q": "Leoforos Vasileos Konstantinou 42",
+   "name": "Valsamakis block, Vas. Konstantinou 42",
+   "blurb": "A 1959–60 Valsamakis block on Plateia Proskopon, next door to a Molfesis block of the same year.",
+   "when": "Street view.",
+   "nv": false
+  },
+  {
+   "id": "molfesis-konstantinou",
+   "key": "A-molfesis-konstantinou",
+   "k": "arch",
+   "main": 0,
+   "ll": [
+    37.97267,
+    23.74435
+   ],
+   "q": "Leoforos Vasileos Konstantinou 46",
+   "name": "Molfesis block, Vas. Konstantinou 46",
+   "blurb": "Sthenis Molfesis's 1959 block, by the architect of the unbuilt-or-unknown modern church in Ano Glyfada.",
+   "when": "Street view.",
+   "nv": false
+  },
+  {
+   "id": "papazisis-mithimnis",
+   "key": "A-papazisis-mithimnis",
+   "k": "arch",
+   "main": 0,
+   "ll": [
+    38.00198,
+    23.73409
+   ],
+   "q": "Mithimnis 34, Kypseli",
+   "name": "Papazisis block, Mithimnis 34",
+   "blurb": "A 1957–58 block by Dimitris Papazisis off Plateia Amerikis.",
+   "when": "Street view.",
+   "nv": false
+  },
+  {
+   "id": "argolidos-26",
+   "key": "A-argolidos-26",
+   "k": "arch",
+   "main": 0,
+   "ll": [
+    37.98971,
+    23.76216
+   ],
+   "q": "Argolidos 26, Ambelokipi",
+   "name": "Antonakakis & Gartzos block, Argolidos 26",
+   "blurb": "An early (1961–62) block by Suzana and Dimitris Antonakakis with Kostis Gartzos.",
+   "when": "Street view.",
+   "nv": false
+  },
+  {
+   "id": "kypseli-28",
+   "key": "A-kypseli-28",
+   "k": "arch",
+   "main": 0,
+   "ll": [
+    37.99709,
+    23.73671
+   ],
+   "q": "Kypselis 28",
+   "name": "Kypselis 28",
+   "blurb": "A 1955 Kypseli block with Corbusian ribbon balconies and bands of Cretan tile.",
+   "when": "Street view.",
+   "nv": false
+  },
+  {
+   "id": "zolotas-house",
+   "key": "A-zolotas-house",
+   "k": "arch",
+   "main": 0,
+   "ll": [
+    37.97,
+    23.724
+   ],
+   "q": "Dionysiou Areopagitou 27",
+   "name": "Zolotas house, Dionysiou Areopagitou 27",
+   "blurb": "Emmanouil Vourekas's austere 1960 house facing the Acropolis, home of the economist and prime minister Xenophon Zolotas.",
+   "when": "Private; seen from the pedestrian street.",
+   "nv": false
+  },
+  {
+   "id": "hilton",
+   "key": "A-hilton",
+   "k": "arch",
+   "main": 0,
+   "ll": [
+    37.9765,
+    23.7505
+   ],
+   "q": "Hilton Athens, Vasilissis Sofias 46",
+   "name": "Athens Hilton",
+   "blurb": "The 1959–63 slab that Athenians loved and hated: Vasileiadis, Vourekas and Staikos's 'skyscraper', with incised murals by Yannis Moralis.",
+   "when": "Hotel; lobby and rooftop bar open to guests and visitors.",
+   "nv": false
+  },
+  {
+   "id": "athens-tower",
+   "key": "A-athens-tower",
+   "k": "arch",
+   "main": 0,
+   "ll": [
+    37.988,
+    23.763
+   ],
+   "q": "Pyrgos Athinon, Mesogeion 2",
+   "name": "Athens Tower",
+   "blurb": "Greece's first glass-curtain skyscraper (1971–73), built in a gap in the height law under the junta.",
+   "when": "Office tower; street view.",
+   "nv": false
+  },
+  {
+   "id": "apollo-tower",
+   "key": "A-apollo-tower",
+   "k": "arch",
+   "main": 0,
+   "ll": [
+    37.9926,
+    23.7641
+   ],
+   "q": "Louizis Riankour 64",
+   "name": "Apollo Tower",
+   "blurb": "Greece's tallest residential building (1973, 80 m), which stayed lit through the 1981 and 1999 earthquakes on its own generators.",
+   "when": "Private flats; street view.",
+   "nv": false
+  },
+  {
+   "id": "radiomegaro",
+   "key": "A-radiomegaro",
+   "k": "arch",
+   "main": 0,
+   "ll": [
+    38.013,
+    23.8259
+   ],
+   "q": "Mesogeion 432, Agia Paraskevi",
+   "name": "ERT Radiomegaro",
+   "blurb": "The junta-era brutalist broadcasting house, occupied by its workers when the government shut ERT in 2013.",
+   "when": "ERT headquarters; exterior from Mesogeion.",
+   "nv": false
+  },
+  {
+   "id": "oek-filadelfeia",
+   "key": "A-oek-filadelfeia",
+   "k": "arch",
+   "main": 1,
+   "ll": [
+    38.04,
+    23.735
+   ],
+   "q": "Ergatikes katoikies Neas Filadelfeias",
+   "name": "Konstantinidis's OEK estate, Nea Filadelfeia",
+   "blurb": "Aris Konstantinidis's 1955–57 workers' housing: low blocks with a bare concrete frame and earth-coloured infill.",
+   "when": "Lived-in, altered by residents; street view. Map pin approximate.",
+   "nv": false
+  },
+  {
+   "id": "mont-parnes",
+   "key": "A-mont-parnes",
+   "k": "arch",
+   "main": 0,
+   "ll": [
+    38.1522,
+    23.7369
+   ],
+   "q": "Regency Casino Mont Parnes",
+   "name": "Mont Parnes hotel-casino",
+   "blurb": "Pavlos Mylonas's 1958–61 hotel at 1,078 m on Parnitha, a casino since 1971, reached by the 1972 cable car.",
+   "when": "Casino open; exterior.",
+   "nv": false
+  },
+  {
+   "id": "prosfygika",
+   "key": "A-prosfygika",
+   "k": "arch",
+   "main": 1,
+   "ll": [
+    37.9893,
+    23.75
+   ],
+   "q": "Prosfygika, Leoforos Alexandras",
+   "name": "Prosfygika, Alexandras Avenue",
+   "blurb": "Eight 1930s refugee blocks in reinforced concrete facing the Areos stadium: Athens's own small Falowiec, decayed and still lived in.",
+   "when": "Lived-in and partly occupied; walk through respectfully. Restoration of 4 of the 8 blocks planned to 2028: expect scaffolding. Map pin approximate.",
+   "nv": false
+  },
+  {
+   "id": "blue-building",
+   "key": "A-blue-building",
+   "k": "arch",
+   "main": 1,
+   "ll": [
+    37.98647,
+    23.73557
+   ],
+   "q": "Arachovis 61, Exarchia",
+   "name": "Blue Building, Exarchia",
+   "blurb": "The 1932–33 block on Exarchia Square that Le Corbusier is said to have praised: 'C'est très beau'.",
+   "when": "Street view.",
+   "nv": false
+  },
+  {
+   "id": "lanara",
+   "key": "A-lanara",
+   "k": "arch",
+   "main": 1,
+   "ll": [
+    38.00125,
+    23.73641
+   ],
+   "q": "Fokionos Negri 23, Kypseli",
+   "name": "Lanara block, Fokionos Negri 23",
+   "blurb": "The finest interwar block on Kypseli's long pedestrian street (1938), threatened with demolition and listed in 2006.",
+   "when": "Street view.",
+   "nv": false
+  },
+  {
+   "id": "protopapa",
+   "key": "A-protopapa",
+   "k": "arch",
+   "main": 0,
+   "ll": [
+    37.9955,
+    23.7375
+   ],
+   "q": "Fokionos Negri 9, Kypseli",
+   "name": "Protopapa block and the first Fokionos Negri blocks",
+   "blurb": "Fokionos Negri 7 (1932) and 9 (1933): the first modern apartment blocks on the street.",
+   "when": "Street view.",
+   "nv": false
+  },
+  {
+   "id": "bonis-shelter",
+   "key": "A-bonis-shelter",
+   "k": "under",
+   "main": 1,
+   "ll": [
+    37.99637,
+    23.735
+   ],
+   "q": "Eptanisou & Pipinou, Kypseli",
+   "name": "Bonis block and 1938 shelter, Kypseli",
+   "blurb": "A 1938 block whose basement air-raid shelter still has its hand-operated steel doors and lighting.",
+   "when": "Shelter closed; exterior only.",
+   "nv": false
+  },
+  {
+   "id": "dourgouti",
+   "key": "A-dourgouti",
+   "k": "arch",
+   "main": 0,
+   "ll": [
+    37.958,
+    23.727
+   ],
+   "q": "Dourgouti, Neos Kosmos",
+   "name": "Dourgouti refugee blocks, Neos Kosmos",
+   "blurb": "Interwar refugee blocks and 1924 row houses in Neos Kosmos, where the Armenian quarter burned in the 1944 blockade.",
+   "when": "Lived-in; street view. Map pin approximate.",
+   "nv": false
+  },
+  {
+   "id": "tavros-refugee",
+   "key": "A-tavros-refugee",
+   "k": "arch",
+   "main": 0,
+   "ll": [
+    37.963,
+    23.699
+   ],
+   "q": "Prosfygika Tavrou",
+   "name": "Tavros refugee estate",
+   "blurb": "'Metaxas two-storeys' of 1936 and 71 blocks with over 2,000 flats off Pireos Street.",
+   "when": "Lived-in; street view. Map pin approximate.",
+   "nv": false
+  },
+  {
+   "id": "olympic-village",
+   "key": "A-olympic-village",
+   "k": "land",
+   "main": 0,
+   "ll": [
+    38.1111,
+    23.7685
+   ],
+   "q": "Olympiako Chorio, Acharnes",
+   "name": "Olympic Village, Thrakomakedones",
+   "blurb": "The 2004 athletes' village: the flats are lived in, the admin and sports buildings left to rot; an empty entrance building burned in July 2026.",
+   "when": "Walk round; derelict buildings fenced and off-limits.",
+   "nv": false
+  },
+  {
+   "id": "hellinikon",
+   "key": "A-hellinikon",
+   "k": "land",
+   "main": 1,
+   "ll": [
+    37.88953,
+    23.74178
+   ],
+   "q": "Ellinikon Experience Centre, Elliniko",
+   "name": "Hellinikon: Saarinen terminal and the new park",
+   "blurb": "The old airport turned building site and park: Eero Saarinen's 1969 terminal, the control tower and hangars kept as relics of a vanished airfield.",
+   "when": "Sports Park open in stages from 20 July 2026; Experience Centre daily 9–21. The Saarinen terminal is closed. Pin = Experience Centre.",
+   "nv": false
+  },
+  {
+   "id": "faliro-volley",
+   "key": "A-faliro-volley",
+   "k": "land",
+   "main": 1,
+   "ll": [
+    37.934,
+    23.689
+   ],
+   "q": "Faliro Olympic Beach Volleyball Centre",
+   "name": "Faliro Olympic beach-volleyball stadium",
+   "blurb": "A 9,600-seat concrete stadium built for beach volleyball in 2004, never used for official competition since: the emblem of Athens's white elephants.",
+   "when": "Fenced and derelict; view from outside. The Aenaon Park plan will turn it into an open-air events amphitheatre, so see it soon. Map pin approximate.",
+   "nv": false
+  },
+  {
+   "id": "goudi-badminton",
+   "key": "A-goudi-badminton",
+   "k": "land",
+   "main": 0,
+   "ll": [
+    37.986,
+    23.779
+   ],
+   "q": "Badminton Theater, Goudi Park",
+   "name": "Goudi 'Badminton' theatre",
+   "blurb": "The 2004 badminton hall in Goudi park, converted to a theatre; a fire hit the old building on 12 July 2026.",
+   "when": "Status after the fire unknown; check before going. Map pin approximate.",
+   "nv": true
+  },
+  {
+   "id": "papadimitriou-sanatorium",
+   "key": "A-papadimitriou-sanatorium",
+   "k": "land",
+   "main": 1,
+   "ll": [
+    38.05763,
+    23.84337
+   ],
+   "q": "Sismanogleio Annex (former Papadimitriou), Al. Zaimi 5, Melissia",
+   "name": "Papadimitriou sanatorium, Penteli",
+   "blurb": "A 1930s TB sanatorium in the pines of Penteli, used by IKA until 2016, now a looted concrete shell: the heart of Athens's 'Greek Davos'.",
+   "when": "Fenced; enter at your own risk is not advised. Exterior from the grounds' edge. Plans for an 'Athens Health Park' are in flux.",
+   "nv": false
+  },
+  {
+   "id": "daou-sanatorium",
+   "key": "A-daou-sanatorium",
+   "k": "land",
+   "main": 0,
+   "ll": [
+    38.03,
+    23.97
+   ],
+   "q": "Sanatorio Ntaou Pentelis",
+   "name": "Daou sanatorium ruin, Penteli",
+   "blurb": "A stone prewar sanatorium in 460 stremmata of pine whose staff were in ELAS; a nurse was executed in 1944.",
+   "when": "Open ground. Map pin approximate.",
+   "nv": false
+  },
+  {
+   "id": "xenia-parnitha",
+   "key": "A-xenia-parnitha",
+   "k": "land",
+   "main": 0,
+   "ll": [
+    38.16,
+    23.73
+   ],
+   "q": "Xenia Parnithas",
+   "name": "Xenia Parnitha",
+   "blurb": "A 1930s sanatorium turned EOT Xenia hotel turned tourism school, closed in 1980 and stripped to its walls: the most visited ruin in Greece.",
+   "when": "Open ruin, structurally unsafe after the 1999 quake. Map pin approximate.",
+   "nv": false
+  },
+  {
+   "id": "spap-station",
+   "key": "A-spap-station",
+   "k": "arch",
+   "main": 0,
+   "ll": [
+    37.992,
+    23.721
+   ],
+   "q": "Stathmos Peloponnisou, Athens",
+   "name": "Peloponnese (SPAP) station",
+   "blurb": "The ornate 19th-century terminus of the metre-gauge line to the Peloponnese, closed in 2005.",
+   "when": "Closed; restoration status unknown. Map pin approximate.",
+   "nv": false
+  },
+  {
+   "id": "lipasmata",
+   "key": "A-lipasmata",
+   "k": "land",
+   "main": 1,
+   "ll": [
+    37.94171,
+    23.62142
+   ],
+   "q": "Lipasmata Park, Drapetsona",
+   "name": "Lipasmata Drapetsona (Workers' Park)",
+   "blurb": "A 2.5 km seafront walk through the remains of one of Europe's largest fertiliser works: chimney, silos, water tower and a conveyor gantry.",
+   "when": "Open daily 6:00–2:00, free.",
+   "nv": false
+  },
+  {
+   "id": "peiraiki-patraiki",
+   "key": "A-peiraiki-patraiki",
+   "k": "arch",
+   "main": 0,
+   "ll": [
+    37.995,
+    23.42
+   ],
+   "q": "Peiraiki Patraiki, Megalo Pefko",
+   "name": "Peiraiki-Patraiki mill, Megalo Pefko",
+   "blurb": "The first new factory of postwar Greece (1950), praised by Time in 1962, closed in 1992 and abandoned.",
+   "when": "Exterior only. Map pin approximate.",
+   "nv": false
+  },
+  {
+   "id": "tatoi",
+   "key": "A-tatoi",
+   "k": "land",
+   "main": 0,
+   "ll": [
+    38.16,
+    23.798
+   ],
+   "q": "Ktima Tatoiou",
+   "name": "Tatoi estate and royal cemetery",
+   "blurb": "The 42 km² summer estate of Greece's kings, abandoned after 1974, burned in 2021, now being restored: palace, farm, forest and the royal cemetery.",
+   "when": "Museum core due to open December 2026; until then the grounds and access change. Check before going.",
+   "nv": false
+  },
+  {
+   "id": "makronisos",
+   "key": "A-makronisos",
+   "k": "land",
+   "main": 0,
+   "ll": [
+    37.7,
+    24.12
+   ],
+   "q": "Makronisos",
+   "name": "Makronisos prison island",
+   "blurb": "The Civil War 're-education' island off Lavrio: ruined camps and churches on a bare 13 km ridge. Charter boat only.",
+   "when": "No ferry: charter from Lavrio (Port Authority +30 22920 25249); landing and interpretation minimal; confirm access with the operator.",
+   "nv": false
+  },
+  {
+   "id": "sotiria",
+   "key": "A-sotiria",
+   "k": "arch",
+   "main": 0,
+   "ll": [
+    37.9935,
+    23.7865
+   ],
+   "q": "Nosokomeio Sotiria, Mesogeion 152",
+   "name": "Sotiria hospital 1936 buildings",
+   "blurb": "The TB hospital where Periklis Georgakopoulos and Ioannis Despotopoulos built some of the key interwar modernist hospital blocks (1936).",
+   "when": "Working hospital; which blocks survive unaltered is unchecked. Map pin approximate.",
+   "nv": true
+  },
+  {
+   "id": "keratsini-ps",
+   "key": "A-keratsini-ps",
+   "k": "land",
+   "main": 1,
+   "ll": [
+    37.958,
+    23.615
+   ],
+   "q": "AIS Agiou Georgiou, Keratsini",
+   "name": "Agios Georgios power station ('Drakos')",
+   "blurb": "Interwar power station on the Keratsini shore (1928–2012), its red-and-white chimney listed in 2023; scene of the 1944 'Battle of the Electric'.",
+   "when": "Visits with the history exhibition (since 2017) on set days; exterior from the coast road. Map pin approximate.",
+   "nv": false
+  },
+  {
+   "id": "faliro-ps",
+   "key": "A-faliro-ps",
+   "k": "land",
+   "main": 1,
+   "ll": [
+    37.945,
+    23.666
+   ],
+   "q": "AIS Neou Falirou",
+   "name": "Old Faliro power station (1903)",
+   "blurb": "Greece's first thermal power station (1903), listed in 1986, its main hall decaying beside the Karaiskakis stadium.",
+   "when": "Exterior; rare guided visits (Friends of the Benaki) and art events. Map pin approximate.",
+   "nv": false
+  },
+  {
+   "id": "chropei",
+   "key": "A-chropei",
+   "k": "arch",
+   "main": 0,
+   "ll": [
+    37.951,
+    23.652
+   ],
+   "q": "CHROPEI, Pireos Street, Piraeus",
+   "name": "CHROPEI paint works",
+   "blurb": "A listed paint factory (1899–1989) of nearly 18,000 m², empty on Pireos Street with its neighbours.",
+   "when": "Street view. Map pin approximate.",
+   "nv": false
+  },
+  {
+   "id": "pireos-260",
+   "key": "A-pireos-260",
+   "k": "arch",
+   "main": 0,
+   "ll": [
+    37.963,
+    23.697
+   ],
+   "q": "Peiraios 260",
+   "name": "Pireos 260",
+   "blurb": "Ten listed concrete factory buildings used for the Athens Festival and earmarked for a Culture Ministry conversion.",
+   "when": "Festival events. Map pin approximate.",
+   "nv": false
+  },
+  {
+   "id": "marathon-dam",
+   "key": "A-marathon-dam",
+   "k": "land",
+   "main": 0,
+   "ll": [
+    38.17,
+    23.905
+   ],
+   "q": "Fragma Marathona",
+   "name": "Marathon dam",
+   "blurb": "The 1929 dam built by the American firm Ulen, faced entirely in marble, with a small water museum.",
+   "when": "Crest walkable; EYDAP museum. Map pin approximate.",
+   "nv": false
+  },
+  {
+   "id": "lavrio-line",
+   "key": "A-lavrio-line",
+   "k": "relic",
+   "main": 0,
+   "ll": [
+    37.738,
+    24.05
+   ],
+   "q": "Thorikos, Lavrio",
+   "name": "Lavrio railway relics, Thorikos",
+   "blurb": "Traces of the metre-gauge Lavrio line (closed 1957–62): a bridge, rails and a decaying station at Thorikos.",
+   "when": "Open. Map pin approximate.",
+   "nv": false
+  },
+  {
+   "id": "lavrio-mines",
+   "key": "A-lavrio-mines",
+   "k": "land",
+   "main": 0,
+   "ll": [
+    37.712,
+    24.052
+   ],
+   "q": "Technological Cultural Park of Lavrio",
+   "name": "Lavrio mining landscape",
+   "blurb": "Silver mines of classical Athens and a 19th-century French mining company: ancient ore washeries, the Serpieri shaft and the Kyprianos works.",
+   "when": "NTUA park hours; washeries open ground. Map pin approximate.",
+   "nv": false
+  },
+  {
+   "id": "keratea-nike",
+   "key": "A-keratea-nike",
+   "k": "land",
+   "main": 0,
+   "ll": [
+    37.79,
+    24.0
+   ],
+   "q": "Keratea NATO missile base",
+   "name": "Keratea NIKE missile base",
+   "blurb": "The most complete Cold War ruin in Attica: a Greek Air Force NIKE battery under NATO's nuclear umbrella from 1964 to 1989, abandoned in 2005.",
+   "when": "Open ground; no facilities. Map pin approximate.",
+   "nv": true
+  },
+  {
+   "id": "aeras-parnitha",
+   "key": "A-aeras-parnitha",
+   "k": "land",
+   "main": 0,
+   "ll": [
+    38.17,
+    23.72
+   ],
+   "q": "Aeras, Parnitha",
+   "name": "Parnitha 'Aeras' military station",
+   "blurb": "A disused 1950s antenna post on a Parnitha summit with a gatehouse and twin sentry boxes, burned in 2007.",
+   "when": "Walk past the barrier. Map pin approximate.",
+   "nv": true
+  },
+  {
+   "id": "penteli-nato",
+   "key": "A-penteli-nato",
+   "k": "land",
+   "main": 1,
+   "ll": [
+    38.05,
+    23.88
+   ],
+   "q": "Radar Pentelis",
+   "name": "Penteli NATO station",
+   "blurb": "Big dishes still standing above Agios Panteleimon: a NATO telecom station that ran until about the late 1990s.",
+   "when": "Derelict and fenced; outside only. Map pin approximate.",
+   "nv": true
+  },
+  {
+   "id": "hymettus-radar",
+   "key": "A-hymettus-radar",
+   "k": "scar",
+   "main": 0,
+   "ll": [
+    37.93,
+    23.81
+   ],
+   "q": "Ymittos, trig point 827",
+   "name": "German station ruins, Hymettus",
+   "blurb": "Ruins of a 1942 Luftwaffe signals post near the summit of Hymettus; local writers say the 'radar' was propaganda.",
+   "when": "Hiking. Map pin approximate.",
+   "nv": true
+  },
+  {
+   "id": "navcommsta",
+   "key": "A-navcommsta",
+   "k": "land",
+   "main": 0,
+   "ll": [
+    38.095,
+    24.0
+   ],
+   "q": "NAVCOMMSTA Nea Makri",
+   "name": "US Naval Communications Station, Nea Makri",
+   "blurb": "A US Navy station built from 1953, mostly underground, closed in 1990 and now a park.",
+   "when": "Open park. Map pin approximate.",
+   "nv": false
+  },
+  {
+   "id": "ardittos-shelter",
+   "key": "A-ardittos-shelter",
+   "k": "under",
+   "main": 0,
+   "ll": [
+    37.9665,
+    23.74
+   ],
+   "q": "Lofos Ardittou",
+   "name": "Ardittos shelter",
+   "blurb": "The largest air-raid shelter in Attica (about 1,300 people), under the hill behind the Panathenaic Stadium; three of its four entrances are sealed.",
+   "when": "Abandoned and closed; the entrance was not located. Map pin approximate.",
+   "nv": true
+  },
+  {
+   "id": "lycabettus-shelter",
+   "key": "A-lycabettus-shelter",
+   "k": "under",
+   "main": 0,
+   "ll": [
+    37.98,
+    23.741
+   ],
+   "q": "Agioi Isidoroi, Lycabettus",
+   "name": "Lycabettus shelter",
+   "blurb": "A c. 1936 shelter cut 100 m into Lycabettus beside the Agioi Isidoroi cave church: larger and better preserved than Ardittos.",
+   "when": "Closed. Map pin approximate.",
+   "nv": true
+  },
+  {
+   "id": "praxitelous-33",
+   "key": "A-praxitelous-33",
+   "k": "under",
+   "main": 0,
+   "ll": [
+    37.979,
+    23.729
+   ],
+   "q": "Praxitelous 33, Athens",
+   "name": "Praxitelous 33 shelter",
+   "blurb": "Two reinforced chambers under a late-1930s block, used in the Dekemvriana and opened for a 'Bunker' show.",
+   "when": "Events only. Map pin approximate.",
+   "nv": false
+  },
+  {
+   "id": "zalokosta-7",
+   "key": "A-zalokosta-7",
+   "k": "under",
+   "main": 0,
+   "ll": [
+    37.977,
+    23.7385
+   ],
+   "q": "Zalokosta 7, Kolonaki",
+   "name": "Zalokosta 7 shelter",
+   "blurb": "An 80 m² basement shelter 50 m from Parliament, in a listed EFKA-owned building.",
+   "when": "Closed. Map pin approximate.",
+   "nv": false
+  },
+  {
+   "id": "kastella-shelters",
+   "key": "A-kastella-shelters",
+   "k": "under",
+   "main": 0,
+   "ll": [
+    37.938,
+    23.66
+   ],
+   "q": "Kastella, Piraeus",
+   "name": "Kastella shelters, Piraeus",
+   "blurb": "A two-storey abandoned Metaxas-era shelter and a smaller vaulted one on Profitis Ilias hill.",
+   "when": "Closed or hidden. Map pin approximate.",
+   "nv": true
+  },
+  {
+   "id": "peiraiki-batteries",
+   "key": "A-peiraiki-batteries",
+   "k": "scar",
+   "main": 0,
+   "ll": [
+    37.933,
+    23.625
+   ],
+   "q": "Peiraiki coastal walk",
+   "name": "German coastal batteries, Peiraiki",
+   "blurb": "Empty German gun emplacements on the Peiraiki shore walk; the guns went in 1944.",
+   "when": "Open coastal walk. Map pin approximate.",
+   "nv": false
+  },
+  {
+   "id": "porto-rafti-pillboxes",
+   "key": "A-porto-rafti-pillboxes",
+   "k": "scar",
+   "main": 0,
+   "ll": [
+    37.88,
+    24.03
+   ],
+   "q": "Agios Spyridonas, Porto Rafti",
+   "name": "Pillboxes of the Attica coast",
+   "blurb": "Three intact WWII pillboxes, a naval-gun base and trenches on Porto Rafti's Agios Spyridonas hill; more at Legrena and Varkiza.",
+   "when": "Open. Map pin approximate.",
+   "nv": false
+  },
+  {
+   "id": "elefsina-wrecks",
+   "key": "A-elefsina-wrecks",
+   "k": "land",
+   "main": 0,
+   "ll": [
+    38.035,
+    23.535
+   ],
+   "q": "Elefsina coast",
+   "name": "Elefsina ship graveyard",
+   "blurb": "Rusting semi-sunk ships against refineries and cement works, 2 km from the Eleusinian sanctuary; much reduced since removals began in 2018.",
+   "when": "Public shore. Map pin approximate; check how many hulks remain.",
+   "nv": true
+  },
+  {
+   "id": "korai-4",
+   "key": "B-korai-4",
+   "k": "scar",
+   "main": 1,
+   "ll": [
+    37.97996,
+    23.7327
+   ],
+   "q": "Korai 4, Athens",
+   "name": "Korai 4 Kommandantur cells",
+   "blurb": "Two basement levels 6 m under Syntagma where the Germans held prisoners; their scratched names, planes and ships survive on the walls.",
+   "when": "Tue–Sat 9:00–14:00, free; closed in August. Tel. 210 324 3581.",
+   "nv": false
+  },
+  {
+   "id": "merlin-6",
+   "key": "B-merlin-6",
+   "k": "scar",
+   "main": 1,
+   "ll": [
+    37.9766,
+    23.7386
+   ],
+   "q": "Merlin 6, Athens",
+   "name": "Merlin 6: the Gestapo house",
+   "blurb": "A brass relief and an original cell door outside a cosmetics store mark the SS and Gestapo headquarters of 1941–44.",
+   "when": "Outdoors, 24 h.",
+   "nv": false
+  },
+  {
+   "id": "kaisariani-range",
+   "key": "B-kaisariani-range",
+   "k": "exec",
+   "main": 1,
+   "ll": [
+    37.9657,
+    23.7576
+   ],
+   "q": "Skopeftirio Kaisarianis",
+   "name": "Kaisariani Shooting Range",
+   "blurb": "The wall where the Germans shot 200 communist prisoners on 1 May 1944; they went to their deaths singing.",
+   "when": "Park open; the memorial enclosure opens irregularly. Memorial plaques vandalised in Feb 2026, repairs promised.",
+   "nv": false
+  },
+  {
+   "id": "haidari-block15",
+   "key": "B-haidari-block15",
+   "k": "scar",
+   "main": 0,
+   "ll": [
+    38.0205,
+    23.6621
+   ],
+   "q": "Stratopedo Karaiskaki, Chaidari",
+   "name": "Haidari camp, Block 15",
+   "blurb": "The condemned block of the 'Bastille of Greece', the Haidari camp (1943–44), inside a working army camp.",
+   "when": "Permit needed; open on commemorations and tour days. Virtual tour: block15.aueb.gr.",
+   "nv": false
+  },
+  {
+   "id": "kokkinia-mantra",
+   "key": "B-kokkinia-mantra",
+   "k": "exec",
+   "main": 1,
+   "ll": [
+    37.96541,
+    23.64357
+   ],
+   "q": "Ilioupoleos 102A, Nikaia",
+   "name": "Kokkinia Blockade Mantra",
+   "blurb": "The carpet-factory hall where 72 men and 3 women were shot in the Blockade of 17 August 1944; ricochet marks and the old wooden gate survive.",
+   "when": "Tue–Fri 9:00–13:00, free.",
+   "nv": false
+  },
+  {
+   "id": "faros-heroon",
+   "key": "B-faros-heroon",
+   "k": "exec",
+   "main": 0,
+   "ll": [
+    37.942,
+    23.716
+   ],
+   "q": "Plateia Ethnikis Antistaseos, Nea Smyrni",
+   "name": "Heroon of Faros, Nea Smyrni",
+   "blurb": "A 1980 bronze where 114 men were shot in August 1944.",
+   "when": "Street. Map pin approximate.",
+   "nv": false
+  },
+  {
+   "id": "nea-smyrni-walk",
+   "key": "B-nea-smyrni-walk",
+   "k": "plaque",
+   "main": 0,
+   "ll": [
+    37.945,
+    23.714
+   ],
+   "q": "Plateia Skatzouraki, Nea Smyrni",
+   "name": "Nea Smyrni, December 1944",
+   "blurb": "Plaques of the December 1944 fighting round a refugee suburb: Plateia Skatzouraki, an ELAS hospital, the Iosifogleio orphanage.",
+   "when": "Street. Map pin approximate.",
+   "nv": false
+  },
+  {
+   "id": "beth-shalom",
+   "key": "B-beth-shalom",
+   "k": "plaque",
+   "main": 1,
+   "ll": [
+    37.978,
+    23.721
+   ],
+   "q": "Melidoni 5, Athens",
+   "name": "Beth Shalom and the Holocaust memorial",
+   "blurb": "The synagogue where Athens's Jews were rounded up on 24 March 1944, and Maganias's broken Star of David nearby.",
+   "when": "Street; the synagogue by arrangement, with ID.",
+   "nv": false
+  },
+  {
+   "id": "averof-stele",
+   "key": "B-averof-stele",
+   "k": "plaque",
+   "main": 0,
+   "ll": [
+    37.9888,
+    23.7529
+   ],
+   "q": "Courts, Leoforos Alexandras",
+   "name": "Averof prison stele",
+   "blurb": "All that marks the Averof prison (1892–1971), demolished in 1972 for the courts; bus 813 still says 'Averof'.",
+   "when": "Court hours.",
+   "nv": false
+  },
+  {
+   "id": "bouboulinas-18",
+   "key": "B-bouboulinas-18",
+   "k": "plaque",
+   "main": 1,
+   "ll": [
+    37.9895,
+    23.7315
+   ],
+   "q": "Bouboulinas 18, Athens",
+   "name": "Bouboulinas 18",
+   "blurb": "The junta's Security HQ with its rooftop beating room, demolished just before the junta fell; flats stand there now.",
+   "when": "Site only.",
+   "nv": false
+  },
+  {
+   "id": "mesogeion-14",
+   "key": "B-mesogeion-14",
+   "k": "scar",
+   "main": 1,
+   "ll": [
+    37.987,
+    23.76
+   ],
+   "q": "Mesogeion 14, Ambelokipi",
+   "name": "Mesogeion 14–18 cells",
+   "blurb": "The junta's Security headquarters of 1971–74: two original basement cells survive, with plaques since 2017.",
+   "when": "Government offices; cells open only on special days (17 Nov unconfirmed).",
+   "nv": false
+  },
+  {
+   "id": "eat-esa",
+   "key": "B-eat-esa",
+   "k": "scar",
+   "main": 1,
+   "ll": [
+    37.98,
+    23.748
+   ],
+   "q": "Parko Eleftherias, Athens",
+   "name": "EAT-ESA, Parko Eleftherias",
+   "blurb": "Four low stone buildings in a park where the junta's military police tortured prisoners, including Panagoulis.",
+   "when": "Park hours; the small museum opens irregularly.",
+   "nv": false
+  },
+  {
+   "id": "loumbarda",
+   "key": "B-loumbarda",
+   "k": "plaque",
+   "main": 0,
+   "ll": [
+    37.785,
+    23.81
+   ],
+   "q": "Lumbarda, Varkiza",
+   "name": "Loumbarda, km 31 Athens–Sounio",
+   "blurb": "The culvert where Panagoulis set his bomb under Papadopoulos's car on 13 August 1968; the junta put up a thanksgiving monument.",
+   "when": "Roadside on a fast road: dangerous to stop. Monument's survival unknown. Map pin approximate.",
+   "nv": true
+  },
+  {
+   "id": "panagoulis-spot",
+   "key": "B-panagoulis-spot",
+   "k": "plaque",
+   "main": 0,
+   "ll": [
+    37.9403,
+    23.7407
+   ],
+   "q": "Agios Dimitrios - Alexandros Panagoulis metro",
+   "name": "Panagoulis crash spot",
+   "blurb": "The metro station named after Panagoulis, near where he died in a suspicious car crash on 1 May 1976.",
+   "when": "Always.",
+   "nv": false
+  },
+  {
+   "id": "polytechnic-gate",
+   "key": "B-polytechnic-gate",
+   "k": "scar",
+   "main": 1,
+   "ll": [
+    37.9894,
+    23.7318
+   ],
+   "q": "Patision 42",
+   "name": "Polytechnic gate, 17 November 1973",
+   "blurb": "The iron gate crushed by a junta tank on the night of 17 November 1973, kept in the courtyard with a memorial head.",
+   "when": "Campus; closed around 17 November.",
+   "nv": false
+  },
+  {
+   "id": "grigoropoulos",
+   "key": "B-grigoropoulos",
+   "k": "plaque",
+   "main": 0,
+   "ll": [
+    37.987,
+    23.7345
+   ],
+   "q": "Tzavella and Mesologgiou, Exarchia",
+   "name": "Grigoropoulos plaque",
+   "blurb": "Where the 15-year-old Alexandros Grigoropoulos was shot by a policeman on 6 December 2008, starting weeks of riots.",
+   "when": "Street. Map pin approximate.",
+   "nv": true
+  },
+  {
+   "id": "metochiko",
+   "key": "B-metochiko",
+   "k": "arch",
+   "main": 0,
+   "ll": [
+    37.9771,
+    23.734
+   ],
+   "q": "Megaro Metochikou Tameiou Stratou, Panepistimiou",
+   "name": "Army Share Fund building",
+   "blurb": "The block that held the German military administration in 1941–44, now the City Link arcade with Athénée and the Attica store.",
+   "when": "Arcade open.",
+   "nv": false
+  },
+  {
+   "id": "kaisariani-prosfygika",
+   "key": "B-kaisariani-prosfygika",
+   "k": "scar",
+   "main": 0,
+   "ll": [
+    37.964,
+    23.765
+   ],
+   "q": "Prosfygika Kaisarianis",
+   "name": "Kaisariani refugee blocks",
+   "blurb": "Refugee blocks in 'Little Moscow' with bullet marks from 1944 and a mural.",
+   "when": "Street. Map pin approximate.",
+   "nv": false
+  },
+  {
+   "id": "guillotine-nymphs",
+   "key": "B-guillotine-nymphs",
+   "k": "exec",
+   "main": 0,
+   "ll": [
+    37.9725,
+    23.718
+   ],
+   "q": "Lofos Nymfon",
+   "name": "Otto-era guillotine site, Hill of the Nymphs",
+   "blurb": "Where Edmond About placed the scaffold of King Otto's Athens, below the Observatory.",
+   "when": "Open hill; nothing marked.",
+   "nv": true
+  },
+  {
+   "id": "criminology-museum",
+   "key": "B-criminology-museum",
+   "k": "museum",
+   "main": 1,
+   "ll": [
+    37.98411,
+    23.7668
+   ],
+   "q": "Mikras Asias 75, Goudi",
+   "name": "Criminology Museum (last guillotine)",
+   "blurb": "The last Greek guillotine (used until 1912), bandits' heads in jars and tattooed skin, in the Medical School at Goudi.",
+   "when": "Appointment only; visitors report calls unanswered and visits refused. Try anyway, by phone.",
+   "nv": false
+  },
+  {
+   "id": "lavriou-square",
+   "key": "B-lavriou-square",
+   "k": "plaque",
+   "main": 0,
+   "ll": [
+    37.9855,
+    23.729
+   ],
+   "q": "Plateia Lavriou, Athens",
+   "name": "Plateia Lavriou",
+   "blurb": "A square near Omonia that was the 1889 city terminus of the trains to Kifisia and Lavrio; nothing is left.",
+   "when": "Public square.",
+   "nv": false
+  },
+  {
+   "id": "ilisos-open",
+   "key": "B-ilisos-open",
+   "k": "relic",
+   "main": 1,
+   "ll": [
+    37.9675,
+    23.734
+   ],
+   "q": "Agia Fotini, Ardittou",
+   "name": "The open Ilisos at Agia Fotini",
+   "blurb": "The only stretch of Athens's buried river still open to the sky, where the water of the Kallirroi spring still runs out of two pipes.",
+   "when": "Street; best after rain.",
+   "nv": false
+  },
+  {
+   "id": "hasekis-fountain",
+   "key": "B-hasekis-fountain",
+   "k": "relic",
+   "main": 1,
+   "ll": [
+    37.984,
+    23.706
+   ],
+   "q": "Iera Odos 75, Geoponiko Panepistimio",
+   "name": "Hasekis's fountain and konaki",
+   "blurb": "Built in 1778, the only Ottoman fountain in Athens known to survive, a metre below today's road, with the tyrant Hasekis's mansion behind.",
+   "when": "Street; the konaki inside the university campus in campus hours.",
+   "nv": false
+  },
+  {
+   "id": "roman-latrines",
+   "key": "B-roman-latrines",
+   "k": "relic",
+   "main": 1,
+   "ll": [
+    37.9745,
+    23.7268
+   ],
+   "q": "Roman Agora, Athens",
+   "name": "Roman Agora latrines",
+   "blurb": "A 1st-century public toilet for 64 people sitting side by side over a water channel.",
+   "when": "Roman Agora ticket.",
+   "nv": false
+  },
+  {
+   "id": "peisistratid-aqueduct",
+   "key": "B-peisistratid-aqueduct",
+   "k": "relic",
+   "main": 0,
+   "ll": [
+    37.976,
+    23.747
+   ],
+   "q": "Evangelismos metro station",
+   "name": "Peisistratid aqueduct, Evangelismos",
+   "blurb": "A section of the 6th-century BC aqueduct of the tyrants shown in Evangelismos metro station.",
+   "when": "Metro hours.",
+   "nv": false
+  },
+  {
+   "id": "km-zero",
+   "key": "B-km-zero",
+   "k": "plaque",
+   "main": 0,
+   "ll": [
+    37.9727,
+    23.7183
+   ],
+   "q": "National Observatory, Thissio",
+   "name": "Kilometre zero (and the noon time-ball)",
+   "blurb": "The Observatory hill, said to be Greece's kilometre zero, where a time-ball once dropped at noon from 1916.",
+   "when": "Observatory visitor centre evenings; no marker known.",
+   "nv": true
+  },
+  {
+   "id": "thrasyllos-sundial",
+   "key": "B-thrasyllos-sundial",
+   "k": "relic",
+   "main": 0,
+   "ll": [
+    37.9705,
+    23.727
+   ],
+   "q": "Thrasyllos monument, Acropolis south slope",
+   "name": "Thrasyllos monument sundial",
+   "blurb": "A metre-wide ancient sundial reported at the Thrasyllos monument above the Theatre of Dionysus, unpublished.",
+   "when": "Acropolis ticket; seen from the south slope path. Not verified.",
+   "nv": true
+  },
+  {
+   "id": "prof-ilias-cave",
+   "key": "B-prof-ilias-cave",
+   "k": "land",
+   "main": 0,
+   "ll": [
+    38.02917,
+    23.74765
+   ],
+   "q": "Komanon 30, Rizoupoli",
+   "name": "Profitis Ilias cave, Rizoupoli",
+   "blurb": "A karst cave in an empty urban plot among apartment blocks.",
+   "when": "Private plot; see from the street.",
+   "nv": true
+  },
+  {
+   "id": "medrese-gate",
+   "key": "B-medrese-gate",
+   "k": "relic",
+   "main": 1,
+   "ll": [
+    37.97448,
+    23.72725
+   ],
+   "q": "Old Madrasa Gate, Pelopida",
+   "name": "Medrese gate",
+   "blurb": "The marble gate of the Ottoman school of 1721, with a rosette and tulip carving; the building behind became a prison and was demolished.",
+   "when": "Street, always.",
+   "nv": false
+  },
+  {
+   "id": "kolonaki-column",
+   "key": "B-kolonaki-column",
+   "k": "relic",
+   "main": 0,
+   "ll": [
+    37.9775,
+    23.741
+   ],
+   "q": "Plateia Kolonakiou",
+   "name": "The Kolonaki column",
+   "blurb": "The little ancient column that gave Kolonaki its name, a processional marker against epidemics moved to the square in 1938.",
+   "when": "Public square; check it is still in place after the redesigns and metro works.",
+   "nv": true
+  },
+  {
+   "id": "treno-rouf",
+   "key": "B-treno-rouf",
+   "k": "arch",
+   "main": 0,
+   "ll": [
+    37.9775,
+    23.711
+   ],
+   "q": "To Treno sto Rouf",
+   "name": "The Train at Rouf",
+   "blurb": "Old railway carriages at Rouf station turned into a theatre, bar and restaurant.",
+   "when": "Shows and bar hours.",
+   "nv": false
+  },
+  {
+   "id": "zonars",
+   "key": "C-zonars",
+   "k": "cafe",
+   "main": 1,
+   "ll": [
+    37.9771,
+    23.734
+   ],
+   "q": "Athenee, Panepistimiou and Voukourestiou",
+   "name": "Athénée (ex-Zonar's)",
+   "blurb": "The café of Elytis, Gatsos, Hadjidakis and Karamanlis, in the same building since 1940, reopened in 2015.",
+   "when": "Open daily.",
+   "nv": false
+  },
+  {
+   "id": "dexameni",
+   "key": "C-dexameni",
+   "k": "cafe",
+   "main": 1,
+   "ll": [
+    37.9795,
+    23.743
+   ],
+   "q": "Plateia Dexamenis, Kolonaki",
+   "name": "Dexameni café",
+   "blurb": "A square café over Hadrian's reservoir where Papadiamantis was photographed with his head tilted; a 1923 relief of him is set into the reservoir wall.",
+   "when": "Open all day in season, no bookings; open-air Cine Dexameni next door.",
+   "nv": false
+  },
+  {
+   "id": "mouria",
+   "key": "C-mouria",
+   "k": "cafe",
+   "main": 0,
+   "ll": [
+    37.9875,
+    23.737
+   ],
+   "q": "Charilaou Trikoupi 87",
+   "name": "Mouria corner, Exarchia",
+   "blurb": "A kafeneio on the same corner since 1915; Mouria itself probably closed on 31 October 2026, but the space is to stay a café.",
+   "when": "Check on site what is open.",
+   "nv": true
+  },
+  {
+   "id": "saita",
+   "key": "C-saita",
+   "k": "cafe",
+   "main": 0,
+   "ll": [
+    37.9715,
+    23.7305
+   ],
+   "q": "Kydathineon 21, Plaka",
+   "name": "Saita, Plaka",
+   "blurb": "A basement tavern with murals (1970) where songwriter Manolis Rasoulis met Nikos Xydakis in 1978, which led to a landmark album.",
+   "when": "Open; tel. 210 322 6671.",
+   "nv": false
+  },
+  {
+   "id": "galaxy-adonis",
+   "key": "C-galaxy-adonis",
+   "k": "cafe",
+   "main": 0,
+   "ll": [
+    37.9455,
+    23.7135
+   ],
+   "q": "Plateia Neas Smyrnis",
+   "name": "Galaxy and Adonis, Nea Smyrni",
+   "blurb": "Where Greek footballers planned their first strike (1979–80) and Panionios's ultras were founded; Adonis is the café of a 1986 hit song.",
+   "when": "Galaxy is a municipal venue; Adonis is open.",
+   "nv": false
+  },
+  {
+   "id": "diporto",
+   "key": "C-diporto",
+   "k": "cafe",
+   "main": 1,
+   "ll": [
+    37.98,
+    23.726
+   ],
+   "q": "Sokratous 9 and Theatrou",
+   "name": "Diporto",
+   "blurb": "A sign-less basement tavern under an abandoned house by the central market, unchanged since the 1950s; no menu.",
+   "when": "Lunch only, roughly midday to early evening.",
+   "nv": false
+  },
+  {
+   "id": "klimataria",
+   "key": "C-klimataria",
+   "k": "cafe",
+   "main": 0,
+   "ll": [
+    37.98,
+    23.725
+   ],
+   "q": "Plateia Theatrou 2",
+   "name": "Klimataria",
+   "blurb": "A tavern since 1927 where rebetes including Markos Vamvakaris passed through; live music.",
+   "when": "Open; live music most evenings.",
+   "nv": false
+  },
+  {
+   "id": "oinopoleion-psyrri",
+   "key": "C-oinopoleion-psyrri",
+   "k": "cafe",
+   "main": 0,
+   "ll": [
+    37.978,
+    23.724
+   ],
+   "q": "Aischylou 12, Psyrri",
+   "name": "Oinopoleion, Psyrri",
+   "blurb": "Psyrri's oldest tavern (1928), where the rebetis Stelios Tsaousakis was a regular in the early 1950s.",
+   "when": "Open (reopened 2011).",
+   "nv": false
+  },
+  {
+   "id": "brettos",
+   "key": "C-brettos",
+   "k": "cafe",
+   "main": 0,
+   "ll": [
+    37.972,
+    23.731
+   ],
+   "q": "Kydathinaion 41, Plaka",
+   "name": "Brettos, Plaka",
+   "blurb": "A distillery and bar of 1909 with walls of backlit coloured bottles.",
+   "when": "Open daily.",
+   "nv": false
+  },
+  {
+   "id": "spilia-paraskeva",
+   "key": "C-spilia-paraskeva",
+   "k": "cafe",
+   "main": 1,
+   "ll": [
+    37.934,
+    23.651
+   ],
+   "q": "Papanastasiou 11, Kastella",
+   "name": "Spilia tou Paraskeva, Kastella",
+   "blurb": "An ancient cave sanctuary (the Serangeion) that became a refreshment stand and then the glamorous 1960s nightclub of Chiotis and Linda; closed in 1968.",
+   "when": "Fenced ruin; outside only.",
+   "nv": false
+  },
+  {
+   "id": "ikariotiko",
+   "key": "C-ikariotiko",
+   "k": "cafe",
+   "main": 0,
+   "ll": [
+    37.944,
+    23.646
+   ],
+   "q": "Aristeidou 17, Piraeus",
+   "name": "Ikariotiko kafeneio, Piraeus",
+   "blurb": "A Piraeus kafeneio since 1945 in a building of the Rizarios foundation.",
+   "when": "Open.",
+   "nv": false
+  },
+  {
+   "id": "gennadius",
+   "key": "C-gennadius",
+   "k": "library",
+   "main": 0,
+   "ll": [
+    37.9805,
+    23.75
+   ],
+   "q": "Souidias 61, Kolonaki",
+   "name": "Gennadius Library",
+   "blurb": "An unchanged 1926 library holding the papers of Seferis, Elytis and Schliemann.",
+   "when": "Open stacks Sept–June Mon–Wed, Fri 9–16:45, Thu to 19:45, Sat to 13:45; reading room for researchers; public lectures in Cotsen Hall.",
+   "nv": false
+  },
+  {
+   "id": "vallianeio",
+   "key": "C-vallianeio",
+   "k": "library",
+   "main": 1,
+   "ll": [
+    37.98,
+    23.733
+   ],
+   "q": "Panepistimiou 32",
+   "name": "Vallianeio (old National Library)",
+   "blurb": "The neoclassical National Library of the 'Athenian trilogy', with its five-storey iron book tower; the reading room's reopening in 2026 is unconfirmed.",
+   "when": "Reading room closed since late 2023 for ceiling works; reopening 'within 2026' announced, not confirmed.",
+   "nv": true
+  },
+  {
+   "id": "snfcc-library",
+   "key": "C-snfcc-library",
+   "k": "library",
+   "main": 0,
+   "ll": [
+    37.94,
+    23.692
+   ],
+   "q": "Stavros Niarchos Foundation Cultural Centre",
+   "name": "National Library, SNFCC",
+   "blurb": "Renzo Piano's National Library, open to everyone 9:00–24:00 daily.",
+   "when": "Daily 9:00–24:00, free.",
+   "nv": false
+  },
+  {
+   "id": "parnassos",
+   "key": "C-parnassos",
+   "k": "library",
+   "main": 1,
+   "ll": [
+    37.979,
+    23.732
+   ],
+   "q": "Karytsi 8",
+   "name": "Parnassos hall",
+   "blurb": "The 1890–91 hall of the Parnassos literary society, where Coubertin lectured in 1894 and Greece's first art exhibition was held.",
+   "when": "Events only.",
+   "nv": false
+  },
+  {
+   "id": "conservatory",
+   "key": "C-conservatory",
+   "k": "arch",
+   "main": 1,
+   "ll": [
+    37.975,
+    23.744
+   ],
+   "q": "Odeio Athinon, Rigillis and Vas. Georgiou B",
+   "name": "Athens Conservatory (Despotopoulos)",
+   "blurb": "Ioannis Despotopoulos's 160 m Bauhaus-trained building (1970s), finished with its 600-seat hall only in 2022.",
+   "when": "Concerts and events.",
+   "nv": false
+  },
+  {
+   "id": "hellenic-conservatory",
+   "key": "C-hellenic-conservatory",
+   "k": "library",
+   "main": 0,
+   "ll": [
+    37.9825,
+    23.733
+   ],
+   "q": "Feidiou 3",
+   "name": "Hellenic Conservatory, Feidiou 3",
+   "blurb": "An 1836 Otto-era mansion where Maria Callas studied, derelict for 50 years and being restored as the Dance Archive.",
+   "when": "Restoration (€5.7m); a 2026 opening was announced, not confirmed. Exterior.",
+   "nv": true
+  },
+  {
+   "id": "theatro-technis",
+   "key": "C-theatro-technis",
+   "k": "library",
+   "main": 1,
+   "ll": [
+    37.981,
+    23.729
+   ],
+   "q": "Pesmazoglou 5",
+   "name": "Theatro Technis 'Ypogeio'",
+   "blurb": "Karolos Koun's circular basement theatre (1954), where Beckett, Ionesco and Genet had their Greek premieres.",
+   "when": "Performances.",
+   "nv": false
+  },
+  {
+   "id": "technis-frynichou",
+   "key": "C-technis-frynichou",
+   "k": "library",
+   "main": 0,
+   "ll": [
+    37.9715,
+    23.731
+   ],
+   "q": "Frynichou 14, Plaka",
+   "name": "Theatro Technis, Frynichou 14",
+   "blurb": "Theatro Technis's second stage in Plaka (1985).",
+   "when": "Performances.",
+   "nv": false
+  },
+  {
+   "id": "rex",
+   "key": "C-rex",
+   "k": "library",
+   "main": 0,
+   "ll": [
+    37.983,
+    23.731
+   ],
+   "q": "Panepistimiou 48",
+   "name": "Rex / Kotopouli stage",
+   "blurb": "A 1937 cinema-theatre, burned in 1982, listed in 1983, now a National Theatre stage.",
+   "when": "Performances.",
+   "nv": false
+  },
+  {
+   "id": "aigli",
+   "key": "C-aigli",
+   "k": "library",
+   "main": 0,
+   "ll": [
+    37.97,
+    23.737
+   ],
+   "q": "Aigli Zappeiou",
+   "name": "Aigli Zappeiou",
+   "blurb": "The open-air cinema in the Zappeion gardens (from the 1900s or 1910s).",
+   "when": "Summer.",
+   "nv": false
+  },
+  {
+   "id": "thision-cinema",
+   "key": "C-thision-cinema",
+   "k": "library",
+   "main": 0,
+   "ll": [
+    37.9725,
+    23.7195
+   ],
+   "q": "Apostolou Pavlou 7",
+   "name": "Cine Thision",
+   "blurb": "An open-air cinema since 1935 with the Acropolis behind the screen.",
+   "when": "Summer, roughly May–Oct.",
+   "nv": false
+  },
+  {
+   "id": "cine-paris",
+   "key": "C-cine-paris",
+   "k": "library",
+   "main": 0,
+   "ll": [
+    37.972,
+    23.7305
+   ],
+   "q": "Kydathinaion 22, Plaka",
+   "name": "Cine Paris, Plaka",
+   "blurb": "A 1920s rooftop cinema in Plaka.",
+   "when": "Summer.",
+   "nv": false
+  },
+  {
+   "id": "vox-riviera",
+   "key": "C-vox-riviera",
+   "k": "library",
+   "main": 0,
+   "ll": [
+    37.9865,
+    23.735
+   ],
+   "q": "Cine Vox, Plateia Exarchion",
+   "name": "Vox and Riviera, Exarchia",
+   "blurb": "Exarchia's open-air cinemas: Vox (1938) and Riviera (1969).",
+   "when": "Summer.",
+   "nv": false
+  },
+  {
+   "id": "old-chemistry",
+   "key": "C-old-chemistry",
+   "k": "museum",
+   "main": 1,
+   "ll": [
+    37.9833,
+    23.7347
+   ],
+   "q": "Solonos 104",
+   "name": "Old Chemistry, Solonos 104",
+   "blurb": "Ziller's university chemistry lab (1887–90), where a professor hid a Telefunken radio as an 'exhibit' in the Occupation and the 1973 mobilisations began; now the Law Library and a museum of 10,000 scientific instruments.",
+   "when": "Law Library Mon–Fri 8:30–20:00. Natural Sciences and Technology Museum by arrangement (chsymeon@phys.uoa.gr).",
+   "nv": false
+  },
+  {
+   "id": "demokritos",
+   "key": "C-demokritos",
+   "k": "museum",
+   "main": 0,
+   "ll": [
+    37.999,
+    23.818
+   ],
+   "q": "EKEFE Dimokritos, Agia Paraskevi",
+   "name": "Demokritos reactor",
+   "blurb": "Greece's only nuclear reactor, critical since 31 July 1961, now not operating; a museum is only a plan.",
+   "when": "Research campus; no public visits found. Exterior only.",
+   "nv": true
+  },
+  {
+   "id": "newall",
+   "key": "C-newall",
+   "k": "museum",
+   "main": 1,
+   "ll": [
+    38.049,
+    23.864
+   ],
+   "q": "Newall Telescope, Penteli Astronomical Station",
+   "name": "Newall telescope, Penteli",
+   "blurb": "A 62.5 cm refractor of 1869, once the largest in the world, in an all-Pentelic-marble building of 1958; public evening shows.",
+   "when": "Evening shows, about 125 places; book online (noa.gr).",
+   "nv": false
+  },
+  {
+   "id": "thissio-observatory",
+   "key": "C-thissio-observatory",
+   "k": "museum",
+   "main": 1,
+   "ll": [
+    37.973,
+    23.719
+   ],
+   "q": "National Observatory of Athens, Thissio",
+   "name": "Thissio Observatory and Doridis telescope",
+   "blurb": "Greece's first observatory (1842), founded by Sinas, where Gagarin came in 1962; visitor centre with the Doridis telescope.",
+   "when": "Visitor centre evenings; book ahead.",
+   "nv": false
+  },
+  {
+   "id": "pasteur",
+   "key": "C-pasteur",
+   "k": "museum",
+   "main": 0,
+   "ll": [
+    37.988,
+    23.763
+   ],
+   "q": "Institouto Pasteur, Vasilissis Sofias 127",
+   "name": "Hellenic Pasteur Institute",
+   "blurb": "Founded in 1919 with money from arms dealer Basil Zaharoff and opened by Calmette in 1920; old instruments in cases.",
+   "when": "Group tours only.",
+   "nv": false
+  },
+  {
+   "id": "mineralogy-museum",
+   "key": "C-mineralogy-museum",
+   "k": "museum",
+   "main": 0,
+   "ll": [
+    37.968,
+    23.783
+   ],
+   "q": "Mouseio Oryktologias kai Petrologias, Panepistimioupoli Zografou",
+   "name": "Mineralogy and Petrology Museum",
+   "blurb": "1,800 specimens of 700+ minerals in 19th-century cases, with a Santorini room, on the Zografou campus.",
+   "when": "Mon–Fri 9:30–14:00.",
+   "nv": false
+  },
+  {
+   "id": "finos-chiou",
+   "key": "C-finos-chiou",
+   "k": "plaque",
+   "main": 1,
+   "ll": [
+    37.988,
+    23.722
+   ],
+   "q": "Chiou 53, Metaxourgeio",
+   "name": "Finos Film, Chiou 53",
+   "blurb": "The listed 1914 soap-factory building where Finos Film made Greek cinema's golden age; about 500 reels were rescued from it in 2021.",
+   "when": "Street; building for sale.",
+   "nv": false
+  },
+  {
+   "id": "rigillis-18",
+   "key": "C-rigillis-18",
+   "k": "plaque",
+   "main": 0,
+   "ll": [
+    37.97346,
+    23.7424
+   ],
+   "q": "Rigillis 18",
+   "name": "Rigillis 18",
+   "blurb": "New Democracy's headquarters 1975–2011, a listed modern monument since 2020, becoming a private home.",
+   "when": "Street.",
+   "nv": false
+  },
+  {
+   "id": "ag-ioannis-kolona",
+   "key": "R-ag-ioannis-kolona",
+   "k": "church",
+   "main": 1,
+   "ll": [
+    37.9799,
+    23.724
+   ],
+   "q": "Agios Ioannis stin Kolona, Evripidou",
+   "name": "Agios Ioannis tis Kolonas",
+   "blurb": "A tiny whitewashed chapel built round an ancient Corinthian column that rises through its roof; Athenians tied fevers to it with threads.",
+   "when": "Hours conflict: mornings except Sunday (older source) or a monthly liturgy; feast 29 August. The column is visible from Evripidou.",
+   "nv": false
+  },
+  {
+   "id": "davelis-cave",
+   "key": "R-davelis-cave",
+   "k": "church",
+   "main": 1,
+   "ll": [
+    38.07077,
+    23.87722
+   ],
+   "q": "Davelis Cave, Penteli",
+   "name": "Davelis cave and the Pentelic quarry",
+   "blurb": "Rock-cut Byzantine chapels at the mouth of a cave opened by the ancient quarry that supplied the Parthenon's marble; chisel and wedge marks everywhere.",
+   "when": "Open air, always; rough road, then a short walk. Cave floor slippery.",
+   "nv": false
+  },
+  {
+   "id": "omorfokklisia",
+   "key": "R-omorfokklisia",
+   "k": "church",
+   "main": 1,
+   "ll": [
+    38.0289,
+    23.7638
+   ],
+   "q": "Omorfokklisia, Leoforos Veikou, Galatsi",
+   "name": "Omorfokklisia, Galatsi",
+   "blurb": "An 11th–12th-century church with a Gothic rose on its vault and a famous Pantokrator, open only one day a year.",
+   "when": "Open only on St George's feast (Easter Monday when it falls in Lent). Otherwise exterior.",
+   "nv": false
+  },
+  {
+   "id": "gorgoepikoos",
+   "key": "R-gorgoepikoos",
+   "k": "church",
+   "main": 1,
+   "ll": [
+    37.9752,
+    23.7293
+   ],
+   "q": "Mikri Mitropoli, Plateia Mitropoleos",
+   "name": "Little Metropolis (Panagia Gorgoepikoos)",
+   "blurb": "A tiny church built of about 90 reused ancient and Byzantine carvings, including a frieze of the twelve months and the zodiac.",
+   "when": "Daytime.",
+   "nv": false
+  },
+  {
+   "id": "russian-church",
+   "key": "R-russian-church",
+   "k": "church",
+   "main": 0,
+   "ll": [
+    37.9732,
+    23.734
+   ],
+   "q": "Filellinon 21A",
+   "name": "Russian Church (Sotira Lykodimou)",
+   "blurb": "The largest medieval building in Athens, an 11th-century church given to Russia in 1847, with an aqueduct cistern 5 m under its floor.",
+   "when": "Mornings.",
+   "nv": false
+  },
+  {
+   "id": "megali-panagia",
+   "key": "R-megali-panagia",
+   "k": "church",
+   "main": 0,
+   "ll": [
+    37.9758,
+    23.7262
+   ],
+   "q": "Hadrian's Library, Areos 3",
+   "name": "Megali Panagia, Hadrian's Library",
+   "blurb": "Foundations of an early-Christian four-apsed church in the courtyard of Hadrian's Library.",
+   "when": "Site ticket (about €10).",
+   "nv": false
+  },
+  {
+   "id": "chrysospiliotissa",
+   "key": "R-chrysospiliotissa",
+   "k": "church",
+   "main": 0,
+   "ll": [
+    37.9708,
+    23.7275
+   ],
+   "q": "Theatre of Dionysus, Acropolis south slope",
+   "name": "Panagia Chrysospiliotissa",
+   "blurb": "A cave chapel in the Acropolis rock above the Theatre of Dionysus, with two ancient columns above it.",
+   "when": "Seen from the south slope path (Acropolis ticket).",
+   "nv": false
+  },
+  {
+   "id": "kapnikarea",
+   "key": "R-kapnikarea",
+   "k": "church",
+   "main": 0,
+   "ll": [
+    37.9765,
+    23.728
+   ],
+   "q": "Kapnikarea, Ermou",
+   "name": "Kapnikarea",
+   "blurb": "An 11th-century church in the middle of Ermou, saved from demolition by Ludwig of Bavaria.",
+   "when": "Daytime.",
+   "nv": false
+  },
+  {
+   "id": "daphni",
+   "key": "R-daphni",
+   "k": "church",
+   "main": 0,
+   "ll": [
+    38.013,
+    23.636
+   ],
+   "q": "Moni Dafniou",
+   "name": "Daphni monastery",
+   "blurb": "An 11th-century monastery with some of the finest Byzantine mosaics anywhere, including a stern Pantokrator.",
+   "when": "Site hours; check.",
+   "nv": false
+  },
+  {
+   "id": "kaisariani-monastery",
+   "key": "R-kaisariani-monastery",
+   "k": "church",
+   "main": 0,
+   "ll": [
+    37.96,
+    23.798
+   ],
+   "q": "Moni Kaisarianis",
+   "name": "Kaisariani monastery",
+   "blurb": "An 11th-century monastery on Hymettus with a spring that runs from a ram's-head spout.",
+   "when": "Site hours.",
+   "nv": false
+  },
+  {
+   "id": "agia-dynami",
+   "key": "R-agia-dynami",
+   "k": "church",
+   "main": 1,
+   "ll": [
+    37.9757,
+    23.732
+   ],
+   "q": "Agia Dynami, Mitropoleos and Voulis",
+   "name": "Agia Dynami",
+   "blurb": "An Ottoman-era chapel swallowed by the pilotis of a 1950s ministry block that now stands empty: a church whose sky is the underside of a building.",
+   "when": "Daytime.",
+   "nv": false
+  },
+  {
+   "id": "agioi-isidoroi",
+   "key": "R-agioi-isidoroi",
+   "k": "church",
+   "main": 1,
+   "ll": [
+    37.98226,
+    23.74282
+   ],
+   "q": "Agioi Isidoroi, Lycabettus",
+   "name": "Agioi Isidoroi, Lycabettus",
+   "blurb": "A 15th–16th-century church built into the largest cave of Lycabettus, with a plaque about a tunnel to Penteli.",
+   "when": "Daily 9:00–12:00.",
+   "nv": false
+  },
+  {
+   "id": "catholic-cathedral",
+   "key": "R-catholic-cathedral",
+   "k": "church",
+   "main": 1,
+   "ll": [
+    37.9792,
+    23.7344
+   ],
+   "q": "Katholiki Mitropoli Agiou Dionysiou, Panepistimiou",
+   "name": "Catholic Cathedral of St Dionysius",
+   "blurb": "Klenze's only Athens building (1853–65), with green Tinos-marble columns cut for the royal palace and left over after a redesign.",
+   "when": "Daily.",
+   "nv": false
+  },
+  {
+   "id": "st-pauls",
+   "key": "R-st-pauls",
+   "k": "church",
+   "main": 0,
+   "ll": [
+    37.9715,
+    23.7365
+   ],
+   "q": "St Paul's Anglican Church, Filellinon",
+   "name": "Anglican St Paul's",
+   "blurb": "A neo-Gothic church of 1843 in bluish-grey Hymettus marble, with the oldest church organ in the city.",
+   "when": "Sunday services.",
+   "nv": false
+  },
+  {
+   "id": "ag-konstantinos",
+   "key": "R-ag-konstantinos",
+   "k": "church",
+   "main": 0,
+   "ll": [
+    37.9844,
+    23.7251
+   ],
+   "q": "Agios Konstantinos, Omonia",
+   "name": "Agios Konstantinos, Omonia",
+   "blurb": "Kaftanzoglou's big neo-Byzantine church (1871–1905) near Omonia.",
+   "when": "Daily.",
+   "nv": false
+  },
+  {
+   "id": "ag-panteleimonas",
+   "key": "R-ag-panteleimonas",
+   "k": "church",
+   "main": 0,
+   "ll": [
+    37.998,
+    23.729
+   ],
+   "q": "Agios Panteleimonas Acharnon",
+   "name": "Agios Panteleimonas Acharnon",
+   "blurb": "Called the largest church in Athens, begun in 1910 where a chapel stood for a mother driven mad by grief.",
+   "when": "Daily.",
+   "nv": false
+  },
+  {
+   "id": "christuskirche",
+   "key": "R-christuskirche",
+   "k": "church",
+   "main": 1,
+   "ll": [
+    37.9824,
+    23.7396
+   ],
+   "q": "Christuskirche, Sina 66",
+   "name": "Christuskirche, Sina 66",
+   "blurb": "The German Protestant church of 1931–34 in Neue Sachlichkeit style, with its Bauhaus-era pulpit, pews and candlesticks intact.",
+   "when": "Sunday service; otherwise exterior.",
+   "nv": false
+  },
+  {
+   "id": "romaniote-synagogue",
+   "key": "R-romaniote-synagogue",
+   "k": "church",
+   "main": 0,
+   "ll": [
+    37.978,
+    23.721
+   ],
+   "q": "Melidoni 8, Athens",
+   "name": "Romaniote (Ianniotiki) synagogue",
+   "blurb": "The old synagogue of the Greek-speaking Romaniote Jews, facing Beth Shalom.",
+   "when": "By arrangement, with ID.",
+   "nv": false
+  },
+  {
+   "id": "metropolitan-cathedral",
+   "key": "R-metropolitan-cathedral",
+   "k": "church",
+   "main": 0,
+   "ll": [
+    37.9755,
+    23.729
+   ],
+   "q": "Mitropoli Athinon",
+   "name": "Metropolitan Cathedral",
+   "blurb": "The 19th-century cathedral of Athens, with a new treasury museum; next to the Little Metropolis.",
+   "when": "Daily.",
+   "nv": false
+  },
+  {
+   "id": "loumbardiaris",
+   "key": "R-loumbardiaris",
+   "k": "church",
+   "main": 1,
+   "ll": [
+    37.97,
+    23.7203
+   ],
+   "q": "Agios Dimitrios Loumbardiaris, Philopappou",
+   "name": "Agios Dimitrios Loumbardiaris and the Pikionis paths",
+   "blurb": "Pikionis's 1954–58 landscape of paths, a pavilion and a re-clad chapel, made of marble scraps, tiles and concrete: the masterpiece of Greek modernism.",
+   "when": "Grounds open; chapel at service times.",
+   "nv": false
+  },
+  {
+   "id": "ano-glyfada",
+   "key": "R-ano-glyfada",
+   "k": "church",
+   "main": 0,
+   "ll": [
+    37.8817,
+    23.7559
+   ],
+   "q": "Koimisi Theotokou, Ano Glyfada",
+   "name": "Koimisi Theotokou, Ano Glyfada",
+   "blurb": "A modern church designed in 1961 by Molfesis and Papagiannis; whether it was built as drawn is unknown.",
+   "when": "Parish hours; check what it looks like.",
+   "nv": true
+  },
+  {
+   "id": "ag-nikolaos-glyfada",
+   "key": "R-ag-nikolaos-glyfada",
+   "k": "church",
+   "main": 0,
+   "ll": [
+    37.864,
+    23.753
+   ],
+   "q": "Agios Nikolaos Glyfadas",
+   "name": "Agios Nikolaos, Glyfada",
+   "blurb": "A 1956–62 church by Paraskevi Tsatiri, a rare woman church architect; the old church was moved for the avenue.",
+   "when": "Parish hours.",
+   "nv": false
+  },
+  {
+   "id": "votanikos-mosque",
+   "key": "R-votanikos-mosque",
+   "k": "church",
+   "main": 1,
+   "ll": [
+    37.9864,
+    23.7003
+   ],
+   "q": "Tzami Athinon, Iera Odos 144",
+   "name": "Votanikos mosque",
+   "blurb": "Athens's first official mosque since independence (2020): a state-built, minaret-less building, an 'anti-monument'.",
+   "when": "Prayer times; ID check at the gate.",
+   "nv": false
+  },
+  {
+   "id": "first-cemetery",
+   "key": "R-first-cemetery",
+   "k": "church",
+   "main": 1,
+   "ll": [
+    37.96455,
+    23.73562
+   ],
+   "q": "Proto Nekrotafeio Athinon",
+   "name": "First Cemetery of Athens",
+   "blurb": "Athens's great 19th–20th-century cemetery: Halepas's Sleeping Maiden, Schliemann's temple-tomb, cypress avenues.",
+   "when": "Daily 7:30–20:00.",
+   "nv": false
+  },
+  {
+   "id": "phaleron-war",
+   "key": "R-phaleron-war",
+   "k": "church",
+   "main": 1,
+   "ll": [
+    37.918,
+    23.705
+   ],
+   "q": "Phaleron War Cemetery, Alimos",
+   "name": "Phaleron War Cemetery",
+   "blurb": "A Commonwealth war cemetery by Louis de Soissons, sloping to the sea, with Gurkha, Muslim and Crimean plots.",
+   "when": "Daytime; tram to Pikrodafni.",
+   "nv": false
+  },
+  {
+   "id": "german-cemetery",
+   "key": "R-german-cemetery",
+   "k": "church",
+   "main": 1,
+   "ll": [
+    38.091,
+    23.918
+   ],
+   "q": "Germaniko Stratiotiko Nekrotafeio, Dionysos",
+   "name": "German war cemetery, Dionysos",
+   "blurb": "9,905 WWII and 68 WWI German dead in 12 crypts under three walled courtyards on Penteli's north slope.",
+   "when": "Free; mornings.",
+   "nv": false
+  },
+  {
+   "id": "third-cemetery",
+   "key": "R-third-cemetery",
+   "k": "church",
+   "main": 1,
+   "ll": [
+    37.98,
+    23.667
+   ],
+   "q": "Trito Nekrotafeio Athinon, Nikaia",
+   "name": "Third Cemetery, Nikaia",
+   "blurb": "The largest cemetery in the Balkans, with Jewish, Italian, Catholic and military sections and the graves of the Kokkinia Blockade victims.",
+   "when": "Cemetery hours.",
+   "nv": false
+  },
+  {
+   "id": "acropolis",
+   "key": "K-acropolis",
+   "k": "relic",
+   "main": 1,
+   "ll": [
+    37.9715,
+    23.7257
+   ],
+   "q": "Acropolis of Athens",
+   "name": "Acropolis",
+   "blurb": "The 5th-century BC sanctuary of Athena: look for the curved steps, the Venetian shell damage of 1687 and the bright new marble of the restorers.",
+   "when": "Winter 8:00–17:00 (last entry 20 min before); €30 / €15; timed tickets online; free 1st and 3rd Sunday Nov–Mar. Opening slot or last two hours quietest.",
+   "nv": false
+  },
+  {
+   "id": "north-slope",
+   "key": "K-north-slope",
+   "k": "relic",
+   "main": 1,
+   "ll": [
+    37.9728,
+    23.7255
+   ],
+   "q": "Peripatos, Acropolis North Slope",
+   "name": "North Slope: Peripatos and caves",
+   "blurb": "The quiet side of the Acropolis, reopened in 2025: cave shrines of Apollo, Zeus and Pan, the Klepsydra spring and a boulder that gives the path's length.",
+   "when": "Enter from inside the Acropolis site (Acropolis ticket). Winter hours conflict (8:30–15:30 vs 8:00–17:00): check on the day.",
+   "nv": false
+  },
+  {
+   "id": "dionysus-theatre",
+   "key": "K-dionysus-theatre",
+   "k": "relic",
+   "main": 1,
+   "ll": [
+    37.9703,
+    23.7278
+   ],
+   "q": "Theatre of Dionysus, Athens",
+   "name": "Theatre of Dionysus",
+   "blurb": "Where tragedy began: look for the priest's throne carved with kneeling Persians holding griffins.",
+   "when": "Acropolis ticket (south slope entrance).",
+   "nv": false
+  },
+  {
+   "id": "ancient-agora",
+   "key": "K-ancient-agora",
+   "k": "relic",
+   "main": 1,
+   "ll": [
+    37.9747,
+    23.7224
+   ],
+   "q": "Ancient Agora of Athens",
+   "name": "Ancient Agora",
+   "blurb": "The heart of democratic Athens: find the boundary stone that says 'I am the boundary of the Agora', in the first person.",
+   "when": "From 1 Apr 2026: 8:00–19:30 (winter hours shorter, check hh.gr). About €20 since the combined ticket ended.",
+   "nv": false
+  },
+  {
+   "id": "roman-agora",
+   "key": "K-roman-agora",
+   "k": "relic",
+   "main": 1,
+   "ll": [
+    37.9743,
+    23.7267
+   ],
+   "q": "Roman Agora, Athens",
+   "name": "Roman Agora and Tower of the Winds",
+   "blurb": "An octagonal marble clock tower of the 1st century BC: sundial lines under each wind, a water clock inside.",
+   "when": "About €10; winter likely 8:00–15:00 (check).",
+   "nv": false
+  },
+  {
+   "id": "kerameikos",
+   "key": "K-kerameikos",
+   "k": "relic",
+   "main": 1,
+   "ll": [
+    37.9781,
+    23.7184
+   ],
+   "q": "Kerameikos, Ermou 148",
+   "name": "Kerameikos",
+   "blurb": "The city's great cemetery and gate, where the Eridanos still flows through the Sacred Gate and carts left ruts on the Pompeion ramp.",
+   "when": "Reopened 15 Sept 2026 after the upgrade; about €10. Check hours.",
+   "nv": false
+  },
+  {
+   "id": "olympieion",
+   "key": "K-olympieion",
+   "k": "relic",
+   "main": 1,
+   "ll": [
+    37.9693,
+    23.7331
+   ],
+   "q": "Temple of Olympian Zeus",
+   "name": "Olympieion and Hadrian's Arch",
+   "blurb": "The giant temple finished by Hadrian, with a column felled by a storm in 1852 lying in its drums, and an arch with two inscriptions.",
+   "when": "Arch free; temple ticket about €20.",
+   "nv": false
+  },
+  {
+   "id": "pnyx",
+   "key": "K-pnyx",
+   "k": "relic",
+   "main": 1,
+   "ll": [
+    37.9718,
+    23.7194
+   ],
+   "q": "Pnyx, Athens",
+   "name": "Pnyx",
+   "blurb": "Where the Athenian assembly met: a rock-cut speaker's platform and 58 niches for votives to Zeus Hypsistos. Free.",
+   "when": "Free, always; mornings best.",
+   "nv": false
+  },
+  {
+   "id": "zea-sheds",
+   "key": "K-zea-sheds",
+   "k": "relic",
+   "main": 1,
+   "ll": [
+    37.9365,
+    23.65
+   ],
+   "q": "Akti Moutsopoulou and Sirangiou, Piraeus",
+   "name": "Zea shipsheds through a window",
+   "blurb": "The slipways of Athens's trireme sheds, seen through the window of an apartment-block basement in Piraeus.",
+   "when": "Street; look through the windows.",
+   "nv": false
+  },
+  {
+   "id": "stadium",
+   "key": "K-stadium",
+   "k": "relic",
+   "main": 0,
+   "ll": [
+    37.9683,
+    23.7411
+   ],
+   "q": "Panathenaic Stadium",
+   "name": "Panathenaic Stadium",
+   "blurb": "The marble stadium of 1896, with a 57 m vaulted tunnel under the bank leading to the torch museum.",
+   "when": "Hellenic Olympic Committee hours; ticket.",
+   "nv": false
+  },
+  {
+   "id": "areopagus",
+   "key": "K-areopagus",
+   "k": "relic",
+   "main": 0,
+   "ll": [
+    37.9723,
+    23.7235
+   ],
+   "q": "Areopagus Hill",
+   "name": "Areopagus",
+   "blurb": "The rock of the ancient court where St Paul spoke to the Athenians; a bronze plaque has his speech.",
+   "when": "Free; slippery steps (2025 works may have changed them).",
+   "nv": false
+  },
+  {
+   "id": "unknown-soldier",
+   "key": "K-unknown-soldier",
+   "k": "relic",
+   "main": 0,
+   "ll": [
+    37.9755,
+    23.7365
+   ],
+   "q": "Tomb of the Unknown Soldier, Syntagma",
+   "name": "Tomb of the Unknown Soldier",
+   "blurb": "A dying hoplite copied from an Aegina temple pediment, with Pericles's words; the Evzones change guard on the hour.",
+   "when": "Always; Sunday 11:00 grand change.",
+   "nv": false
+  },
+  {
+   "id": "monastiraki-eridanos",
+   "key": "K-monastiraki-eridanos",
+   "k": "relic",
+   "main": 1,
+   "ll": [
+    37.9761,
+    23.7256
+   ],
+   "q": "Monastiraki metro station",
+   "name": "Monastiraki metro: the Eridanos",
+   "blurb": "Inside the Line 3 station, the Eridanos river still runs in its vaulted Hadrianic channel under a glass walkway; you can hear it.",
+   "when": "Metro hours, free with a ticket or from the concourse.",
+   "nv": false
+  },
+  {
+   "id": "syntagma-metro",
+   "key": "K-syntagma-metro",
+   "k": "relic",
+   "main": 1,
+   "ll": [
+    37.9755,
+    23.7351
+   ],
+   "q": "Syntagma metro station",
+   "name": "Syntagma metro: the stratigraphy wall",
+   "blurb": "A cut through Athens's ground: graves, a foundry, the Peisistratid aqueduct and a 4th-century BC skeleton in the station concourse.",
+   "when": "Metro hours.",
+   "nv": false
+  },
+  {
+   "id": "acharnian-gate",
+   "key": "K-acharnian-gate",
+   "k": "relic",
+   "main": 1,
+   "ll": [
+    37.98,
+    23.7275
+   ],
+   "q": "National Bank of Greece, Aiolou 86",
+   "name": "Acharnian Gate in the National Bank",
+   "blurb": "30 m of the Themistoclean city wall, a gate road with wheel ruts and the moat, 5 m down in a bank's basement.",
+   "when": "Bank opening hours; ask at the entrance.",
+   "nv": false
+  },
+  {
+   "id": "kotzia-dig",
+   "key": "K-kotzia-dig",
+   "k": "relic",
+   "main": 0,
+   "ll": [
+    37.9797,
+    23.7268
+   ],
+   "q": "Plateia Kotzia",
+   "name": "Kotzia Square dig",
+   "blurb": "An excavation left open where a car park was never built: three ancient streets, graves and workshops.",
+   "when": "Street.",
+   "nv": false
+  },
+  {
+   "id": "elaionas-bridge",
+   "key": "K-elaionas-bridge",
+   "k": "relic",
+   "main": 0,
+   "ll": [
+    37.9875,
+    23.694
+   ],
+   "q": "Elaionas metro station",
+   "name": "Elaionas metro bridge",
+   "blurb": "Piers of what is called the oldest bridge found in Greece, displayed at Elaionas station.",
+   "when": "Metro hours.",
+   "nv": false
+  },
+  {
+   "id": "long-walls",
+   "key": "K-long-walls",
+   "k": "relic",
+   "main": 0,
+   "ll": [
+    37.96,
+    23.702
+   ],
+   "q": "Thessalonikis Street, Moschato",
+   "name": "Long Walls traces",
+   "blurb": "Stretches of the walls that tied Athens to Piraeus, visible along Thessalonikis Street and under pilotis near Tavros.",
+   "when": "Street.",
+   "nv": false
+  },
+  {
+   "id": "lyceum",
+   "key": "K-lyceum",
+   "k": "relic",
+   "main": 0,
+   "ll": [
+    37.9745,
+    23.7445
+   ],
+   "q": "Aristotle's Lyceum, Rigillis 11",
+   "name": "Aristotle's Lyceum",
+   "blurb": "The palaestra of the gymnasium where Aristotle taught walking (the 'Peripatetics').",
+   "when": "Winter 8:00–15:00; €5 / €3.",
+   "nv": false
+  },
+  {
+   "id": "academy",
+   "key": "K-academy",
+   "k": "relic",
+   "main": 0,
+   "ll": [
+    37.992,
+    23.708
+   ],
+   "q": "Plato's Academy Park",
+   "name": "Plato's Academy park",
+   "blurb": "A neglected park among the ruins of the grove where Plato taught.",
+   "when": "Free.",
+   "nv": false
+  },
+  {
+   "id": "hadrians-library",
+   "key": "K-hadrians-library",
+   "k": "relic",
+   "main": 0,
+   "ll": [
+    37.976,
+    23.7265
+   ],
+   "q": "Hadrian's Library, Areos 3",
+   "name": "Hadrian's Library",
+   "blurb": "Hadrian's great court of books (AD 132), with the foundations of an early church in its garden.",
+   "when": "About €10; winter 8:00–15:00.",
+   "nv": false
+  },
+  {
+   "id": "sounion",
+   "key": "K-sounion",
+   "k": "relic",
+   "main": 0,
+   "ll": [
+    37.6503,
+    24.0246
+   ],
+   "q": "Temple of Poseidon, Sounion",
+   "name": "Sounion",
+   "blurb": "The Temple of Poseidon on its cape: look for 'BYRON' and dozens of travellers' names carved into the columns.",
+   "when": "Go at opening for quiet, at sunset for the view; ticket.",
+   "nv": false
+  },
+  {
+   "id": "marathon-tumulus",
+   "key": "K-marathon-tumulus",
+   "k": "relic",
+   "main": 0,
+   "ll": [
+    38.1188,
+    23.9783
+   ],
+   "q": "Tymvos Marathona",
+   "name": "Marathon tumulus and museum",
+   "blurb": "The mound over the Athenian dead of 490 BC, and a museum with Egyptian-style statues from Herodes Atticus's villa.",
+   "when": "8:30–15:30, closed Tuesday; about €6.",
+   "nv": false
+  },
+  {
+   "id": "brauron",
+   "key": "K-brauron",
+   "k": "relic",
+   "main": 0,
+   "ll": [
+    37.925,
+    23.993
+   ],
+   "q": "Archaeological site of Brauron",
+   "name": "Brauron",
+   "blurb": "Artemis's sanctuary where Athenian girls served as 'little bears': a 5th-century bridge with wheel grooves, and a temple now 400 m from the silted-up sea.",
+   "when": "8:30–15:30, closed Tuesday; site and museum about €5 each.",
+   "nv": false
+  },
+  {
+   "id": "eleusis",
+   "key": "K-eleusis",
+   "k": "relic",
+   "main": 0,
+   "ll": [
+    38.0412,
+    23.5385
+   ],
+   "q": "Archaeological site of Eleusis",
+   "name": "Eleusis",
+   "blurb": "The sanctuary of the Mysteries, between refineries: find the emperor's bust with a cross scratched into its Gorgon.",
+   "when": "Site hours; ticket.",
+   "nv": false
+  },
+  {
+   "id": "myloi",
+   "key": "D-myloi",
+   "k": "land",
+   "main": 0,
+   "ll": [
+    0,
+    0
+   ],
+   "q": "Stathmos Mylon, Argolida",
+   "name": "Myloi rolling-stock graveyard, Argolida",
+   "blurb": "An abandoned junction of the dead Peloponnese metre-gauge network with rusting trains on its sidings, about 2 hours from Athens.",
+   "when": "Unverified since 2018; check recent photos before going.",
+   "off": 1
+  },
+  {
+   "id": "papanikolaou-kymi",
+   "key": "D-papanikolaou-kymi",
+   "k": "land",
+   "main": 0,
+   "ll": [
+    0,
+    0
+   ],
+   "q": "Georgios Papanicolaou Museum, Kymi",
+   "name": "Papanikolaou museum, Kymi (Euboea)",
+   "blurb": "The family house of the inventor of the Pap test, now a museum, about 2 hours from Athens.",
+   "when": "Short hours (e.g. Tue and Thu evenings, Sat morning); check before going.",
+   "off": 1
+  },
+  {
+   "id": "kithairon-chapel",
+   "key": "D-kithairon-chapel",
+   "k": "land",
+   "main": 0,
+   "ll": [
+    0,
+    0
+   ],
+   "q": "Kithaironas summit",
+   "name": "Giannakis's Air Force chapel, Kithairon",
+   "blurb": "An 'almost anti-plastic' modern chapel built in 1960 by the architect Giannakis on the summit of Kithairon during his military service, near the old NIKE flight.",
+   "when": "Lead, not verified; mountain access.",
+   "off": 1
+  },
+  {
+   "id": "ritsona",
+   "key": "D-ritsona",
+   "k": "land",
+   "main": 0,
+   "ll": [
+    0,
+    0
+   ],
+   "q": "Krematorio Ritsonas",
+   "name": "Ritsona crematorium (Boeotia)",
+   "blurb": "Greece's first crematorium (30 Sept 2019), by MONOGON architects, about 80 km from Athens; the end of a long religious and legal fight.",
+   "when": "Working crematorium; exterior.",
+   "off": 1
+  }
+ ],
+ "routes": [
+  {
+   "id": "1",
+   "name": "Acropolis, the hills and the Observatory",
+   "color": "#e6194b",
+   "days": "Daily; Acropolis winter 8–17",
+   "dset": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+   ],
+   "when": "Start at the Acropolis opening slot; the Observatory visitor centre opens in the evening, so end there or come back.",
+   "summary": "The Acropolis for its curves and scars, the quiet North Slope caves, the Theatre of Dionysus, then over the Areopagus to Pikionis's paths, the Pnyx and the Observatory hill.",
+   "stops": [
+    "acropolis",
+    "north-slope",
+    "dionysus-theatre",
+    "chrysospiliotissa+",
+    "thrasyllos-sundial+",
+    "zolotas-house+",
+    "areopagus",
+    "loumbardiaris",
+    "pnyx",
+    "guillotine-nymphs+",
+    "thissio-observatory",
+    "km-zero+",
+    "thision-cinema+"
+   ]
+  },
+  {
+   "id": "2",
+   "name": "Agora, Monastiraki and Psyrri",
+   "color": "#3cb44b",
+   "days": "Not Sunday for some churches",
+   "dset": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+   ],
+   "when": "Agora from 8:00; Kerameikos reopened Sept 2026.",
+   "summary": "From the boundary stone of the Agora through Hadrian's Library and the Eridanos in the metro to the Tower of the Winds, the Medrese gate, the churches built of other buildings, the column chapel and the Kerameikos gate.",
+   "stops": [
+    "ancient-agora",
+    "hadrians-library",
+    "megali-panagia",
+    "monastiraki-eridanos",
+    "roman-agora",
+    "roman-latrines",
+    "medrese-gate",
+    "gorgoepikoos",
+    "metropolitan-cathedral+",
+    "kapnikarea",
+    "agia-dynami",
+    "ag-ioannis-kolona",
+    "oinopoleion-psyrri+",
+    "beth-shalom",
+    "romaniote-synagogue+",
+    "kerameikos"
+   ]
+  },
+  {
+   "id": "3",
+   "name": "Syntagma and Panepistimiou: Occupation and ideas",
+   "color": "#4363d8",
+   "days": "Korai 4: Tue–Sat 9–14",
+   "dset": [
+    2,
+    3,
+    4,
+    5,
+    6
+   ],
+   "when": "Do Korai 4 in the morning (Tue–Sat 9–14); Old Chemistry library Mon–Fri.",
+   "summary": "The Unknown Soldier and the metro strata, the Gestapo house and the Kommandantur cells, Zonar's, Parnassos and Koun's basement theatre, the old National Library and the Catholic cathedral, ending at the Old Chemistry lab.",
+   "stops": [
+    "unknown-soldier",
+    "syntagma-metro",
+    "merlin-6",
+    "zalokosta-7+",
+    "zonars",
+    "metochiko",
+    "korai-4",
+    "parnassos",
+    "theatro-technis",
+    "rex",
+    "vallianeio",
+    "catholic-cathedral",
+    "hellenic-conservatory+",
+    "old-chemistry"
+   ]
+  },
+  {
+   "id": "4",
+   "name": "Market and Omonia",
+   "color": "#f58231",
+   "days": "Diporto lunch, Mon–Sat",
+   "dset": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+   ],
+   "when": "Lunchtime for Diporto; the bank opens on weekdays.",
+   "summary": "Down Athinas and Aiolou: the Themistoclean gate inside a bank, the car park that became a dig, a sign-less basement tavern, Kaftanzoglou's Omonia church and the vanished railway square.",
+   "stops": [
+    "kotzia-dig",
+    "acharnian-gate",
+    "diporto",
+    "klimataria",
+    "praxitelous-33+",
+    "ag-konstantinos",
+    "lavriou-square"
+   ]
+  },
+  {
+   "id": "5",
+   "name": "Plaka, the Olympieion and the buried river",
+   "color": "#911eb4",
+   "days": "Daily",
+   "dset": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+   ],
+   "when": "Cemetery 7:30–20; Saita and Brettos in the evening.",
+   "summary": "From Zenetos's sliding façade by the Garden through the Russian and Anglican churches to Hadrian's temple and arch, the open Ilisos, the stadium tunnel, the Ardittos shelter hill and the First Cemetery.",
+   "stops": [
+    "amalias-34",
+    "st-pauls",
+    "russian-church",
+    "cine-paris+",
+    "saita",
+    "brettos+",
+    "technis-frynichou+",
+    "olympieion",
+    "ilisos-open",
+    "stadium",
+    "ardittos-shelter",
+    "first-cemetery"
+   ]
+  },
+  {
+   "id": "6",
+   "name": "Kolonaki and Lycabettus",
+   "color": "#42d4f4",
+   "days": "Agioi Isidoroi 9–12",
+   "dset": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+   ],
+   "when": "Climb to Agioi Isidoroi before noon; the theatre only on concert nights.",
+   "summary": "Modernist blocks round the National Garden's edge, the Conservatory and the Lyceum, the column of Kolonaki and Papadiamantis's square, Pikionis's school and the German church, then up to the cave church, its shelter and Zenetos's theatre.",
+   "stops": [
+    "valsamakis-proskopon",
+    "molfesis-konstantinou",
+    "rigillis-18+",
+    "lyceum",
+    "conservatory",
+    "hilton",
+    "eat-esa",
+    "valsamakis-irodotou",
+    "gennadius",
+    "kolonaki-column",
+    "dexameni",
+    "pikionis-school",
+    "christuskirche",
+    "agioi-isidoroi",
+    "lycabettus-shelter",
+    "lycabettus-theatre"
+   ]
+  },
+  {
+   "id": "7",
+   "name": "Exarchia, Alexandras and Kypseli",
+   "color": "#f032e6",
+   "days": "Daily",
+   "dset": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+   ],
+   "when": "Polytechnic closed around 17 November.",
+   "summary": "The Polytechnic gate, the Blue Building and the Exarchia cinemas, Atelier 66's street stair, the junta's Bouboulinas site, the Averof stele and the Prosfygika, then Kypseli's 1930s street and a shelter with its steel doors.",
+   "stops": [
+    "polytechnic-gate",
+    "blue-building",
+    "vox-riviera",
+    "grigoropoulos+",
+    "benaki-118",
+    "mouria",
+    "bouboulinas-18",
+    "averof-stele",
+    "prosfygika",
+    "kypseli-28",
+    "protopapa",
+    "lanara",
+    "bonis-shelter",
+    "papazisis-mithimnis",
+    "ag-panteleimonas+"
+   ]
+  },
+  {
+   "id": "8",
+   "name": "Ambelokipi and Goudi: towers, the junta and science",
+   "color": "#bfef45",
+   "days": "Weekdays",
+   "dset": [
+    1,
+    2,
+    3,
+    4,
+    5
+   ],
+   "when": "Criminology Museum by appointment only; Mineralogy Museum Mon–Fri 9:30–14.",
+   "summary": "The glass towers of the 1970s, the junta's last Security HQ, Valsamakis's first block, the Pasteur Institute, the last guillotine, the Olympic badminton hall and the brutalist student slab of Zografou.",
+   "stops": [
+    "athens-tower",
+    "mesogeion-14",
+    "apollo-tower",
+    "semitelou-5",
+    "argolidos-26",
+    "pasteur",
+    "sotiria+",
+    "criminology-museum",
+    "goudi-badminton+",
+    "ntua-residence",
+    "mineralogy-museum"
+   ]
+  },
+  {
+   "id": "9",
+   "name": "West Athens: Finos to Votanikos",
+   "color": "#469990",
+   "days": "Not Friday midday (mosque prayers)",
+   "dset": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    6
+   ],
+   "when": "Campus hours for Hasekis's konaki.",
+   "summary": "Finos Film's building, the Peloponnese station, Plato's Academy, the only Ottoman fountain, the city's first mosque and the train turned theatre.",
+   "stops": [
+    "finos-chiou",
+    "spap-station",
+    "academy",
+    "hasekis-fountain",
+    "votanikos-mosque",
+    "elaionas-bridge+",
+    "treno-rouf"
+   ]
+  },
+  {
+   "id": "10",
+   "name": "Piraeus: ships, shelters and the Blockade",
+   "color": "#9a6324",
+   "days": "Mantra Tue–Fri 9–13",
+   "dset": [
+    2,
+    3,
+    4,
+    5
+   ],
+   "when": "Mantra mornings Tue–Fri; Lipasmata park open late.",
+   "summary": "Trireme sheds through a basement window, the Kastella shelters and the 1960s cave club, the old kafeneia and German batteries, the ghost factories, the fertiliser park and the dragon power station, then Nikaia's Blockade wall and cemetery.",
+   "stops": [
+    "zea-sheds",
+    "kastella-shelters",
+    "spilia-paraskeva",
+    "ikariotiko",
+    "peiraiki-batteries",
+    "chropei",
+    "lipasmata",
+    "keratsini-ps",
+    "kokkinia-mantra",
+    "third-cemetery"
+   ]
+  },
+  {
+   "id": "11",
+   "name": "The south shore: power, Olympics and refugees",
+   "color": "#800000",
+   "days": "Daily",
+   "dset": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+   ],
+   "when": "EMST closed Monday; Phaleron cemetery daytime.",
+   "summary": "FIX's façades and Dourgouti's refugee blocks, Nea Smyrni's December 1944, the 1903 power station and the beach-volleyball white elephant, the sea-facing war cemetery, Zenetos's round school and the Panagoulis station, down to the old airport and Glyfada's modern churches.",
+   "stops": [
+    "fix-emst",
+    "dourgouti",
+    "tavros-refugee+",
+    "long-walls+",
+    "pireos-260+",
+    "galaxy-adonis",
+    "nea-smyrni-walk",
+    "faros-heroon",
+    "faliro-ps",
+    "faliro-volley",
+    "phaleron-war",
+    "zenetos-school",
+    "panagoulis-spot",
+    "hellinikon",
+    "ag-nikolaos-glyfada",
+    "ano-glyfada"
+   ]
+  },
+  {
+   "id": "12",
+   "name": "Kaisariani and Hymettus",
+   "color": "#808000",
+   "days": "Monastery: check site hours",
+   "dset": [
+    0,
+    2,
+    3,
+    4,
+    5,
+    6
+   ],
+   "when": "Shooting Range enclosure opens irregularly.",
+   "summary": "The wall of the 200, the refugee blocks of 'Little Moscow', the monastery spring and the German station ruins near the summit.",
+   "stops": [
+    "kaisariani-range",
+    "kaisariani-prosfygika",
+    "kaisariani-monastery",
+    "hymettus-radar"
+   ]
+  },
+  {
+   "id": "13",
+   "name": "Penteli and the north (car)",
+   "color": "#000075",
+   "days": "Newall: evening shows",
+   "dset": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+   ],
+   "when": "Car needed. End at the Newall telescope for an evening show.",
+   "summary": "Workers' housing and a cave in the suburbs, the one-day church of Galatsi, the junta broadcasting house and the reactor, the sanatorium shells, the NATO dishes, the Parthenon's quarry cave, the German cemetery and the marble telescope.",
+   "stops": [
+    "oek-filadelfeia",
+    "prof-ilias-cave",
+    "omorfokklisia",
+    "radiomegaro",
+    "demokritos",
+    "papadimitriou-sanatorium",
+    "penteli-nato",
+    "davelis-cave",
+    "german-cemetery",
+    "newall"
+   ]
+  },
+  {
+   "id": "14",
+   "name": "Mesogeia, Lavrio and Sounion (car)",
+   "color": "#a9a9a9",
+   "days": "Brauron and Marathon closed Tuesday",
+   "dset": [
+    0,
+    1,
+    3,
+    4,
+    5,
+    6
+   ],
+   "when": "Car needed; a full day. Sounion at sunset.",
+   "summary": "Brauron's bridge and pillboxes at Porto Rafti, the NIKE missile base, Lavrio's ore washeries and railway, then Sounion for Byron's name.",
+   "stops": [
+    "brauron",
+    "porto-rafti-pillboxes",
+    "keratea-nike",
+    "lavrio-line",
+    "lavrio-mines",
+    "sounion"
+   ]
+  }
+ ]
+}
