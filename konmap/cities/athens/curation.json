@@ -143,8 +143,8 @@
   "Kifissos",
   "Ilisos"
  ],
- "attr": "Coast: OSM via @geo-maps (ODbL). Rivers, roads, rail: Natural Earth (public domain). No street data yet.",
- "baseOn": "Base map: drawn from OSM coastline and Natural Earth (main roads, rail and rivers, generalised; can sit up to about 1 km off). No street map yet.",
+ "attr": "Streets, rail and rivers: © OpenStreetMap contributors (ODbL). Coast: OSM via @geo-maps. Outer roads: Natural Earth.",
+ "baseOn": "Base map: OpenStreetMap — every street in central Athens and Piraeus, main roads, rail and rivers across Attica.",
  "lists": [
   [
    "K",
@@ -168,7 +168,7 @@
   ]
  ],
  "extrasNote": "Off the planned walks: add them with Custom, or go on their own.",
- "helpNote": "Base map: drawn from OSM coastline and Natural Earth (main roads, rail and rivers, generalised; can sit up to about 1 km off). No street map yet. Walks 13 and 14 need a car. Since April 2024 there is no combined ticket: each ancient site is paid separately (Acropolis €30). Pins come from Google Places where checked; approximate ones say so in the guide. About 45 leads from the research have no location yet and are not on the map.",
+ "helpNote": "Walks 13 and 14 need a car. Since April 2024 there is no combined ticket: each ancient site is paid separately (Acropolis €30). Pins come from Google Places where checked; approximate ones say so in the guide. About 45 leads from the research have no location yet and are not on the map.",
  "sites": [
   {
    "id": "zenetos-school",
