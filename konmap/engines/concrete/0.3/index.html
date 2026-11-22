@@ -838,6 +838,7 @@ details.box>.inner{padding:0 10px 12px;display:flex;flex-direction:column;gap:10
 .pin{position:relative;box-sizing:border-box;border-radius:50%;display:grid;place-items:center;color:#fff;border:2px solid var(--panel);box-shadow:0 1px 3px rgba(0,0,0,.35);transition:opacity .15s}
 .pin.opt{background:var(--panel)!important;border-width:2.5px}
 .pin.dim{opacity:.2}
+.pin.apx{border-style:dashed}  /* pin placed approximately (city data: pin:'a') */
 .pin.fd{opacity:.4;filter:grayscale(.7)}
 .pin.sv{box-shadow:0 0 0 3px var(--gold),0 0 10px 2px rgba(242,183,5,.6)}
 .pin .num{font:600 11px/1 var(--font-mono);color:#fff}
@@ -1632,6 +1633,7 @@ function pinHtml(o){
   var m=mk(o.id), z=o.size+(m.s?4:0), cls=o.cls||'';
   if(markFaded(o.id)) { cls+=' fd'; z=Math.max(14,z-6); }
   if(m.s) cls+=' sv';
+  if(S[o.id] && S[o.id].pin==='a') cls+=' apx';
   var st=o.opt?'color:'+o.color+';border-color:'+o.color:'background:'+o.color;
   var inner=o.num!=null?'<span class="num">'+o.num+'</span>':glyph(o.glyph);
   return {z:z,html:'<div class="pin'+(o.opt?' opt':'')+cls+'" style="width:'+z+'px;height:'+z+'px;'+st+'">'+inner+(m.v?'<span class="ck">✓</span>':'')+(m.s?'<span class="hv">★</span>':'')+'</div>'};
@@ -1712,9 +1714,10 @@ function stepTxt(s){
   if(s.ropt) return 'Route '+r.id+': '+r.name+' · optional add-on';
   return 'Route '+r.id+': '+r.name+' · stop '+(r.core.indexOf(s)+1)+' of '+r.core.length;
 }
+function apxTxt(s,cls){ return s.pin==='a' && !/approximate/i.test(s.when||'') ? '<p'+(cls?' class="'+cls+'"':'')+'>Map pin approximate (dashed ring): the place is nearby, not exactly here.</p>' : ''; }
 function popupHtml(s){
   var r=s.route, col=mode==='explore'?KCOL[s.k]:(r?r.color:'#8a8f98');
-  var flag=s.nv?'<p class="when">Not re-verified in 2026. Check before a special trip.</p>':'';
+  var flag=(s.nv?'<p class="when">Not re-verified in 2026. Check before a special trip.</p>':'')+apxTxt(s,'when');
   return '<div class="pop"><h2><span class="kg pk" title="'+attr(KNAME[s.k]||'')+'" style="background:'+KCOL[s.k]+'">'+glyph(s.k)+'</span>'+esc(s.name)+'</h2>'+
     '<p>'+esc(s.blurb)+'</p>'+(s.when?'<p class="when">'+esc(s.when)+'</p>':'')+(daysTxt(s)?'<p class="when">'+esc(daysTxt(s))+'</p>':'')+flag+
     '<div class="links"><a href="'+gmSearch(s.q)+'" target="_blank" rel="noopener">Google Maps</a><a href="'+gmTransit(s)+'" target="_blank" rel="noopener">Transit</a><a href="'+cmap(s)+'" target="_blank" rel="noopener">Citymapper</a><a href="'+gimg(s.name,s.q)+'" target="_blank" rel="noopener">Photos</a></div>'+
@@ -2176,7 +2179,7 @@ function openGuide(s,opts){
   $('gchip').innerHTML='<i style="background:'+(r?r.color:'#8a8f98')+'"></i><span>'+esc(r?'Route '+r.id+' · '+r.name:'Not on a route')+'</span>';
   var h='<h2>'+esc(G.t)+'</h2>';
   G.p.forEach(function(p,i){ h+='<p'+(i===0?' class="gintro"':'')+'>'+mdi(p)+'</p>'; });
-  var prac=(s.when?'<p>'+esc(s.when)+'</p>':'')+(daysTxt(s)?'<p>'+esc(daysTxt(s))+'</p>':'')+(s.nv?'<p>Not re-verified in 2026. Check before a special trip.</p>':'');
+  var prac=(s.when?'<p>'+esc(s.when)+'</p>':'')+(daysTxt(s)?'<p>'+esc(daysTxt(s))+'</p>':'')+(s.nv?'<p>Not re-verified in 2026. Check before a special trip.</p>':'')+apxTxt(s,'');
   h+='<div class="gprac">'+prac+'<div class="btnrow" style="margin-top:8px"><button type="button" class="ghost sm" data-copy="'+attr(s.name)+'">Copy name</button>'+(s.q?'<button type="button" class="ghost sm" data-copy="'+attr(s.q)+'">Copy address</button>':'')+'</div>'+'<div class="links"><a href="'+gmSearch(s.q)+'" target="_blank" rel="noopener">Google Maps</a>'+(s.lat!=null?'<a href="'+gmTransit(s)+'" target="_blank" rel="noopener">Transit</a><a href="'+cmap(s)+'" target="_blank" rel="noopener">Citymapper</a>':'')+'<a href="'+gimg(s.name,s.q)+'" target="_blank" rel="noopener">Photos</a></div>'+toolsRow(s.id)+marksRow(s.id)+'</div>';
   if(typeof gExtra==='function') h=h.replace('<div class="gprac">',gExtra(s)+'<div class="gprac">');
   if(G.s) h+='<p class="gsrc">Sources: '+esc(G.s)+'</p>';
@@ -2756,7 +2759,7 @@ function stPass(s){
 function stPin(s,o){
   var z=o.size; if(typeof score==='function') z=Math.round(z*(0.72+score(s)*0.08));
   var rd=stRead(s.id), nt=!!stNote(s.id);
-  var html='<div class="pin stpin'+(rd?' rd':'')+(o.dim?' dim':'')+'" style="width:'+z+'px;height:'+z+'px;background:'+(rd?'#8a8f98':KCOL[s.k])+'">'+
+  var html='<div class="pin stpin'+(rd?' rd':'')+(o.dim?' dim':'')+(s.pin==='a'?' apx':'')+'" style="width:'+z+'px;height:'+z+'px;background:'+(rd?'#8a8f98':KCOL[s.k])+'">'+
     (o.num!=null?'<span class="num">'+o.num+'</span>':glyph(s.k))+(rd?'<span class="ck">✓</span>':'')+(nt?'<span class="stn">✎</span>':'')+'</div>';
   s._m._o={id:s.id,num:o.num,cls:o.dim?' dim':''}; s._m._z=z;
   s._m.setIcon(L.divIcon({className:'pinwrap',iconSize:[z,z],iconAnchor:[z/2,z/2],html:html}));
