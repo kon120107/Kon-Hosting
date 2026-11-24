@@ -1303,7 +1303,7 @@ details.tstory[open]>summary::before{content:"\25BE  "}
     <div class="btnrow"><button type="button" class="ghost sm" id="unfadeAll" hidden>Unfade all</button><button type="button" class="ghost sm" id="unstarAll" hidden>Unstar all</button></div>
   </div>
   <div id="mapwrap">
-    <div class="mapbtns"><button type="button" id="panelBtn" aria-controls="side" aria-expanded="true">Full map</button><button type="button" id="fitBtn">Fit</button><button type="button" id="meBtn" aria-pressed="false" title="Show where I am">Locate</button></div>
+    <div class="mapbtns"><button type="button" id="panelBtn" aria-controls="side" aria-expanded="true">Full map</button><button type="button" id="fitBtn" hidden>Fit</button><button type="button" id="guidesBtn" aria-haspopup="dialog">Guides</button><button type="button" id="meBtn" aria-pressed="false" title="Show where I am">Locate</button></div>
     <div id="toast" role="status" hidden></div>
     <div id="map" role="application" aria-label="Map"></div>
     <div id="pickbar" hidden><span>Tap the map where you are</span><button type="button" id="pickCancel">Cancel</button></div>
@@ -1322,7 +1322,9 @@ details.tstory[open]>summary::before{content:"\25BE  "}
     <dl>
       <dt>Panel</dt><dd>“Close panel” gives the whole screen to the map; “Show panel” (or “Show stops”) on the map brings it back.</dd>
       <dt>Routes</dt><dd>Planned walks in visit order. Tap a route to see its stops, then tap a stop for details. Lines are straight, not the street path; “Walk it in Google Maps” gives directions.</dd>
+      <dt>Visit length</dt><dd>Where a city has them, the first Routes button shows a visit length (“3–5 days”, “1 day”, “All walks”). Tap it again to switch; the shorter ones keep only the best stops.</dd>
       <dt>Routes › Custom</dt><dd>Every place, coloured by kind, with no routes. Narrow them with the filters, then “Make walks” chains what is left into walks within your limits. “From a point I pick” builds one walk around where you tap.</dd>
+      <dt>What to show</dt><dd>“Show” keeps the top places only (Top 10, Top 50 … Everything). “Rank by” decides what “top” means: Famous, To see, Story; tap several to combine them. “By kind” fine-tunes how many of each kind.</dd>
       <dt>Sites</dt><dd>Every place on its own. Search by name, or set a point (your location, or tap the map) and a radius to light up what is near it, nearest first. “Study” here is for reading up before you go.</dd><dt>Events</dt><dd>Temporary happenings appear here once a trip has dates (research prompt 2).</dd>
       <dt>Your marks</dt><dd>Star a must-see; Fade a place you don’t want (faded places are left out of new walks). At the bottom of each card, pick a rating and press Visited to keep it. The Visited and faded settings in each tab show, fade or hide those places. Marks stay in this browser only.</dd>
     </dl>
@@ -1591,7 +1593,7 @@ function stayOf(s,mode){ var t=STAY[mode||'normal']; return s.main?t[0]:t[1]; }
 function walkMin(list,mode){ return pathKm(list)/4.5*60 + list.reduce(function(a,s){return a+stayOf(s,mode);},0); }
 function fmtT(m){ var h=Math.floor(m/60), mm=Math.round(m%60/15)*15; if(mm===60){h++;mm=0;} return (h?h+' h':'')+(mm?(h?' ':'')+mm+' min':'') || '0 min'; }
 
-var routes=NR.map(function(r){
+function mkRoutes(list){ sights.forEach(function(s){ s.route=null; s.ropt=false; }); return (list||[]).map(function(r){
   var o={id:r.id,name:r.name,color:r.color,days:r.days,dset:r.dset,when:r.when,summary:r.summary,items:[]};
   r.stops.forEach(function(x){ var opt=/\+$/.test(x), id=x.replace(/\+$/,''), s=S[id]; if(!s) return; o.items.push({s:s,opt:opt}); s.route=o; s.ropt=opt; });
   o.core=o.items.filter(function(it){return !it.opt;}).map(function(it){return it.s;});
@@ -1599,9 +1601,26 @@ var routes=NR.map(function(r){
   if(P && P.legs.length===o.core.length-1){ o.legs=P.legs; o.km=P.legs.reduce(function(a,l){return a+l[0];},0)/1000; o.min=o.km/4.5*60+o.core.reduce(function(a,s){return a+stayOf(s);},0); o.real=true; }
   else { o.km=pathKm(o.core); o.min=walkMin(o.core); }
   return o;
-});
+}); }
+var routes=mkRoutes(NR);
 var R={}; routes.forEach(function(r){R[r.id]=r;});
 var extras=sights.filter(function(s){ return !s.route; });
+var RHIDE=false;   // plans module: hide places that are not on the current walks
+// ---- module plans, data side (24 Nov 2026, Kon): a city may carry `plans` = [{id, name, short, note, routes:[...]}],
+// shorter sets of walks for a given visit length (Rome: 3–5 days, 1 day). They replace the area walks while chosen;
+// the full set is the last entry, "All walks". Places on no walk of the chosen set are hidden in By area.
+var PLANS=(CC.plans||[]).filter(function(p){ return p&&p.id&&p.routes&&p.routes.length; }), PLAN=null;
+// a plan may carry `flavours` = [{id, name, note, routes}] (Rome: Classic, Uncommon, To see, Story): separate
+// hand-made walk sets for the same visit length; the choice is kept across plans (SK+'flav').
+var FLAV=sget(SK+'flav','')||'';
+function planFlav(p){ var f=p&&p.flavours; if(!f||!f.length) return null; return f.filter(function(x){ return x.id===FLAV; })[0]||f[0]; }
+function planRoutes(p){ var f=planFlav(p); return f?f.routes:p.routes; }
+function useRoutes(p){ routes=mkRoutes(planRoutes(p)); R={}; routes.forEach(function(r){R[r.id]=r;}); extras=sights.filter(function(s){ return !s.route; }); RHIDE=p.id!=='all'; }
+if(PLANS.length){
+  PLANS.push({id:'all',name:'All walks',short:'All walks',note:'Every walk on the map, area by area.',routes:NR});
+  (function(){ var pid=sget(SK+'plan',null); PLAN=PLANS.filter(function(p){ return p.id===pid; })[0]||PLANS[0]; })();
+  if(PLAN.id!=='all') useRoutes(PLAN);
+}
 
 // ---------- shared state ----------
 var mode='routes', focus=null;   // focus: {type:'route'|'kept'|'walk', id}
@@ -1851,6 +1870,7 @@ function drawRoutes(){
     if(isF && focus.type==='route'){ num = s.ropt?null:(r.core.indexOf(s)+1); }
     else if(isF){ num=inF[s.id]+1; }
     if(!markVis(s.id)) return;
+    if(RHIDE && !r) return;
     var color = r ? r.color : '#8a8f98';
     setPin(s._m,{id:s.id,color:color,size:isF?(s.main?28:24):(r?(s.main?24:18):14),glyph:s.k,opt:s.ropt,cls:dim?' dim':'',num:num,top:s.main});
     pinLG.addLayer(s._m);
@@ -2495,27 +2515,46 @@ if(isPhone()) setSheet('half');
 // main/minor status; research prompts v2 will replace them with real ratings. =====
 var PHYS={arch:5,under:5,relic:4,scar:4,land:4,museum:4,exec:3,cafe:3,library:3,church:4,plaque:1};
 var STORY={exec:5,plaque:4,scar:4,relic:4,cafe:4,library:4,museum:3,under:3,land:3,arch:2,church:3};
-var LENS={all:{n:'Balanced',d:'General interest, what you can see and the story, mixed.'},see:{n:'Something to see',d:'Favours places with a real object, building or space in front of you.'},story:{n:'A good story',d:'Favours places where what happened matters more than what is left.'}};
-var RK={min:+(sget(SK+'rkmin',1))||1, lens:sget(SK+'rklens','all')||'all'};
-if(!LENS[RK.lens]) RK.lens='all';
+// Ranking (reworked 24 Nov 2026, Kon): a big map (Rome, 483 places) left ~125 places at the strictest setting,
+// because scores were rounded to halves and most places rated 5/5. Now:
+// - three axes that combine (tap any of them on or off): Famous (s.f, 1-5, only where the city has it),
+//   To see (presence) and Story (what happened there); each leans a little on the report's interest rating;
+// - the score is the mean of the axes picked, kept in decimals, plus small tie-breaks: main stop, how many
+//   curated tours use the place, and facts not re-verified;
+// - the Show slider counts places ("Top 10", "Top 50", … "Everything"), so its strictest step is small on any map.
+var HASF=sights.some(function(s){ return s.f!=null; });
+var AXES={fame:{n:'Famous',d:'how well known it is'},see:{n:'To see',d:'a real object, building or space in front of you'},story:{n:'Story',d:'what happened there and why it matters'}};
+var AXK=Object.keys(AXES).filter(function(k){ return k!=='fame'||HASF; });
+var TOURN={}; (CC.tours||[]).forEach(function(t){ (t.stops||[]).forEach(function(x){ var id=x&&x.id||x; TOURN[id]=(TOURN[id]||0)+1; }); });
 sights.forEach(function(s){
   var I = s.route ? (s.ropt?2:(s.main?4:3)) : (s.main?4:3);
   if(s.nv) I-=0.5;
   s.sc=s.ip?{i:s.ip[0],p:s.ip[1],t:STORY[s.k]||3}:{i:I,p:PHYS[s.k]||3,t:STORY[s.k]||3};
+  if(s.f!=null) s.sc.f=+s.f;
+  s.sc.tb=(s.main?0.15:0)+Math.min(3,TOURN[s.id]||0)*0.05-(s.nv?0.1:0);
 });
-function score(s,lens){
-  var c=s.sc; if(!c) return 5; lens=lens||RK.lens;
-  var v = lens==='see' ? (c.i+2*c.p)/3 : lens==='story' ? (c.i+2*c.t)/3 : (2*c.i+c.p+c.t)/4;
-  return Math.max(1,Math.min(5,Math.round(v*2)/2));
+var RK={top:+(sget(SK+'rktop',0))||sights.length, ax:sget(SK+'rkax',null)};
+if(!Array.isArray(RK.ax)) RK.ax=AXK.slice(); RK.ax=RK.ax.filter(function(k){ return AXK.indexOf(k)>=0; }); if(!RK.ax.length) RK.ax=AXK.slice();
+function axVal(c,k){ return k==='fame' ? (3*(c.f==null?1:c.f)+c.i)/4 : k==='see' ? (c.i+2*c.p)/3 : (2*c.i+c.t)/3; }
+// scoreRaw ranks (not capped; the axes not picked count a little, to split ties); score is shown, 1-5
+function scoreRaw(s,ax){
+  var c=s.sc; if(!c) return 5; ax=ax||RK.ax;
+  var v=0, w=0; ax.forEach(function(k){ v+=axVal(c,k); }); AXK.forEach(function(k){ w+=axVal(c,k); });
+  return v/ax.length+(c.tb||0)+0.05*w/AXK.length;
 }
-// Amounts (30 Oct 2026): one cutoff. Each kind keeps its top N places by score; the Show slider
-// sets every kind's N to "those scoring at least X", the kind sliders then fine-tune ("Custom mix").
-// The total shown is always the sum of the kind sliders (plus starred places).
+function score(s,ax){ return Math.max(1,Math.min(5,scoreRaw(s,ax))); }
+function rkCmp(a,b){ return (scoreRaw(b)-scoreRaw(a))||(b.main-a.main)||a.name.localeCompare(b.name); }
+// Show steps: counts, ending with everything; a 24-place map gets 5, 10, 15, 20, 24
+var RKSTEPS=(function(){ var N=sights.length, a=[5,10,15,20,30,40,50,75,100,150,200,300,400].filter(function(n){ return n<N; }); a.push(N); return a; })();
+function rkStepOf(n){ var b=0; RKSTEPS.forEach(function(v,i){ if(Math.abs(v-n)<Math.abs(RKSTEPS[b]-n)) b=i; }); return b; }
+RK.top=RKSTEPS[rkStepOf(RK.top)];
+// Amounts (30 Oct 2026): each kind keeps its top N places by score; the Show slider sets every kind's N from the
+// overall top list, the kind sliders then fine-tune ("Custom mix"). Total shown = sum of the kind sliders + starred.
 var AM={n:sget(SK+'amn',null)||{}, mix:!!sget(SK+'ammix',false)}, AMTOP={};
 function amKinds(){ return KORD.filter(function(k){ return sights.some(function(s){ return s.k===k; }); }); }
 function amAll(k){ return sights.filter(function(s){ return s.k===k; }).length; }
-function amList(k){ return sights.filter(function(s){ return s.k===k; }).sort(function(a,b){ return (score(b)-score(a))||(b.main-a.main)||a.name.localeCompare(b.name); }); }
-function amFromMin(){ AM.n={}; amKinds().forEach(function(k){ AM.n[k]=sights.filter(function(s){ return s.k===k && score(s)>=RK.min; }).length; }); }
+function amList(k){ return sights.filter(function(s){ return s.k===k; }).sort(rkCmp); }
+function amFromMin(){ AM.n={}; amKinds().forEach(function(k){ AM.n[k]=0; }); sights.slice().sort(rkCmp).slice(0,RK.top).forEach(function(s){ AM.n[s.k]++; }); }
 function amRank(){
   if(!AM.mix) amFromMin();
   AMTOP={}; amKinds().forEach(function(k){ var n=AM.n[k]==null?amAll(k):Math.min(AM.n[k],amAll(k)); amList(k).slice(0,n).forEach(function(s){ AMTOP[s.id]=1; }); });
@@ -2524,18 +2563,19 @@ function amTotal(){ var t=0; amKinds().forEach(function(k){ t+=AM.n[k]==null?amA
 function amSave(){ sset(SK+'amn',AM.mix?AM.n:null); sset(SK+'ammix',AM.mix); }
 function rkPass(s){ var m=mk(s.id); if(m.s) return true; return !!AMTOP[s.id]; }
 amRank();
-function dots(v){ var h='<span class="dots" aria-label="'+v+' of 5">'; for(var i=1;i<=5;i++) h+='<i class="'+(v>=i?'on':v>=i-.5?'half':'')+'"></i>'; return h+'</span>'; }
+function dots(v){ var h='<span class="dots" aria-label="'+(Math.round(v*10)/10)+' of 5">'; for(var i=1;i<=5;i++) h+='<i class="'+(v>=i?'on':v>=i-.5?'half':'')+'"></i>'; return h+'</span>'; }
+function scNum(v){ return '<span class="scn">'+(Math.round(v*10)/10).toFixed(1)+'</span>'; }
 // control
 (function(){
   var box=document.createElement('div'); box.id='rank'; box.className='rank';
-  box.innerHTML='<div class="rk-row"><label class="rk-l" for="rkMin">Show</label><input type="range" id="rkMin" min="1" max="5" step="0.5" value="'+RK.min+'"><output id="rkOut"></output></div>'+
-    '<div class="rk-row"><span class="rk-l">Lens</span><span class="segs" id="rkLens" role="group" aria-label="Ranking lens">'+Object.keys(LENS).map(function(k){ return '<button type="button" data-l="'+k+'">'+LENS[k].n+'</button>'; }).join('')+'</span></div>'+
+  box.innerHTML='<div class="rk-row"><label class="rk-l" for="rkMin">Show</label><input type="range" id="rkMin" min="0" max="'+(RKSTEPS.length-1)+'" step="1" value="'+rkStepOf(RK.top)+'"><output id="rkOut"></output></div>'+
+    '<div class="rk-row"><span class="rk-l">Rank by</span><span class="segs" id="rkLens" role="group" aria-label="Rank by (combine)">'+AXK.map(function(k){ return '<button type="button" data-l="'+k+'">'+AXES[k].n+'</button>'; }).join('')+'</span></div>'+
     '<details class="amk" id="amBox"><summary>By kind <span class="sm" id="amSum"></span></summary>'+
       '<div class="btnrow"><button type="button" class="ghost sm" id="amAllB">All</button><button type="button" class="ghost sm" id="amNoneB">None</button></div>'+
       '<div id="amRows">'+amKinds().map(function(k){ var t=amAll(k);
         return '<div class="pkr"><span class="kg" style="background:'+KCOL[k]+'">'+glyph(k)+'</span><span>'+esc(KNAME[k])+'</span><output id="amo-'+k+'"></output><input type="range" min="0" max="'+t+'" step="1" data-am="'+k+'" aria-label="'+esc(KNAME[k])+'"></div>'; }).join('')+'</div></details>'+
     '<p class="rk-n" id="rkNote"></p>';
-  var st=document.createElement('style'); st.textContent='.amk{margin:8px 0 2px}.amk>summary{cursor:pointer;font-size:13px;font-weight:600}.amk .btnrow{margin:6px 0}#amRows{display:grid;gap:6px}.pkr{display:grid;grid-template-columns:18px 1fr 70px;gap:4px 8px;align-items:center;font-size:13px}.pkr input{grid-column:1/-1;width:100%}.pkr output{font-family:var(--font-mono);font-size:11px;color:var(--muted);text-align:right}';
+  var st=document.createElement('style'); st.textContent='.amk{margin:8px 0 2px}.amk>summary{cursor:pointer;font-size:13px;font-weight:600}.amk .btnrow{margin:6px 0}#amRows{display:grid;gap:6px}.pkr{display:grid;grid-template-columns:18px 1fr 70px;gap:4px 8px;align-items:center;font-size:13px}.pkr input{grid-column:1/-1;width:100%}.pkr output{font-family:var(--font-mono);font-size:11px;color:var(--muted);text-align:right}.scn{font-family:var(--font-mono);font-size:10.5px;color:var(--muted);margin-left:3px}';
   document.head.appendChild(st);
   var d=document.createElement('details'); d.className='box'; d.id='showBox';
   d.innerHTML='<summary>What to show <span class="sm" id="showN"></span></summary><div class="inner"></div>';
@@ -2546,31 +2586,34 @@ function dots(v){ var h='<span class="dots" aria-label="'+v+' of 5">'; for(var i
   var p=document.querySelector('#pRoutes .mslot'); if(p) p.appendChild(d);
   window._showBox=d;
 })();
-function rkLabel(v){ if(AM.mix) return 'Custom mix'; return v<=1?'Everything':v>=5?'Only the best':'Score '+v+'+'; }
+function rkLabel(){ if(AM.mix) return 'Custom mix'; return RK.top>=sights.length?'Everything':'Top '+RK.top; }
 function rkSync(){
   amRank();
-  $('rkOut').textContent=rkLabel(RK.min);
+  $('rkOut').textContent=rkLabel();
+  var si=rkStepOf(RK.top); if(+$('rkMin').value!==si) $('rkMin').value=si;
   amKinds().forEach(function(k){ var t=amAll(k), n=AM.n[k]==null?t:Math.min(AM.n[k],t), i=document.querySelector('[data-am="'+k+'"]'); if(i && +i.value!==n) i.value=n; var o=$('amo-'+k); if(o) o.textContent=n+' of '+t; });
   var as=$('amSum'); if(as) as.textContent=amTotal()+' of '+sights.length+(AM.mix?' · custom':'');
-  each(document.querySelectorAll('#rkLens button'),function(b){ b.setAttribute('aria-pressed',b.getAttribute('data-l')===RK.lens); });
+  each(document.querySelectorAll('#rkLens button'),function(b){ b.setAttribute('aria-pressed',RK.ax.indexOf(b.getAttribute('data-l'))>=0); });
   var n=sights.filter(function(s){ return rkPass(s); }).length;
-  $('rkNote').textContent=n+' of '+sights.length+' places shown, the best-scoring of each kind first. '+LENS[RK.lens].d+' Starred places always show.';
+  $('rkNote').textContent=n+' of '+sights.length+' places, best first by '+RK.ax.map(function(k){ return AXES[k].n; }).join(' + ')+(RK.ax.length<AXK.length?' (tap more to combine)':'')+'. Starred places always show.';
   $('rank').hidden=mode==='events';
-  var sn=$('showN'); if(sn) sn.textContent = mode==='events' ? '' : (RK.min<=1 ? 'all '+sights.length+' places' : n+' of '+sights.length+' places');
+  var sn=$('showN'); if(sn) sn.textContent = mode==='events' ? '' : (n>=sights.length ? 'all '+sights.length+' places' : n+' of '+sights.length+' places');
 }
 moveMarkFilter=function(){ var slot=document.querySelector('#p'+mode.charAt(0).toUpperCase()+mode.slice(1)+' .mslot'); if(slot && $('showBox')) slot.appendChild($('showBox')); };
-$('rkMin').addEventListener('input',function(e){ RK.min=+e.target.value; sset(SK+'rkmin',RK.min); AM.mix=false; amSave(); refresh(); });
+$('rkMin').addEventListener('input',function(e){ RK.top=RKSTEPS[+e.target.value]; sset(SK+'rktop',RK.top); AM.mix=false; amSave(); refresh(); });
 $('amRows').addEventListener('input',function(e){ var k=e.target.getAttribute('data-am'); if(!k) return; if(!AM.mix){ amFromMin(); AM.mix=true; } AM.n[k]=+e.target.value; amSave(); refresh(); });
-$('amAllB').addEventListener('click',function(){ RK.min=1; $('rkMin').value=1; sset(SK+'rkmin',1); AM.mix=false; amSave(); refresh(); });
+$('amAllB').addEventListener('click',function(){ RK.top=sights.length; sset(SK+'rktop',RK.top); AM.mix=false; amSave(); refresh(); });
 $('amNoneB').addEventListener('click',function(){ amKinds().forEach(function(k){ AM.n[k]=0; }); AM.mix=true; amSave(); refresh(); });
-$('rkLens').addEventListener('click',function(e){ var b=e.target.closest('[data-l]'); if(!b) return; RK.lens=b.getAttribute('data-l'); sset(SK+'rklens',RK.lens); refresh(); });
+$('rkLens').addEventListener('click',function(e){ var b=e.target.closest('[data-l]'); if(!b) return; var k=b.getAttribute('data-l'), i=RK.ax.indexOf(k);
+  if(i>=0){ if(RK.ax.length>1) RK.ax.splice(i,1); } else RK.ax.push(k);
+  RK.ax.sort(function(a,b){ return AXK.indexOf(a)-AXK.indexOf(b); }); sset(SK+'rkax',RK.ax); refresh(); });
 // hide failing places everywhere places are shown
 var _markVisD=markVis; markVis=function(id){ if(!_markVisD(id)) return false; var s=S[id]; if(s && !rkPass(s)) return false; return true; };
 // pins scale with score; the list shows the score
 var _setPinD=setPin; setPin=function(marker,o){ var s=S[o.id]; if(s){ var v=score(s); o.size=Math.round(o.size*(0.72+v*0.08)); } _setPinD(marker,o); };
 var _stopRowD=stopRow; stopRow=function(s,n,opts){
   var h=_stopRowD(s,n,opts), v=score(s), pass=rkPass(s);
-  h=h.replace('<span class="tags">','<span class="tags">'+dots(v));
+  h=h.replace('<span class="tags">','<span class="tags">'+dots(v)+scNum(v));
   if(!pass) h=h.replace('class="stop','class="stop clip');
   return h;
 };
@@ -3195,6 +3238,41 @@ var _setSheetL=setSheet; setSheet=function(st){ if(st==='peek') st='mini'; _setS
 if(RS.sub==='custom' && sget(SK+'mode','routes')==='routes') RS.sub='area';
 rsApply();
 
+// ---- module plans, interface (24 Nov 2026, Kon): no menu. With plans, the "By area" button shows the chosen set
+// (e.g. "3–5 days ↻"); tapping it again while it is open moves to the next set: 3–5 days → 1 day → All walks → …
+(function(){
+  if(!PLANS.length) return;
+  var b=document.querySelector('#rSub [data-s="area"]'); if(!b) return;
+  var st=document.createElement('style'); st.textContent='#rSub .cyc{font-size:.9em;opacity:.65;margin-left:2px}#planNote{margin:6px 0 8px;font-size:12.5px;color:var(--muted)}#planNote b{color:var(--fg);font-weight:600}body:not(.rs-area) #planNote{display:none}#planNote .pfl{display:flex;flex-wrap:wrap;align-items:center;gap:4px;margin-top:7px}#planNote .pfl-l{font:600 10.5px/1 system-ui,sans-serif;letter-spacing:.06em;text-transform:uppercase;margin-right:4px}#planNote .pfl button{font:inherit;font-size:12px;padding:3px 9px;border:1px solid var(--line);border-radius:999px;background:var(--panel);color:var(--fg);cursor:pointer}#planNote .pfl button[aria-pressed=true]{background:var(--fg);color:var(--bg);border-color:var(--fg)}#planNote .pfn{display:block;margin-top:4px}'; document.head.appendChild(st);
+  var pn=document.createElement('p'); pn.id='planNote'; $('rSub').parentNode.insertBefore(pn,$('rSub').nextSibling);
+  function next(){ return PLANS[(PLANS.indexOf(PLAN)+1)%PLANS.length]; }
+  function lab(){
+    b.innerHTML=esc(PLAN.short||PLAN.name)+'<span class="cyc" aria-hidden="true"> ↻</span>';
+    b.title='Tap again for: '+(next().short||next().name); b.setAttribute('aria-label',(PLAN.short||PLAN.name)+'. Tap again for '+(next().short||next().name));
+    var f=planFlav(PLAN);
+    pn.innerHTML='<b>'+esc(PLAN.name)+'</b> · '+routes.length+' walk'+(routes.length===1?'':'s')+(PLAN.note?'. '+esc(PLAN.note):'')+' Tap “'+esc(PLAN.short||PLAN.name)+'” again for '+esc(next().short||next().name)+'.'+
+      (f?'<span class="pfl" role="group" aria-label="Taste"><span class="pfl-l">Taste</span>'+PLAN.flavours.map(function(x){ return '<button type="button" data-flav="'+esc(x.id)+'" aria-pressed="'+(x===f)+'">'+esc(x.name)+'</button>'; }).join('')+'</span>'+(f.note?'<span class="pfn">'+esc(f.note)+'</span>':''):'');
+  }
+  pn.addEventListener('click',function(e){ var x=e.target.closest('[data-flav]'); if(!x) return;
+    FLAV=x.getAttribute('data-flav'); sset(SK+'flav',FLAV);
+    try{ if(TR.on) trEnd(); }catch(x2){}
+    useRoutes(PLAN); focus=null; try{ if(MET&&MET.on) metApply(); }catch(x3){}
+    lab(); refresh(); fitMode(); });
+  var was=false;
+  $('rSub').addEventListener('click',function(e){
+    var x=e.target.closest('[data-s="area"]'); if(!x) return;
+    if(!(mode==='routes'&&RS.sub==='area')) return;
+    e.stopPropagation(); e.preventDefault();
+    PLAN=next(); sset(SK+'plan',PLAN.id);
+    try{ if(TR.on) trEnd(); }catch(x2){}
+    useRoutes(PLAN); focus=null;
+    try{ if(MET&&MET.on) metApply(); }catch(x3){}
+    lab(); refresh(); fitMode();
+  },true);
+  var _rr=renderRoutes; renderRoutes=function(){ _rr(); var eb=$('extrasBox'); if(eb) eb.hidden=RHIDE||!extras.length; };
+  lab();
+})();
+
 // ---- module sites (29 Oct 2026): top tabs Routes / Sites / Events ----
 // Sites = every place on its own, no routes: search, and "near a point" (my location or a tapped
 // point, with a radius): nearby pins lit, the list sorted by distance. Study is the second view here.
@@ -3424,6 +3502,31 @@ renderStudy=function(){
     return '<button type="button" class="stcard'+(r?' rd':'')+(f?' on':'')+'" data-open="'+esc(id)+'"><span class="rnum" style="background:'+(t.color||'#8a8f98')+'">'+(r?'✓':'·')+'</span><span><span class="rtitle">'+esc(t.name)+'</span><span class="rmeta"><span>'+(t.kind==='era'?'Period of history':esc(t.theme||'Theme'))+'</span><span>'+(c?c.list.length:0)+' stops</span></span></span></button>'; }).join('');
   $('stTours').previousElementSibling.hidden=!TOURS.length;
 };
+// ---- module guides menu: top-bar "Guides" lists only the written guides (reading + tours) ----
+(function(){
+  var st=document.createElement('style');
+  st.textContent='#gmenu{position:fixed;inset:0;z-index:3000;background:rgba(0,0,0,.45);display:flex;align-items:flex-end;justify-content:center}#gmenu[hidden]{display:none}#gmenu .gm{background:var(--panel);color:var(--fg);width:100%;max-width:460px;max-height:82vh;overflow:auto;border-radius:12px 12px 0 0;padding:14px 14px 22px;box-shadow:0 -4px 24px rgba(0,0,0,.3)}@media(min-width:700px){#gmenu{align-items:center}#gmenu .gm{border-radius:12px}}#gmenu h3{margin:0 0 4px;font-size:16px;display:flex;justify-content:space-between;align-items:center}#gmenu h3 button{border:0;background:none;font-size:22px;line-height:1;color:var(--muted);cursor:pointer;padding:0 4px}#gmenu .gs{font:600 11px/1 system-ui,sans-serif;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:14px 0 6px}#gmenu .gi{display:flex;gap:10px;align-items:flex-start;width:100%;text-align:left;border:1px solid var(--line);background:var(--panel);color:inherit;border-radius:8px;padding:10px;margin:0 0 6px;cursor:pointer;font:inherit}#gmenu .gi:hover{background:var(--chip)}#gmenu .gi i{flex:none;width:10px;height:10px;border-radius:50%;margin-top:5px}#gmenu .gt{font-weight:600;font-size:14px}#gmenu .gm2{display:block;font-size:12px;color:var(--muted);margin-top:2px}';
+  document.head.appendChild(st);
+  var m=document.createElement('div'); m.id='gmenu'; m.hidden=true; m.setAttribute('role','dialog'); m.setAttribute('aria-label','Written guides');
+  document.body.appendChild(m);
+  function close(){ m.hidden=true; }
+  function build(){
+    var h='<div class="gm"><h3><span>Written guides</span><button type="button" data-gx aria-label="Close">×</button></h3>';
+    var reads=STUDY_REPS.filter(function(r){ return r.g==='read'; });
+    if(reads.length){ h+='<div class="gs">Reading</div>'+reads.map(function(r){ return '<button type="button" class="gi" data-grep="'+esc(r.id)+'"><i style="background:var(--fg)"></i><span><span class="gt">'+esc(r.title)+'</span><span class="gm2">'+esc(r.sub||'')+(r.min?' · ≈ '+r.min+' min':'')+'</span></span></button>'; }).join(''); }
+    if(TOURS.length){ var vis=TOURS.slice().sort(function(a,b){ return (a.kind==='era')-(b.kind==='era'); });
+      h+='<div class="gs">Tours: a topic, and why each stop</div>'+vis.map(function(t){ return '<button type="button" class="gi" data-gtour="'+esc(t.id)+'"><i style="background:'+(t.color||'#8a8f98')+'"></i><span><span class="gt">'+esc(t.name)+'</span><span class="gm2">'+(t.kind==='era'?'Period of history':esc(t.theme||'Theme'))+' · '+((t.stops||[]).length)+' stops</span></span></button>'; }).join(''); }
+    m.innerHTML=h+'</div>';
+  }
+  $('guidesBtn').addEventListener('click',function(){ build(); m.hidden=false; });
+  m.addEventListener('click',function(e){
+    if(e.target===m||e.target.closest('[data-gx]')){ close(); return; }
+    var r=e.target.closest('[data-grep]'), t=e.target.closest('[data-gtour]');
+    if(r){ close(); openReport(r.getAttribute('data-grep')); }
+    else if(t){ close(); if(mode!=='study') setMode('study'); stOpenTour(t.getAttribute('data-gtour')); }
+  });
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape') close(); });
+})();
 // ---- module curated view (29 Oct 2026): in Routes › Curated the map shows the curated tours, faded,
 // instead of the area walks; tapping one (card or line) shows only that tour. "What to show" belongs
 // to Sites and Custom only, so it is hidden in By area and Curated.
@@ -3442,6 +3545,31 @@ var _drawRoutesK=drawRoutes; drawRoutes=function(){
   });
 };
 (function(){ var st=document.createElement('style'); st.textContent='body.rs-area #showBox,body.rs-cur #showBox{display:none}'; document.head.appendChild(st); })();
+// ---- module route jump: tapping a route (line on the map, or the route row in a place card)
+// switches the panel to Routes › By area with that route open.
+function goRoute(id){
+  var r=routes.filter(function(x){ return String(x.id)===String(id); })[0]; if(!r) return;
+  map.closePopup(); try{ closeGuide(); }catch(e){}
+  RS.sub='area'; sset(SK+'rsub','area');
+  if(mode!=='routes') setMode('routes');
+  try{ rsApply(); }catch(e){}
+  if(focus&&focus.type==='route'&&String(focus.id)===String(r.id)){ refresh(); fitList(focusList()); }
+  else setFocus({type:'route',id:r.id});
+  var ap=$('app'); if(ap&&ap.classList.contains('sheet')&&ap.classList.contains('sh-mini')){ var pb=$('panelBtn'); if(pb) pb.click(); }
+}
+var _routeLineJ=routeLine; routeLine=function(r,on,dim){
+  var ls=_routeLineJ(r,on,dim);
+  if(!on) ls.forEach(function(l){ l.options.interactive=true; l.on('click',function(e){ L.DomEvent.stop(e); goRoute(r.id); }); try{ l.bindTooltip(r.name,{sticky:true}); }catch(x){} });
+  return ls;
+};
+function routeRow(s){
+  var r=s.route; if(!r) return '';
+  return '<button type="button" class="rjump" data-rgo="'+esc(String(r.id))+'"><i style="background:'+r.color+'"></i><span>'+esc(stepTxt(s))+'</span><b>Open route ›</b></button>';
+}
+var _popupJ=popupHtml; popupHtml=function(s){ var h=_popupJ(s); return s.route?h.replace('<div class="links">',routeRow(s)+'<div class="links">'):h; };
+var _gExtraJ=gExtra; gExtra=function(s){ var h=_gExtraJ(s); if(!s.route) return h; return h.replace(/<div class="rc"><i style="background:[^"]*"><\/i><span>[^<]*<\/span><\/div>/,routeRow(s)); };
+document.addEventListener('click',function(e){ var b=e.target.closest&&e.target.closest('[data-rgo]'); if(b){ e.preventDefault(); e.stopPropagation(); goRoute(b.getAttribute('data-rgo')); } },true);
+(function(){ var st=document.createElement('style'); st.textContent='.rjump{display:flex;align-items:center;gap:8px;width:100%;margin:6px 0;padding:7px 9px;border:1px solid var(--line);border-radius:6px;background:var(--chip);color:var(--fg);font:inherit;font-size:12.5px;text-align:left;cursor:pointer}.rjump i{flex:none;width:10px;height:10px;border-radius:50%}.rjump span{flex:1}.rjump b{font-weight:600;white-space:nowrap}'; document.head.appendChild(st); })();
 // ---- kinds (30 Oct 2026): the per-kind sliders in "What to show" replace Custom's kind checkboxes and
 // the old Custom-only "Set how many of each kind". Old saved plans are read into the sliders.
 (function(){
@@ -3452,7 +3580,7 @@ var _drawRoutesK=drawRoutes; drawRoutes=function(){
 syncKinds=function(){};
 function amFromPlan(p){
   if(!p) return;
-  if(p.am){ if(p.am.min!=null){ RK.min=+p.am.min; $('rkMin').value=RK.min; } AM.mix=!!p.am.mix; AM.n=p.am.n||{}; }
+  if(p.am){ if(p.am.top!=null) RK.top=RKSTEPS[rkStepOf(+p.am.top)]; else if(p.am.min!=null) RK.top=RKSTEPS[rkStepOf(Math.max(1,sights.filter(function(x){ return score(x)>=+p.am.min; }).length))]; if(Array.isArray(p.am.ax)&&p.am.ax.length) RK.ax=p.am.ax.filter(function(k){ return AXK.indexOf(k)>=0; }); if(!RK.ax.length) RK.ax=AXK.slice(); sset(SK+'rktop',RK.top); sset(SK+'rkax',RK.ax); AM.mix=!!p.am.mix; AM.n=p.am.n||{}; }
   else {
     var x=(p.X&&p.X.kinds)||{}, off=KORD.some(function(k){ return x[k]===false; }), pk=p.pk&&p.pk.on;
     if(off||pk){ amFromMin(); if(pk) KORD.forEach(function(k){ if(p.pk.n&&p.pk.n[k]!=null) AM.n[k]=p.pk.n[k]; }); KORD.forEach(function(k){ if(x[k]===false) AM.n[k]=0; }); AM.mix=true; }
@@ -3460,7 +3588,7 @@ function amFromPlan(p){
   KORD.forEach(function(k){ X.kinds[k]=true; });
   amSave();
 }
-var _cuStateP=cuState; cuState=function(){ var o=_cuStateP(); o.am={min:RK.min,mix:AM.mix,n:AM.mix?AM.n:null}; return o; };
+var _cuStateP=cuState; cuState=function(){ var o=_cuStateP(); o.am={top:RK.top,ax:RK.ax.slice(),mix:AM.mix,n:AM.mix?AM.n:null}; return o; };
 var _cuApplyP=cuApply; cuApply=function(p){ _cuApplyP(p); amFromPlan(p); };
 if(CP.plan) amFromPlan(CP.plan);
 
@@ -3479,7 +3607,7 @@ if(CP.plan) amFromPlan(CP.plan);
 function gExtra(s){
   var h='<div class="rc"><span class="kg" style="background:'+KCOL[s.k]+'">'+glyph(s.k)+'</span><span>'+esc(KNAME[s.k]||'')+'</span></div>';
   if(s.route||s.ropt) h+='<div class="rc"><i style="background:'+(s.route?s.route.color:'#8a8f98')+'"></i><span>'+esc(stepTxt(s))+'</span></div>';
-  if(s.sc&&typeof dots==='function'){ var row=function(n,v){ return '<span class="sc"><b>'+n+'</b>'+dots(v)+'</span>'; }; h+='<div class="scs">'+row('Interest',s.sc.i)+row('To see',s.sc.p)+row('Story',s.sc.t)+'</div>'; }
+  if(s.sc&&typeof dots==='function'){ var row=function(n,v){ return '<span class="sc"><b>'+n+'</b>'+dots(v)+'</span>'; }; h+='<div class="scs">'+(s.sc.f!=null?row('Famous',s.sc.f):'')+row('Interest',s.sc.i)+row('To see',s.sc.p)+row('Story',s.sc.t)+'</div><div class="scs"><span class="sc"><b>Rank score</b>'+(Math.round(score(s)*10)/10).toFixed(1)+' of 5</span></div>'; }
   if(typeof tourChips==='function') h+=tourChips(s);
   return h;
 }
@@ -3532,7 +3660,7 @@ try{ var mq=window.matchMedia('(prefers-color-scheme: dark)'); var th=function()
     if(cfg.baseFile) cfg.baseFile=dir+cfg.baseFile;
     if(cfg.reportsFile) cfg.reportsFile=dir+cfg.reportsFile;
     cfg.glyphFile=ROOT+'shared/glyphs.json';
-    var cc=d.cc; cc.tours=d.tours||[];
+    var cc=d.cc; cc.tours=d.tours||[]; cc.plans=d.plans||[];
     document.title=d.meta.name+' · KonMap';
     var n=document.getElementById('cityName'); if(n) n.textContent='KonMap';
     var h=document.getElementById('cityNote'); if(h) h.textContent=cc.helpNote||'';
