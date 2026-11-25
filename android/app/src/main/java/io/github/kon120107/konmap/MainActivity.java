@@ -121,6 +121,13 @@ public class MainActivity extends Activity {
     @SuppressWarnings("deprecation")
     @Override
     public void onBackPressed() {
+        // The page closes its own open layer (guide, help, place card) if it has one; see konmapBack in the engine.
+        web.evaluateJavascript("(function(){try{return !!(window.konmapBack&&window.konmapBack());}catch(e){return false;}})()",
+                v -> { if (!"true".equals(v)) goBackOrLeave(); });
+    }
+
+    @SuppressWarnings("deprecation")
+    private void goBackOrLeave() {
         if (web.canGoBack()) web.goBack();
         else super.onBackPressed();
     }
