@@ -2238,6 +2238,15 @@ $('gclose').addEventListener('click',closeGuide);
 $('gprev').addEventListener('click',function(){stepGuide(-1);});
 $('gnext').addEventListener('click',function(){stepGuide(1);});
 document.addEventListener('keydown',function(e){ if(e.key==='Escape'){ if(!$('help').hidden) $('help').hidden=true; else if(!gEl.hidden) closeGuide(); else if(picking) setPicking(false); } });
+// Back gesture in the KonMap Android app: closes the top layer (guides menu, help, guide or reading, place card).
+// Returns true if it closed something; otherwise the app goes back as usual.
+window.konmapBack=function(){
+  var gm=document.getElementById('gmenu'); if(gm && !gm.hidden){ gm.hidden=true; return true; }
+  if(!$('help').hidden){ $('help').hidden=true; return true; }
+  if(!gEl.hidden){ closeGuide(); return true; }
+  if(map._popup && map._popup.isOpen()){ map.closePopup(); return true; }
+  return false;
+};
 
 // off-map day trips
 if(DATA.offmap.length){ $('offBox').hidden=false; $('offN').textContent=DATA.offmap.length; }
