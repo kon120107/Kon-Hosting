@@ -1,11 +1,14 @@
 """OSM .pbf (e.g. a BBBike extract: extract.bbbike.org, format 'Protocol Buffer (PBF)', box drawn round the city)
 -> streets GeoJSON for add_streets.py + rivers.json (non-buried waterways).
-Edit PBF and CEN (box with every street; outside it only tertiary and up) below. Needs: pip install osmium.
+usage: pbf_to_streets.py <in.pbf> <W,S,E,N box with every street; outside it only tertiary and up> <out.geojson> <rivers.json>
+(no arguments: the Athens run below). Needs: pip install osmium.
 Athens, 12 Nov 2026: BBBike box 23.38-24.16 E, 37.62-38.21 N, 47 MB; Kon downloaded it on his computer in minutes.
 Overpass was busy or blocked (406) that day; BBBike is now the first choice."""
-import osmium, json
+import osmium, json, sys
 PBF='/mnt/user-data/uploads/planet_23_380_37_620_24_160_38_210_osm.pbf'
 CEN=(23.60,37.920,23.82,38.035)  # all streets
+OUT,RIV='athens-streets.geojson','rivers.json'
+if len(sys.argv)>1: PBF,CEN,OUT,RIV=sys.argv[1],tuple(float(x) for x in sys.argv[2].split(',')),sys.argv[3],sys.argv[4]
 MAJ={'motorway','motorway_link','trunk','trunk_link','primary','primary_link','secondary','secondary_link','tertiary','tertiary_link'}
 feats=[];rivers=[]
 class H(osmium.SimpleHandler):
@@ -26,6 +29,6 @@ class H(osmium.SimpleHandler):
         else:
             (None if t.get('tunnel') or t.get('location')=='underground' else rivers.append((t.get('name') or '', ww, cs)))
 H().apply_file(PBF,locations=True)
-json.dump({'type':'FeatureCollection','features':feats},open('athens-streets.geojson','w'))
-json.dump(rivers,open('rivers.json','w'))
+json.dump({'type':'FeatureCollection','features':feats},open(OUT,'w'))
+json.dump(rivers,open(RIV,'w'))
 print(len(feats),'features',len(rivers),'waterways')

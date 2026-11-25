@@ -14,7 +14,7 @@ Republish from this folder with `publish_files` (patch mode: send only the files
 | City | Engine | Status |
 |---|---|---|
 | Turin | concrete/0.3 | migrated 29 Oct 2026 (from Turin 2.2 + tours from 2.0A) |
-| Plovdiv | concrete/0.3 | built from the research register 29 Oct 2026 (72 stops, 10 walks, 7 tours, 5 Study readings; drawn base, no streets) |
+| Plovdiv | concrete/0.3 | built from the research register 29 Oct 2026 (72 stops, 10 walks, 7 tours, 5 Study readings); OSM street map 25 Nov 2026 |
 | Vatra Dornei | concrete/0.3 | built 30 Oct 2026 (34 stops); OSM street map 6 Nov 2026 |
 | Cluj-Napoca | concrete/0.3 | short-stay map 5 Nov 2026: 24 stops, 1 half-afternoon walk, Study with 2 readings; OSM street map (2013 named-street extract, madeincluj/street-names), no river |
 | Rome | concrete/0.3 | built from claude/rome/rome-sites.md 6 Nov 2026: 134 stops, 14 walks, 14 tours (church day as tours), 6 day trips, Study; OSM street map 7 Nov 2026 (all streets in the centre; main roads, rail, Tevere and Aniene citywide) |
@@ -78,3 +78,9 @@ Plovdiv 1.0 (replaced by cities/plovdiv) · Apps (HTML holder prototype). Old Gi
 - 2026-11-16 — Git synced from the live KonMap artifact (version 1794661655-0d15): Athens city.json, base.json, reports.json — 283 stops, 33 routes, 10 tours (updated 14 Nov 2026).
 - 2026-11-22 — Git synced from the live KonMap artifact (version 1795379250-b22e): Rome city.json, base.json (citywide OSM streets), reports.json and engine concrete/0.3 (dashed ring for approximate pins) — Rome rounds 2–3, guides G1–G4, centre walk regroup, pins. Standalone `/rome/index.html` rebuilt.
 - 2026-11-24 — concrete/0.3 fixed in place (all cities checked at phone width, no errors): (1) Plovdiv's shared-page changes moved into the engine: "Guides" button replaces Fit (Study readings + tours), and tapping a route line or a place card's route row opens that route in Routes › By area. (2) Visit-length plans: a city may carry top-level `plans` = [{id, name, short, note, routes, flavours:[{id, name, note, routes}]}]; the By area button then shows the plan ("3–5 days ↻") and cycles plans → All walks on repeat taps; a "Taste" row picks one hand-made walk set per plan; places on no walk of the chosen set are hidden in By area. Cities without plans unchanged. (3) Ranking: Show slider counts places (Top 5 … Everything) instead of a score cutoff; "Rank by" = Famous / To see / Story, combinable; decimal scores with tie-breaks (main, tours, nv). Optional per-place `f` (fame 1–5); Famous hidden where a city has none. Rome: `f` for all 483 places; plans 3–5 days (10 walks) and 1 day (2) in Classic, Uncommon, To see, Story. Standalone Rome and both Vatra Dornei pages rebuilt (es strings in tools/i18n/es.py). Plovdiv shared artifact (e424f7ff…) not yet republished.
+- 2026-11-25 — Plovdiv street map: OSM from Geofabrik's Bulgaria extract, cut to 24.60–24.86 E, 42.09–42.19 N by the
+  `OSM extract` GitHub workflow (the sandbox cannot reach OSM servers; raw/plovdiv.osm.pbf). Every street in
+  24.66–24.82 E, 42.11–42.18 N, tertiary and up beyond; rail. Street names in Cyrillic, as on the signs:
+  shared/glyphs.json gains 1024-1279 trimmed to the basic Cyrillic alphabet (U+0400–045F, GoNotoKurrent via npm
+  smp-noto-glyphs). tools/pbf_to_streets.py takes its inputs as arguments. concrete/0.3: `window.konmapBack()` closes
+  the top layer (guides menu, help, guide or reading, place card) for the Android app's back gesture.
