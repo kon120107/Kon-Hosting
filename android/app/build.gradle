@@ -1,0 +1,91 @@
+import java.security.MessageDigest
+import groovy.json.JsonOutput
+
+plugins {
+    id 'com.android.application'
+}
+
+// Copies the site (../../konmap) into the app, minus sources and notes, and writes
+// konmap-manifest.json: the git blob SHA of every bundled file, so the app can tell
+// which files on GitHub differ from the ones it ships with. Keep the filter in step
+// with Updater.wanted().
+abstract class KonmapAssets extends DefaultTask {
+    @InputDirectory abstract DirectoryProperty getSite()
+    @OutputDirectory abstract DirectoryProperty getOutputDir()
+
+    static boolean wanted(String rel) {
+        !(rel.startsWith('raw/') || rel.startsWith('tools/') || rel.endsWith('.md')
+          || rel.endsWith('curation.json') || rel.contains('__pycache__') || rel.endsWith('.py') || rel.endsWith('.pyc'))
+    }
+
+    @TaskAction
+    void run() {
+        File src = site.get().asFile
+        File out = outputDir.get().asFile
+        out.deleteDir()
+        Map<String, String> shas = new TreeMap<>()
+        src.eachFileRecurse(groovy.io.FileType.FILES) { File f ->
+            String rel = src.toPath().relativize(f.toPath()).toString().replace('\\', '/')
+            if (!wanted(rel)) return
+            byte[] b = f.bytes
+            MessageDigest md = MessageDigest.getInstance('SHA-1')
+            md.update(("blob " + b.length + "\u0000").getBytes('UTF-8'))
+            md.update(b)
+            shas[rel] = md.digest().encodeHex().toString()
+            File dst = new File(out, 'konmap/' + rel)
+            dst.parentFile.mkdirs()
+            dst.bytes = b
+        }
+        new File(out, 'konmap-manifest.json').text = JsonOutput.toJson([files: shas])
+    }
+}
+
+def konmapAssets = tasks.register('konmapAssets', KonmapAssets) {
+    site = rootProject.layout.projectDirectory.dir('../konmap')
+    outputDir = layout.buildDirectory.dir('generated/konmapAssets')
+}
+
+android {
+    namespace 'io.github.kon120107.konmap'
+    compileSdk 35
+
+    defaultConfig {
+        applicationId 'io.github.kon120107.konmap'
+        minSdk 26
+        targetSdk 34
+        versionCode((System.getenv('VERSION_CODE') ?: '1') as int)
+        versionName "1.${System.getenv('VERSION_CODE') ?: '0'}"
+    }
+
+    signingConfigs {
+        release {
+            def ks = System.getenv('KONMAP_KEYSTORE')
+            if (ks) {
+                storeFile file(ks)
+                storePassword System.getenv('KONMAP_KEYSTORE_PASSWORD')
+                keyAlias 'konmap'
+                keyPassword System.getenv('KONMAP_KEYSTORE_PASSWORD')
+            }
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            signingConfig signingConfigs.release
+        }
+    }
+
+    buildFeatures { buildConfig true }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+}
+
+androidComponents {
+    onVariants(selector().all()) { variant ->
+        variant.sources.assets.addGeneratedSourceDirectory(konmapAssets) { it.outputDir }
+    }
+}
