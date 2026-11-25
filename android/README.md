@@ -11,8 +11,8 @@ A full-screen wrapper around `konmap/`. It works offline and updates its map dat
   So: edit `konmap/` and push as usual; no new app build is needed. New engine versions travel the same way.
 - **New build** only when the app itself changes: any push touching `android/` runs
   `.github/workflows/konmap-android.yml`, which publishes `KonMap-<n>.apk` under Releases.
-- **Signing:** repo secrets `KONMAP_KEYSTORE_B64` (the keystore, base64) and `KONMAP_KEYSTORE_PASSWORD`.
-  Keep a backup of the keystore: Android only installs an update signed with the same key.
-  Without the secrets the workflow makes an unsigned test build and no release.
+- **Signing:** `android/konmap.jks`, password in the workflow. Public on purpose: the app never installs
+  anything by itself, so the key only matters for APKs you install by hand from this repo's Releases.
+  Don't lose it: Android only installs an update signed with the same key.
 - **If the library versions in an engine change,** add the new files under `vendor/web/<host>/<path>`;
   until then the app loads them from the web the first time.

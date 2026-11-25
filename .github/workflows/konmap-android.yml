@@ -28,35 +28,14 @@ jobs:
         with:
           gradle-version: '8.10.2'
 
-      - name: Signing key
-        id: key
-        env:
-          KS: ${{ secrets.KONMAP_KEYSTORE_B64 }}
-        run: |
-          if [ -n "$KS" ]; then
-            echo "$KS" | base64 -d > "$RUNNER_TEMP/konmap.jks"
-            echo "signed=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "::warning::KONMAP_KEYSTORE_B64 secret not set: building an unsigned test build only, no release."
-            echo "signed=false" >> "$GITHUB_OUTPUT"
-          fi
-
       - name: Build release APK
-        if: steps.key.outputs.signed == 'true'
         env:
-          KONMAP_KEYSTORE: ${{ runner.temp }}/konmap.jks
-          KONMAP_KEYSTORE_PASSWORD: ${{ secrets.KONMAP_KEYSTORE_PASSWORD }}
+          KONMAP_KEYSTORE: ${{ github.workspace }}/android/konmap.jks
+          KONMAP_KEYSTORE_PASSWORD: kNjPNSoqGAPxVtV6zhSUIDZ
           VERSION_CODE: ${{ github.run_number }}
         run: gradle -p android assembleRelease --no-daemon
 
-      - name: Build test APK
-        if: steps.key.outputs.signed != 'true'
-        env:
-          VERSION_CODE: ${{ github.run_number }}
-        run: gradle -p android assembleDebug --no-daemon
-
       - name: Publish release
-        if: steps.key.outputs.signed == 'true'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
@@ -65,10 +44,3 @@ jobs:
           gh release create "konmap-app-$N" "KonMap-$N.apk" \
             --target "${{ github.sha }}" --title "KonMap app $N" --latest \
             --notes "Install KonMap-$N.apk on your phone. Map data updates by itself; a new app build is only needed when the app changes."
-
-      - name: Keep test APK
-        if: steps.key.outputs.signed != 'true'
-        uses: actions/upload-artifact@v4
-        with:
-          name: konmap-test-apk
-          path: android/app/build/outputs/apk/debug/app-debug.apk
