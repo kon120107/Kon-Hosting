@@ -1711,7 +1711,15 @@ document.addEventListener('click',function(e){
 
 // ---------- links ----------
 function gmSearch(q){ return 'https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(q); }
-function gmTransit(s){ return 'https://www.google.com/maps/dir/?api=1&destination='+s.lat+','+s.lon+'&travelmode=transit'; }
+// Google Maps link for a place: its Google place id (s.pid) when known, so the exact place opens;
+// otherwise, in cities with cfg.mapsLink 'pin', the map pin itself (a text search can land on a namesake);
+// otherwise the text search s.q.
+function gmPlace(s){
+  if(s.pid) return 'https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(s.name)+'&query_place_id='+encodeURIComponent(s.pid);
+  if(CFG.mapsLink==='pin' && s.lat!=null) return 'https://www.google.com/maps/search/?api=1&query='+s.lat+'%2C'+s.lon;
+  return gmSearch(s.q||s.name);
+}
+function gmTransit(s){ return 'https://www.google.com/maps/dir/?api=1&destination='+s.lat+','+s.lon+(s.pid?'&destination_place_id='+encodeURIComponent(s.pid):'')+'&travelmode=transit'; }
 function cmap(s){ return 'https://citymapper.com/directions?endcoord='+s.lat+'%2C'+s.lon+'&endname='+encodeURIComponent(s.name); }
 function walkLinks(list){
   // Google Maps takes origin + up to 8 waypoints + destination; longer walks are split.
@@ -1739,7 +1747,7 @@ function popupHtml(s){
   var flag=(s.nv?'<p class="when">Not re-verified in 2026. Check before a special trip.</p>':'')+apxTxt(s,'when');
   return '<div class="pop"><h2><span class="kg pk" title="'+attr(KNAME[s.k]||'')+'" style="background:'+KCOL[s.k]+'">'+glyph(s.k)+'</span>'+esc(s.name)+'</h2>'+
     '<p>'+esc(s.blurb)+'</p>'+(s.when?'<p class="when">'+esc(s.when)+'</p>':'')+(daysTxt(s)?'<p class="when">'+esc(daysTxt(s))+'</p>':'')+flag+
-    '<div class="links"><a href="'+gmSearch(s.q)+'" target="_blank" rel="noopener">Google Maps</a><a href="'+gmTransit(s)+'" target="_blank" rel="noopener">Transit</a><a href="'+cmap(s)+'" target="_blank" rel="noopener">Citymapper</a><a href="'+gimg(s.name,s.q)+'" target="_blank" rel="noopener">Photos</a></div>'+
+    '<div class="links"><a href="'+gmPlace(s)+'" target="_blank" rel="noopener">Google Maps</a><a href="'+gmTransit(s)+'" target="_blank" rel="noopener">Transit</a><a href="'+cmap(s)+'" target="_blank" rel="noopener">Citymapper</a><a href="'+gimg(s.name,s.q)+'" target="_blank" rel="noopener">Photos</a></div>'+
     toolsRow(s.id)+
     '<button type="button" class="gbtn" data-guide="'+esc(s.id)+'">'+(GUIDE[s.id]?'Read the guide':'More: rating, visited, scores')+'</button></div>';
 }
@@ -2200,7 +2208,7 @@ function openGuide(s,opts){
   var h='<h2>'+esc(G.t)+'</h2>';
   G.p.forEach(function(p,i){ h+='<p'+(i===0?' class="gintro"':'')+'>'+mdi(p)+'</p>'; });
   var prac=(s.when?'<p>'+esc(s.when)+'</p>':'')+(daysTxt(s)?'<p>'+esc(daysTxt(s))+'</p>':'')+(s.nv?'<p>Not re-verified in 2026. Check before a special trip.</p>':'')+apxTxt(s,'');
-  h+='<div class="gprac">'+prac+'<div class="btnrow" style="margin-top:8px"><button type="button" class="ghost sm" data-copy="'+attr(s.name)+'">Copy name</button>'+(s.q?'<button type="button" class="ghost sm" data-copy="'+attr(s.q)+'">Copy address</button>':'')+'</div>'+'<div class="links"><a href="'+gmSearch(s.q)+'" target="_blank" rel="noopener">Google Maps</a>'+(s.lat!=null?'<a href="'+gmTransit(s)+'" target="_blank" rel="noopener">Transit</a><a href="'+cmap(s)+'" target="_blank" rel="noopener">Citymapper</a>':'')+'<a href="'+gimg(s.name,s.q)+'" target="_blank" rel="noopener">Photos</a></div>'+toolsRow(s.id)+marksRow(s.id)+'</div>';
+  h+='<div class="gprac">'+prac+'<div class="btnrow" style="margin-top:8px"><button type="button" class="ghost sm" data-copy="'+attr(s.name)+'">Copy name</button>'+(s.q?'<button type="button" class="ghost sm" data-copy="'+attr(s.q)+'">Copy address</button>':'')+'</div>'+'<div class="links"><a href="'+gmPlace(s)+'" target="_blank" rel="noopener">Google Maps</a>'+(s.lat!=null?'<a href="'+gmTransit(s)+'" target="_blank" rel="noopener">Transit</a><a href="'+cmap(s)+'" target="_blank" rel="noopener">Citymapper</a>':'')+'<a href="'+gimg(s.name,s.q)+'" target="_blank" rel="noopener">Photos</a></div>'+toolsRow(s.id)+marksRow(s.id)+'</div>';
   if(typeof gExtra==='function') h=h.replace('<div class="gprac">',gExtra(s)+'<div class="gprac">');
   if(G.s) h+='<p class="gsrc">Sources: '+esc(G.s)+'</p>';
   if(G.u&&G.u.length) h+='<p class="gsrc">'+G.u.map(function(x){ return '<a href="'+esc(x[1])+'" target="_blank" rel="noopener">'+esc(x[0])+'</a>'; }).join(' · ')+'</p>';
@@ -2251,7 +2259,7 @@ window.konmapBack=function(){
 // off-map day trips
 if(DATA.offmap.length){ $('offBox').hidden=false; $('offN').textContent=DATA.offmap.length; }
 if(DATA.offmap.length) $('offmap').innerHTML=DATA.offmap.map(function(o,i){
-  return '<div><h3>'+esc(o.name)+'</h3><p>'+esc(o.blurb)+'</p><p>'+esc(o.when)+' <a href="'+gmSearch(o.q)+'" target="_blank" rel="noopener">Google Maps</a></p>'+(GUIDE[OFFIDS[i]]?'<button type="button" class="ghost sm" data-og="'+i+'">Read the guide</button>':'')+'</div>';
+  return '<div><h3>'+esc(o.name)+'</h3><p>'+esc(o.blurb)+'</p><p>'+esc(o.when)+' <a href="'+gmPlace(o)+'" target="_blank" rel="noopener">Google Maps</a></p>'+(GUIDE[OFFIDS[i]]?'<button type="button" class="ghost sm" data-og="'+i+'">Read the guide</button>':'')+'</div>';
 }).join('');
 $('offmap').addEventListener('click',function(e){
   var b=e.target.closest('[data-og]'); if(!b) return; var i=+b.getAttribute('data-og'), o=DATA.offmap[i];
@@ -2821,7 +2829,7 @@ function stPin(s,o){
 function chapters(){
   var out=routes.map(function(r){ return {id:'r'+r.id,title:'Route '+r.id+' · '+r.name,color:r.color,list:r.items.map(function(it){return it.s;}),r:r}; });
   if(extras.length) out.push({id:'x',title:'Not on a route',color:'#8a8f98',list:extras});
-  if(DATA.offmap.length) out.push({id:'d',title:'Day trips',color:'#8a8f98',list:DATA.offmap.map(function(o,i){ return {id:OFFIDS[i],name:o.name,blurb:o.blurb,when:o.when,q:o.q,route:null,_off:1}; })});
+  if(DATA.offmap.length) out.push({id:'d',title:'Day trips',color:'#8a8f98',list:DATA.offmap.map(function(o,i){ return {id:OFFIDS[i],name:o.name,blurb:o.blurb,when:o.when,q:o.q,pid:o.pid,route:null,_off:1}; })});
   return out;
 }
 function chapById(id){ return chapters().filter(function(c){return c.id===id;})[0]; }
@@ -2870,7 +2878,7 @@ function stOpen(id){
   if(id.indexOf('rep:')===0) return openReport(id.slice(4));
   if(id.indexOf('chap:')===0) return openChapter(id.slice(5));
   if(S[id]) return openGuide(S[id],{fly:true});
-  var i=OFFIDS.indexOf(id); if(i>=0){ var o=DATA.offmap[i]; return openGuide({id:id,name:o.name,blurb:o.blurb,when:o.when,q:o.q,route:null},{}); }
+  var i=OFFIDS.indexOf(id); if(i>=0){ var o=DATA.offmap[i]; return openGuide({id:id,name:o.name,blurb:o.blurb,when:o.when,q:o.q,pid:o.pid,route:null},{}); }
 }
 $('pStudy').addEventListener('click',function(e){
   var r=e.target.closest('[data-rep]'); if(r){ openReport(r.getAttribute('data-rep')); return; }
