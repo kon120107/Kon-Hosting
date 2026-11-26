@@ -14,7 +14,7 @@ Republish from this folder with `publish_files` (patch mode: send only the files
 | City | Engine | Status |
 |---|---|---|
 | Turin | concrete/0.3 | migrated 29 Oct 2026 (from Turin 2.2 + tours from 2.0A) |
-| Plovdiv | concrete/0.3 | built from the research register 29 Oct 2026 (72 stops, 10 walks, 7 tours, 5 Study readings); OSM street map 25 Nov 2026 |
+| Plovdiv | concrete/0.3 | built from the research register 29 Oct 2026 (72 stops, 10 walks, 7 tours, 5 Study readings); OSM street map 25 Nov 2026; 78 stops and 11 walks since 26 Nov 2026 |
 | Vatra Dornei | concrete/0.3 | built 30 Oct 2026 (34 stops); OSM street map 6 Nov 2026 |
 | Cluj-Napoca | concrete/0.3 | short-stay map 5 Nov 2026: 24 stops, 1 half-afternoon walk, Study with 2 readings; OSM street map (2013 named-street extract, madeincluj/street-names), no river |
 | Rome | concrete/0.3 | built from claude/rome/rome-sites.md 6 Nov 2026: 134 stops, 14 walks, 14 tours (church day as tours), 6 day trips, Study; OSM street map 7 Nov 2026 (all streets in the centre; main roads, rail, Tevere and Aniene citywide) |
@@ -84,3 +84,4 @@ Plovdiv 1.0 (replaced by cities/plovdiv) · Apps (HTML holder prototype). Old Gi
   shared/glyphs.json gains 1024-1279 trimmed to the basic Cyrillic alphabet (U+0400–045F, GoNotoKurrent via npm
   smp-noto-glyphs). tools/pbf_to_streets.py takes its inputs as arguments. concrete/0.3: `window.konmapBack()` closes
   the top layer (guides menu, help, guide or reading, place card) for the Android app's back gesture.
+- 2026-11-26 — Plovdiv: friends' tip list checked (Alyosha and the rowing canal were already on). Added list D "Main sights and locals' tips" with 6 stops, pins from the OSM extract: Old Town (area, approximate pin), Regional Ethnographic Museum, Bishop's Basilica, City Art Gallery (Saborna 14A hall), Kapana, FREA second-hand (minor); multi-paragraph guides; walk 11 "Kapana and the Old Town: the classic visit". concrete/0.3 fixed in place: new kind 'shop' (bag glyph, brown). Still missing classics: Ancient Theatre, Roman Stadium, Dzhumaya Mosque, Nebet Tepe. Plovdiv shared artifact (e424f7ff…) not republished.
